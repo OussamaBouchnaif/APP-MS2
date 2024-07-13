@@ -1,5 +1,10 @@
+using Admin.Extensions;
+using Admin.Repository;
+using Admin.Service.Contract;
 using Microsoft.EntityFrameworkCore;
 using MS2Api.Data;
+using Admin.Service;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,15 +12,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 
-builder.Configuration
-       .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-       .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
-       .AddJsonFile("appsettings.Local.json", optional: true, reloadOnChange: true)
-       .AddEnvironmentVariables();
+builder.Configuration.AddCustomConfiguration(builder.Environment);
 
 builder.Services.AddDbContext<MyContext>(option =>
     option.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionDb"))
     );
+
+// Ajouter le repository générique
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
+// Ajouter le service des bénéficiaires
+builder.Services.AddScoped<IBeneficiaryService, Admin.Service.BenificierService>();
 
 var app = builder.Build();
 
@@ -36,6 +43,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Benificier}/{action=Index}/{id?}");
 
 app.Run();
