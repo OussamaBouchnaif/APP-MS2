@@ -1,3 +1,4 @@
+
 using Admin.Extensions;
 using Admin.Repository;
 using Admin.Service.Contract;
@@ -10,7 +11,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
 
 builder.Configuration.AddCustomConfiguration(builder.Environment);
 
