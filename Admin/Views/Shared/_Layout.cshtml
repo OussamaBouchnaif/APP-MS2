@@ -1,10 +1,16 @@
 ﻿<!doctype html>
 <html lang="en">
 <head>
+<<<<<<< HEAD
     <title>@ViewData["Title"] | MS2-Admin</title>
     <!-- Css -->
     @Html.Partial("_CssLinks")
     @await RenderSectionAsync("Styles", required: false)
+=======
+    <title>@ViewData["Title"] - MS2-Admin & Dashboard</title>
+    <!-- Css -->
+    @Html.Partial("_CssLinks")
+>>>>>>> e47c632 (integration du template)
     </head>
     <body>
         <div id="layout-wrapper">
@@ -13,7 +19,11 @@
         @Html.Partial("_verticalMenu")
 
         @Html.Partial("_Ishorizontal")
+<<<<<<< HEAD
 
+=======
+         
+>>>>>>> e47c632 (integration du template)
             <div class="main-content">
                 <div class="page-content">
                 @RenderBody()
