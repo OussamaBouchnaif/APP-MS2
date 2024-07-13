@@ -95,6 +95,6 @@ namespace Admin.Repository
             _context.SaveChanges();
         }
 
-    
+
     }
 }

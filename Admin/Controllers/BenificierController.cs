@@ -6,6 +6,7 @@ namespace Admin.Controllers
     public class BenificierController : Controller
     {
         private readonly IBeneficiaryService _beneficiaryService;
+
         public BenificierController(IBeneficiaryService beneficiaryService)
         {
             _beneficiaryService = beneficiaryService;
@@ -14,7 +15,7 @@ namespace Admin.Controllers
         public IActionResult Index()
         {
             var beneficiaries = _beneficiaryService.GetAllBeneficiaries();
-        
+
             return View(beneficiaries);
         }
     }
