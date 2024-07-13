@@ -1,7 +1,21 @@
+using Microsoft.EntityFrameworkCore;
+using MS2Api.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+
+builder.Configuration
+       .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+       .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
+       .AddJsonFile("appsettings.Local.json", optional: true, reloadOnChange: true)
+       .AddEnvironmentVariables();
+
+builder.Services.AddDbContext<MyContext>(option =>
+    option.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionDb"))
+    );
 
 var app = builder.Build();
 
