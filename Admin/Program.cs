@@ -1,11 +1,9 @@
-
 using Admin.Extensions;
 using Admin.Repository;
 using Admin.Service.Contract;
 using Microsoft.EntityFrameworkCore;
 using MS2Api.Data;
 using Admin.Service;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +27,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
+    app.UseStatusCodePagesWithRedirects("/Erreur/{0}");
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
