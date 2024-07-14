@@ -4,11 +4,15 @@
     ViewData["Title"] = "Beneficiaries";
 }
 
-<h1>@ViewData["Title"]</h1>
+@section Styles{
+    <!-- grig js -->
+    <link href="~/assets/libs/gridjs/theme/mermaid.min.css" rel="stylesheet" />
+}
+
 
 @if (Model != null && Model.Any())
 {
-    <table class="table">
+    @* <table class="table">
         <thead>
             <tr>
                 <th>
@@ -33,7 +37,7 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Id)
                     </td>
-                   
+
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                         <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
@@ -42,9 +46,46 @@
                 </tr>
             }
         </tbody>
-    </table>
+    </table> *@
+
+    <div id="grid"></div>
 }
 else
 {
     <p>No beneficiaries found.</p>
+}
+
+@section Scripts {
+
+    <script src="~/assets/libs/gridjs/gridjs.umd.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            new gridjs.Grid({
+                columns: [
+                    'Nom',
+                    'Téléphone Urgent',
+                    'Pays d\'origine',
+                    'Nationalité',
+                    'Adresse',
+                    'Ville',
+                    'Type de détection',
+                    'Code Unique'
+                ],
+                pagination: {
+                    limit: 10
+                },
+                search: true,
+                data: @Html.Raw(Json.Serialize(Model.Select(b => new object[] {
+                b.Nom,
+                b.TeleUrgent,
+                b.PaysOrigin,
+                b.Nationalite,
+                b.Address,
+                b.Ville,
+                b.TypeDetection,
+                b.codeUnique
+            })))
+                }).render(document.getElementById('grid'));
+        });
+    </script>
 }
