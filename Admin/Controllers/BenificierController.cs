@@ -1,4 +1,5 @@
 ﻿using Admin.Service.Contract;
+using Admin.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Admin.Controllers
@@ -6,7 +7,7 @@ namespace Admin.Controllers
     public class BenificierController : Controller
     {
         private readonly IBeneficiaryService _beneficiaryService;
-
+        
         public BenificierController(IBeneficiaryService beneficiaryService)
         {
             _beneficiaryService = beneficiaryService;
@@ -17,6 +18,25 @@ namespace Admin.Controllers
             var beneficiaries = _beneficiaryService.GetAllBeneficiaries();
 
             return View(beneficiaries);
+        }
+
+        [HttpGet]
+        public IActionResult Add() 
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Add(BenificierVM benificierVM) 
+        {
+            if(ModelState.IsValid)
+            {
+                _beneficiaryService.AddBenificier(benificierVM);
+                return RedirectToAction("Index");   
+            }
+
+            return View(benificierVM);
+
         }
     }
 }

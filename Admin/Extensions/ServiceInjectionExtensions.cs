@@ -1,6 +1,8 @@
 ﻿using Admin.Repository;
 using Admin.Service.Contract;
 using Admin.Service;
+using Admin.Mapper.Contract;
+using Admin.Mapper;
 
 namespace Admin.Extensions
 {
@@ -15,7 +17,7 @@ namespace Admin.Extensions
             services.AddScoped<IBeneficiaryService, BenificierService>();
 
             // Ajouter le mapper des bénéficiaires
-            //services.AddScoped<IBenificierMapper, BenificierMapper>();
+            services.AddScoped<IBenificierMapper, BenificierMapper>();
         }
     }
 }
