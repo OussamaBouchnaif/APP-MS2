@@ -1,9 +1,10 @@
 ﻿<!doctype html>
 <html lang="en">
 <head>
-    <title>@ViewData["Title"] | MS2-Admin & Dashboard</title>
+    <title>@ViewData["Title"] | MS2-Admin</title>
     <!-- Css -->
     @Html.Partial("_CssLinks")
+    @await RenderSectionAsync("Styles", required: false)
     </head>
     <body>
         <div id="layout-wrapper">

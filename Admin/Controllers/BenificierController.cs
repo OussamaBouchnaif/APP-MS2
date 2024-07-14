@@ -7,7 +7,7 @@ namespace Admin.Controllers
     public class BenificierController : Controller
     {
         private readonly IBeneficiaryService _beneficiaryService;
-        
+
         public BenificierController(IBeneficiaryService beneficiaryService)
         {
             _beneficiaryService = beneficiaryService;
