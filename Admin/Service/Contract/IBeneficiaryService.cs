@@ -1,4 +1,5 @@
-﻿using MS2Api.Model;
+﻿using Admin.ViewModel;
+using MS2Api.Model;
 using System.Linq.Expressions;
 
 namespace Admin.Service.Contract
@@ -6,12 +7,12 @@ namespace Admin.Service.Contract
     public interface IBeneficiaryService
     {
         IEnumerable<Benificier> GetAllBeneficiaries();
-        Benificier GetBeneficiaryById(int id);
-        Benificier FindBeneficiaryByExpression(Expression<Func<Benificier, bool>> predicate);
+        Benificier GetBenificierById(int id);
+        Benificier FindBenificierByExpression(Expression<Func<Benificier, bool>> predicate);
         IEnumerable<Benificier> FindManyBeneficiariesByExpression(Expression<Func<Benificier, bool>> predicate);
-        void AddBeneficiary(Benificier beneficiary);
-        void UpdateBeneficiary(Benificier beneficiary);
-        void DeleteBeneficiary(int id);
+        void AddBenificier(BenificierVM benificierVM);
+        void UpdateBenificier(Benificier beneficiary);
+        void DeleteBenificier(int id);
         void SaveChanges();
     }
 }

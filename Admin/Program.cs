@@ -1,4 +1,3 @@
-
 using Admin.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,7 +8,6 @@ builder.Services.AddControllersWithViews();
 builder.Configuration.AddCustomConfiguration(builder.Environment);
 
 builder.AddGestionCommandesContext();
-
 builder.Services.AddCustomServices();
 
 var app = builder.Build();
