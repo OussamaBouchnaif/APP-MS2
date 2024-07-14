@@ -1,9 +1,4 @@
 using Admin.Extensions;
-using Admin.Repository;
-using Admin.Service.Contract;
-using Microsoft.EntityFrameworkCore;
-using MS2Api.Data;
-using Admin.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,15 +7,8 @@ builder.Services.AddControllersWithViews();
 
 builder.Configuration.AddCustomConfiguration(builder.Environment);
 
-builder.Services.AddDbContext<MyContext>(option =>
-    option.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionDb"))
-    );
-
-// Ajouter le repository générique
-builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-
-// Ajouter le service des bénéficiaires
-builder.Services.AddScoped<IBeneficiaryService, Admin.Service.BenificierService>();
+builder.AddGestionCommandesContext();
+builder.Services.AddCustomServices();
 
 var app = builder.Build();
 
@@ -42,6 +30,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Benificier}/{action=Index}/{id?}");
+    pattern: "{controller=Benificier}/{action=Add}/{id?}");
 
 app.Run();

@@ -1,6 +1,8 @@
 ﻿
+using Admin.Mapper.Contract;
 using Admin.Repository;
 using Admin.Service.Contract;
+using Admin.ViewModel;
 using MS2Api.Model;
 using System.Linq.Expressions;
 
@@ -9,10 +11,12 @@ namespace Admin.Service
     public class BenificierService : IBeneficiaryService
     {
         private readonly IRepository<Benificier> _BenificierRepository;
+        private readonly IBenificierMapper _benificerMapper;
 
-        public BenificierService(IRepository<Benificier> BenificierRepository)
+        public BenificierService(IRepository<Benificier> BenificierRepository ,IBenificierMapper benificierMapper)
         {
             _BenificierRepository = BenificierRepository;
+            _benificerMapper = benificierMapper;
         }
 
         public IEnumerable<Benificier> GetAllBeneficiaries()
@@ -35,14 +39,14 @@ namespace Admin.Service
             return _BenificierRepository.FindManyByExpression(predicate).ToList();
         }
 
-        public void AddBenificier(Benificier Benificier)
+        public void AddBenificier(BenificierVM benificierVM)
         {
-            if (Benificier == null)
+            if (benificierVM == null)
             {
-                throw new ArgumentNullException(nameof(Benificier));
+                throw new ArgumentNullException(nameof(benificierVM));
             }
-
-            _BenificierRepository.Insert(Benificier);
+            Benificier benificier = _benificerMapper.MapToBenificier(benificierVM); 
+            _BenificierRepository.Insert(benificier);
             SaveChanges();
         }
 
@@ -72,31 +76,6 @@ namespace Admin.Service
         public void SaveChanges()
         {
             _BenificierRepository.SaveChanges();
-        }
-
-        public Benificier GetBeneficiaryById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Benificier FindBeneficiaryByExpression(Expression<Func<Benificier, bool>> predicate)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddBeneficiary(Benificier beneficiary)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateBeneficiary(Benificier beneficiary)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteBeneficiary(int id)
-        {
-            throw new NotImplementedException();
-        }
+        }   
     }
 }
