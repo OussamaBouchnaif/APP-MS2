@@ -1,0 +1,68 @@
+﻿@model Admin.ViewModel.UtilisateurVM
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Formulaire de Utilisateur</h4>
+                <p class="card-title-desc">Veuillez remplir les informations ci-dessous.</p>
+            </div>
+            <div class="card-body">
+                <form asp-action="Add" method="post">
+                    <div class="mb-3 row">
+                        <label for="Nom" class="col-md-2 col-form-label">Nom</label>
+                        <div class="col-md-10">
+                            <input asp-for="Nom" class="form-control" placeholder="Entrez le nom" />
+                            <span asp-validation-for="Nom" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="Prenom" class="col-md-2 col-form-label">Prénom</label>
+                        <div class="col-md-10">
+                            <input asp-for="Prenom" class="form-control" placeholder="Entrez le prénom" />
+                            <span asp-validation-for="Prenom" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="Age" class="col-md-2 col-form-label">Age</label>
+                        <div class="col-md-10">
+                            <input asp-for="Age" class="form-control" type="number" placeholder="Entrez l'âge" />
+                            <span asp-validation-for="Age" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="Sexe" class="col-md-2 col-form-label">Sexe</label>
+                        <div class="col-md-10">
+                            <select asp-for="Sexe" class="form-control" asp-items="ViewBag.Sexes">
+                                <option value="" disabled selected>Choisissez le sexe</option>
+                            </select>
+                            <span asp-validation-for="Sexe" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="Tele" class="col-md-2 col-form-label">Téléphone</label>
+                        <div class="col-md-10">
+                            <input asp-for="Tele" class="form-control" type="tel" placeholder="Entrez le numéro de téléphone" />
+                            <span asp-validation-for="Tele" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="Role" class="col-md-2 col-form-label">Role</label>
+                        <div class="col-md-10">
+                            <select asp-for="Role" class="form-control" asp-items="ViewBag.Roles">
+                                <option value="" disabled selected>Choisissez le rôle</option>
+                            </select>
+                            <span asp-validation-for="Role" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row left">
+                        <div class="col-md-10 offset-md-2">
+                            <button type="submit" class="btn btn-primary">Soumettre</button>
+                            <a href="@Url.Action("Index", "Utilisateur")" class="btn btn-secondary">Liste des Utilisateurs</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

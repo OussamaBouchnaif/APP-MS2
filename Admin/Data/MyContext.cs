@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MS2Api.Model;
+using Admin.ViewModel;
 
 namespace MS2Api.Data
 {
@@ -28,6 +29,8 @@ namespace MS2Api.Data
                 .HasValue<Utilisateur>("Utilisateur");
 
         }
+
+        public DbSet<Admin.ViewModel.UtilisateurVM>? UtilisateurVM { get; set; }
 
     }
 }
