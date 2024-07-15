@@ -32,7 +32,7 @@ namespace Admin.Controllers
             if(ModelState.IsValid)
             {
                 _beneficiaryService.AddBenificier(benificierVM);
-                return RedirectToAction("Index");   
+                return RedirectToAction(nameof(Index));   
             }
 
             return View(benificierVM);
