@@ -62,7 +62,6 @@ namespace Admin.Service
         }
 
         List<SelectListItem> IUtilisateurService.GetSexesList()
-        {
             return new List<SelectListItem>
             {
                 new SelectListItem { Value = "Homme", Text = "Homme" },
@@ -79,4 +78,3 @@ namespace Admin.Service
             };
         }
     }
-}
