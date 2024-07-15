@@ -4,6 +4,8 @@ namespace Admin.ViewModel
 {
     public class BenificierVM
     {
+        public int Id { get; set; }
+
         [Required(ErrorMessage = "Le nom est requis.")]
         [StringLength(100, ErrorMessage = "Le nom ne peut pas dépasser 100 caractères.")]
         public string Nom { get; set; }
