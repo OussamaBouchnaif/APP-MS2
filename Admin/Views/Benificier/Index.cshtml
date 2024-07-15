@@ -4,88 +4,78 @@
     ViewData["Title"] = "Beneficiaries";
 }
 
-@section Styles{
-    <!-- grig js -->
-    <link href="~/assets/libs/gridjs/theme/mermaid.min.css" rel="stylesheet" />
-}
+<div class="content">
+    <div class="container">
+        <a href="Benificier/Add" class="btn btn-primary" id="bn">Ajouter un Benificier</a>
+        @if (Model != null && Model.Any())
+        {
+
+            <table id="myTable" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prenom</th>
+                        <th>Age</th>
+                        <th>Sexe</th>
+                        <th>Tele</th>
+                        <th>TeleUrgent</th>
+                        <th>PaysOrigin</th>
+                        <th>Nationalite</th>
+                       @*  <th>Adress</th>
+                        <th>Ville</th> *@
+                        @* <th>TypeDetection</th>
+                        <th>CodeUnique</th> *@
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var beneficiary in Model)
+                    {
+                        <tr>
+                            <td>@beneficiary.Nom</td>
+                            <td>@beneficiary.Prenom</td>
+                            <td>@beneficiary.Age</td>
+                            <td>@beneficiary.Sexe</td>
+                            <td>@beneficiary.Tele</td>
+                            <td>@beneficiary.TeleUrgent</td>
+                            <td>@beneficiary.PaysOrigin</td>
+                            <td>@beneficiary.Nationalite</td>
+                            @* <td>@beneficiary.Address</td>
+                            <td>@beneficiary.Ville</td> *@
+                            @* <td>@beneficiary.TypeDetection</td>
+                            <td>@beneficiary.codeUnique</td> *@
+                            <td class="text-center">
+                                <a href="Add" class="text-danger"><i class="fa-solid fa-trash"></i></a>
+                                <a href="Add"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <a href="Add" class="text-info"><i class="fa-solid fa-circle-info"></i></a>
+                                <a href="Add" class="text-warning"><i class="fa-solid fa-folder-plus"></i></a>
+                                
+                                
+                            </td>
+                        
+                        </tr>
+                    }
+                </tbody>
+            </table>
 
 
-@if (Model != null && Model.Any())
-{
-    @* <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Id
-                </th>
-                <th>
-                    Name
-                </th>
-                <th>
-                    Email
-                </th>
-                <th>
-                    IsActive
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Id)
-                    </td>
 
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table> *@
+        }
+        else
+        {
+            <p>No beneficiaries found.</p>
+        }
+    </div>
+</div>
 
-    <div id="grid"></div>
-}
-else
-{
-    <p>No beneficiaries found.</p>
-}
 
 @section Scripts {
-
-    <script src="~/assets/libs/gridjs/gridjs.umd.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/assets/DataTables/datatables.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            new gridjs.Grid({
-                columns: [
-                    'Nom',
-                    'Téléphone Urgent',
-                    'Pays d\'origine',
-                    'Nationalité',
-                    'Adresse',
-                    'Ville',
-                    'Type de détection',
-                    'Code Unique'
-                ],
-                pagination: {
-                    limit: 10
-                },
-                search: true,
-                data: @Html.Raw(Json.Serialize(Model.Select(b => new object[] {
-                b.Nom,
-                b.TeleUrgent,
-                b.PaysOrigin,
-                b.Nationalite,
-                b.Address,
-                b.Ville,
-                b.TypeDetection,
-                b.codeUnique
-            })))
-                }).render(document.getElementById('grid'));
+        $(document).ready(function () {
+            $('#myTable').DataTable();
         });
     </script>
+
 }
