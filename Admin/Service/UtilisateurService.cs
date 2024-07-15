@@ -73,7 +73,7 @@ namespace Admin.Service
         {
             return new List<SelectListItem>
             {
-                 new SelectListItem { Value = "Admin", Text = "Admin" },
+                new SelectListItem { Value = "Admin", Text = "Admin" },
                 new SelectListItem { Value = "Agent", Text = "Agent" }
             };
         }
