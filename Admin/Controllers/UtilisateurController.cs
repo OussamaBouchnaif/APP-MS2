@@ -21,8 +21,8 @@ namespace Admin.Controllers
         }
         [HttpGet]
         public IActionResult Add() {
-            ViewBag.Sexes = GetSexesList();
-            ViewBag.Roles = GetRoles();
+            ViewBag.Sexes = _utilisateurService.GetSexesList();
+            ViewBag.Roles = _utilisateurService.GetRolesList();
 
 
             return View();
@@ -35,27 +35,12 @@ namespace Admin.Controllers
                 _utilisateurService.AddUtilisateur(utilisateurVM);
                 return RedirectToAction("Index");
             }
-            ViewBag.Sexes = GetSexesList();
-            ViewBag.Roles = GetRoles();
+            ViewBag.Sexes = _utilisateurService.GetSexesList();
+            ViewBag.Roles = _utilisateurService.GetRolesList();
 
 
             return View(utilisateurVM);
         }
-        private List<SelectListItem> GetSexesList()
-        {
-            return new List<SelectListItem>
-            {
-                new SelectListItem { Value = "Homme", Text = "Homme" },
-                new SelectListItem { Value = "Femme", Text = "Femme" }
-            };
-        }
-        private List<SelectListItem> GetRoles()
-        {
-            return new List<SelectListItem>
-            {
-                 new SelectListItem { Value = "Admin", Text = "Admin" },
-                new SelectListItem { Value = "Agent", Text = "Agent" }
-            };
-        }
+      
     }
 }
