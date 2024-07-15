@@ -18,6 +18,12 @@ namespace Admin.Extensions
 
             // Ajouter le mapper des bénéficiaires
             services.AddScoped<IBenificierMapper, BenificierMapper>();
+            // Ajouter le service des bénéficiaires
+
+            services.AddScoped<IUtilisateurMapper, UtilisateurMapper>();
+
+            // Ajouter le mapper des bénéficiaires
+            services.AddScoped<IUtilisateurService, UtilisateurService>();
         }
     }
 }
