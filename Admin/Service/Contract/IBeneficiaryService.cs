@@ -11,8 +11,8 @@ namespace Admin.Service.Contract
         Benificier FindBenificierByExpression(Expression<Func<Benificier, bool>> predicate);
         IEnumerable<Benificier> FindManyBeneficiariesByExpression(Expression<Func<Benificier, bool>> predicate);
         void AddBenificier(BenificierVM benificierVM);
-        void UpdateBenificier(Benificier beneficiary);
-        void DeleteBenificier(int id);
+        void UpdateBenificier( BenificierVM benificierVM, Benificier benificier);
+        void DeleteBenificier(Benificier benificier);
         void SaveChanges();
     }
 }

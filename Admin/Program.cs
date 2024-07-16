@@ -49,7 +49,7 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Account}/{action=Login}");
 
-// Créer les rôles
+// CrÃ©er les rÃ´les
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;

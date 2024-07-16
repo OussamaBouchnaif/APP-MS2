@@ -18,8 +18,8 @@ namespace Admin.Controllers
 
         public IActionResult Index()
         {
-            var Utilisateurs = _utilisateurService.GetAllUtilisateurs();
-            return View(Utilisateurs);
+            var utilisateurs = _utilisateurService.GetAllUtilisateurs();
+            return View(utilisateurs);
         }
 
         [HttpGet]
@@ -39,10 +39,58 @@ namespace Admin.Controllers
                 _utilisateurService.AddUtilisateur(utilisateurVM);
                 return RedirectToAction("Index");
             }
+
+            ViewBag.Sexes = _utilisateurService.GetSexesList();
+            ViewBag.Roles = _utilisateurService.GetRolesList();
+            return View(utilisateurVM);
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var utilisateur = _utilisateurService.GetUtilisateurById(id);
+            if (utilisateur == null)
+            {
+                return NotFound();
+            }
+            
+            return View(utilisateurVM);
+        }
+            var utilisateurVM = _utilisateurService.GetUtilisateurById(id);
+            if (utilisateur == null)
+            {
+                return NotFound();
+            }
             ViewBag.Sexes = _utilisateurService.GetSexesList();
             ViewBag.Roles = _utilisateurService.GetRolesList();
 
             return View(utilisateurVM);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(UtilisateurVM utilisateurVM)
+        {
+            if (ModelState.IsValid)
+            {
+                _utilisateurService.UpdateUtilisateur(utilisateurVM);
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.Sexes = _utilisateurService.GetSexesList();
+            ViewBag.Roles = _utilisateurService.GetRolesList();
+            return View(utilisateurVM);
+        }
+
+        public IActionResult Delete(int id)
+        {
+            var utilisateur = _utilisateurService.GetUtilisateurById(id);
+            if (utilisateur == null)
+            {
+                return NotFound();
+            }
+
+            _utilisateurService.DeleteUtilisateur(id);
+            return RedirectToAction("Index");
         }
     }
 }

@@ -2,6 +2,7 @@
 using Admin.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MS2Api.Model;
 
 namespace Admin.Controllers
 {
@@ -38,6 +39,32 @@ namespace Admin.Controllers
             }
 
             return View(benificierVM);
+        }
+
+        [HttpGet]
+        public IActionResult Update(int Id) 
+        {
+            Benificier benificier = _beneficiaryService.GetBenificierById(Id);
+            return View(benificier);    
+        }
+
+        [HttpPost]
+        public IActionResult Update(BenificierVM benificierVM,int Id)
+        {
+            Benificier benificier = _beneficiaryService.GetBenificierById(Id);
+            if(ModelState.IsValid) 
+            {
+                _beneficiaryService.UpdateBenificier( benificierVM, benificier);
+                return RedirectToAction(nameof(Index));
+            }
+            return View(benificier);
+        }
+
+        public IActionResult Delete(int Id) 
+        {
+            Benificier benificier = _beneficiaryService.GetBenificierById(Id);
+            _beneficiaryService.DeleteBenificier(benificier);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

@@ -1,23 +1,24 @@
 ﻿using Admin.Mapper.Contract;
-using Admin.Models;
 using Admin.Repository;
 using Admin.Service.Contract;
 using Admin.ViewModel;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MS2Api.Model;
-using System.Linq.Expressions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Admin.Service
 {
     public class UtilisateurService : IUtilisateurService
     {
-        private readonly IRepository<Utilisateur> _UtilisateurRepository;
-        private readonly IUtilisateurMapper _UtilisateurMapper;
+        private readonly IRepository<Utilisateur> _utilisateurRepository;
+        private readonly IUtilisateurMapper _utilisateurMapper;
 
-        public UtilisateurService(IRepository<Utilisateur> UtilisateurRepository, IUtilisateurMapper UtilisateurMapper)
+        public UtilisateurService(IRepository<Utilisateur> utilisateurRepository, IUtilisateurMapper utilisateurMapper)
         {
-            _UtilisateurRepository = UtilisateurRepository;
-            _UtilisateurMapper = UtilisateurMapper;
+            _utilisateurRepository = utilisateurRepository;
+            _utilisateurMapper = utilisateurMapper;
         }
 
         public void AddUtilisateur(UtilisateurVM utilisateurVM)
@@ -26,42 +27,35 @@ namespace Admin.Service
             {
                 throw new ArgumentNullException(nameof(utilisateurVM));
             }
-            Utilisateur utilisateur = _UtilisateurMapper.MapToUtilisateur(utilisateurVM);
-            _UtilisateurRepository.Insert(utilisateur);
-            _UtilisateurRepository.SaveChanges();
+
+            var utilisateur = _utilisateurMapper.MapToUtilisateur(utilisateurVM);
+            _utilisateurRepository.Insert(utilisateur);
+            _utilisateurRepository.SaveChanges();
         }
 
         public void DeleteUtilisateur(int id)
         {
-            throw new NotImplementedException();
+            var utilisateur = _utilisateurRepository.FindById(id);
+            if (utilisateur == null)
+            {
+                throw new ArgumentException("Utilisateur non trouvé", nameof(id));
+            }
+
+            _utilisateurRepository.Delete(utilisateur);
+            _utilisateurRepository.SaveChanges();
         }
 
         public IEnumerable<Utilisateur> GetAllUtilisateurs()
         {
-            return _UtilisateurRepository.GetAll().ToList();
+            return _utilisateurRepository.GetAll().ToList();
         }
 
         public Utilisateur GetUtilisateurById(int id)
         {
-            return _UtilisateurRepository.FindById(id);
+            return _utilisateurRepository.FindById(id);
         }
 
-        public void SaveChanges()
-        {
-            _UtilisateurRepository.SaveChanges();
-        }
-
-        public void UpdateUtilisateur(Utilisateur utilisateur)
-        {
-            if (utilisateur == null)
-            {
-                throw new ArgumentNullException(nameof(utilisateur));
-            }
-            _UtilisateurRepository.Update(utilisateur);
-            SaveChanges();
-        }
-
-        List<SelectListItem> IUtilisateurService.GetSexesList()
+        public List<SelectListItem> GetSexesList()
         {
             return new List<SelectListItem>
             {
@@ -75,6 +69,24 @@ namespace Admin.Service
             return Role.Roles
                    .Select(role => new SelectListItem { Value = role, Text = role })
                    .ToList();
+        }
+
+        public void UpdateUtilisateur(UtilisateurVM utilisateurVM)
+        {
+            if (utilisateurVM == null)
+            {
+                throw new ArgumentNullException(nameof(utilisateurVM));
+            }
+
+            var utilisateur = _utilisateurRepository.FindById(utilisateurVM.Id);
+            if (utilisateur == null)
+            {
+                throw new ArgumentException("Utilisateur non trouvé", nameof(utilisateurVM.Id));
+            }
+
+            _utilisateurMapper.UpdateUtilisateur(utilisateurVM, utilisateur);
+            _utilisateurRepository.Update(utilisateur);
+            _utilisateurRepository.SaveChanges();
         }
     }
 }

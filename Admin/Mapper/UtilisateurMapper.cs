@@ -1,8 +1,6 @@
 ﻿using Admin.Mapper.Contract;
 using Admin.ViewModel;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using MS2Api.Model;
-using System.Data;
 
 namespace Admin.Mapper
 {
@@ -10,10 +8,6 @@ namespace Admin.Mapper
     {
         public Utilisateur MapToUtilisateur(UtilisateurVM utilisateurVM)
         {
-            if (utilisateurVM == null)
-            {
-                return null;
-            }
             return new Utilisateur
             {
                 Id = utilisateurVM.Id,
@@ -26,7 +20,22 @@ namespace Admin.Mapper
             };
         }
 
-        public Utilisateur UpdateUtilisateru(UtilisateurVM utilisateurVM, Utilisateur utilisateur)
+        public UtilisateurVM MapToUtilisateurVM(Utilisateur utilisateur)
+        {
+            if (utilisateurVM == null || utilisateur == null)
+            return new UtilisateurVM
+            {
+                Id = utilisateur.Id,
+                Nom = utilisateur.Nom,
+                Prenom = utilisateur.Prenom,
+                Age = utilisateur.Age,
+                Sexe = utilisateur.Sexe,
+                Tele = utilisateur.Tele,
+                Role = utilisateur.Role,
+            };
+        }
+
+        public void UpdateUtilisateur(UtilisateurVM utilisateurVM, Utilisateur utilisateur)
         {
             if (utilisateurVM == null || utilisateur == null)
             {

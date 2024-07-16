@@ -4,51 +4,64 @@
     ViewData["Title"] = "Utilisateurs";
 }
 
-@section Styles {
-    <!-- grig js -->
-    <link href="~/assets/libs/gridjs/theme/mermaid.min.css" rel="stylesheet" />
-}
+<div class="content">
+    <div class="container">
+        <a href="Utilisateur/Add" class="btn btn-primary" id="bn">Ajouter un Utilisateur</a>
+        @if (Model != null && Model.Any())
+        {
+
+            <table id="myTable" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prenom</th>
+                        <th>Age</th>
+                        <th>Sexe</th>
+                        <th>Tele</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var utilisateur in Model)
+                    {
+                        <tr>
+                            <td>@utilisateur.Nom</td>
+                            <td>@utilisateur.Prenom</td>
+                            <td>@utilisateur.Age</td>
+                            <td>@utilisateur.Sexe</td>
+                            <td>@utilisateur.Tele</td>
+                            <td class="text-center">
+                                <a asp-action="Delete" asp-route-id="@utilisateur.Id" class="text-danger"><i class="fas fa-trash-alt"></i></a>
+                                <a asp-action="Edit" asp-route-id="@utilisateur.Id"><i class="fas fa-edit"></i></a>
+                                <a asp-action="Details" asp-route-id="@utilisateur.Id" class="text-info"><i class="fas fa-info-circle"></i></a>
+                                <a asp-action="Add" class="text-warning"><i class="fas fa-folder-plus"></i></a>
+                            </td>
 
 
 
-        <a href="@Url.Action("Add", "Utilisateur")" class="btn btn-primary">Ajouter Utilisateur</a>
+                        </tr>
+                    }
+                </tbody>
+            </table>
 
 
-@if (Model != null && Model.Any())
-{
-    <div id="grid"></div>
-}
-else
-{
-    <p>No Users found.</p>
-}
+
+        }
+        else
+        {
+            <p>No beneficiaries found.</p>
+        }
+    </div>
+</div>
+
+
 @section Scripts {
-
-    <script src="~/assets/libs/gridjs/gridjs.umd.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/assets/DataTables/datatables.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            new gridjs.Grid({
-                columns: [
-                    'Nom',
-                    'Prenom',
-                    'Age',
-                    'Sexe',
-                    'Tele',
-
-                ],
-                pagination: {
-                    limit: 10
-                },
-                search: true,
-                data: @Html.Raw(Json.Serialize(Model.Select(b => new object[] {
-                b.Nom,
-                b.Prenom,
-                b.Age,
-                b.Sexe,
-                b.PhoneNumber,
-
-            })))
-                        }).render(document.getElementById('grid'));
+        $(document).ready(function () {
+            $('#myTable').DataTable();
         });
     </script>
+
 }

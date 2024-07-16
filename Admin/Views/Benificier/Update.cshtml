@@ -1,4 +1,4 @@
-﻿@model Admin.ViewModel.BenificierVM
+﻿@model MS2Api.Model.Benificier;
 
 <div class="row">
     <div class="col-12">
@@ -8,7 +8,10 @@
                 <p class="card-title-desc">Veuillez remplir les informations ci-dessous.</p>
             </div>
             <div class="card-body">
-                <form asp-action="Add" method="post">
+                <form asp-action="Update" method="post">
+                    <div class="form-group">
+                        <input asp-for="Id" class="form-control" type="hidden" />
+                    </div>
                     <div class="mb-3 row">
                         <label for="Nom" class="col-md-2 col-form-label">Nom</label>
                         <div class="col-md-10">
@@ -99,7 +102,7 @@
                     </div>
                     <div class="row left">
                         <div class="col-md-10 offset-md-2">
-                            <button type="submit" class="btn btn-primary">Soumettre</button>
+                            <button type="submit" class="btn btn-primary">Update</button>
                         </div>
                     </div>
                 </form>

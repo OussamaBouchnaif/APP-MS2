@@ -1,5 +1,4 @@
-﻿﻿
-@model IEnumerable<MS2Api.Model.Benificier>
+﻿@model IEnumerable<MS2Api.Model.Benificier>
 
 @{
     ViewData["Title"] = "Beneficiaries";
@@ -37,7 +36,7 @@
                             <td>@beneficiary.Prenom</td>
                             <td>@beneficiary.Age</td>
                             <td>@beneficiary.Sexe</td>
-                            <td>@beneficiary.PhoneNumber</td>
+                            <td>@beneficiary.Tele</td>
                             <td>@beneficiary.TeleUrgent</td>
                             <td>@beneficiary.PaysOrigin</td>
                             <td>@beneficiary.Nationalite</td>
@@ -46,14 +45,20 @@
                             @* <td>@beneficiary.TypeDetection</td>
                             <td>@beneficiary.codeUnique</td> *@
                             <td class="text-center">
-                                <a href="Add" class="text-danger"><i class="fa-solid fa-trash"></i></a>
-                                <a href="Add"><i class="fa-solid fa-pen-to-square"></i></a>
-                                <a href="Add" class="text-info"><i class="fa-solid fa-circle-info"></i></a>
-                                <a href="Add" class="text-warning"><i class="fa-solid fa-folder-plus"></i></a>
-
-
+                                <a asp-action="Delete" asp-route-id="@beneficiary.Id" class="text-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet élément ?');">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>
+                                <a asp-action="Update" asp-route-id="@beneficiary.Id">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+                                <a href="Add" class="text-info">
+                                    <i class="fa-solid fa-circle-info"></i>
+                                </a>
+                                <a href="Add" class="text-warning">
+                                    <i class="fa-solid fa-folder-plus"></i>
+                                </a>
                             </td>
-
+                        
                         </tr>
                     }
                 </tbody>

@@ -50,26 +50,27 @@ namespace Admin.Service
             SaveChanges();
         }
 
-        public void UpdateBenificier(Benificier Benificier)
+        public void UpdateBenificier( BenificierVM benificierVM, Benificier existingBenificier)
         {
-            if (Benificier == null)
+            if (benificierVM == null || existingBenificier == null)
             {
-                throw new ArgumentNullException(nameof(Benificier));
+                throw new ArgumentNullException(nameof(benificierVM));
             }
 
-            _BenificierRepository.Update(Benificier);
+            _benificerMapper.UpdateBenificier(benificierVM, existingBenificier);
+
+            _BenificierRepository.Update(existingBenificier);
             SaveChanges();
         }
 
-        public void DeleteBenificier(int id)
+        public void DeleteBenificier(Benificier benificier)
         {
-            var Benificier = _BenificierRepository.FindById(id);
-            if (Benificier == null)
+            if (benificier == null)
             {
-                throw new ArgumentNullException(nameof(Benificier));
+                throw new ArgumentNullException(nameof(benificier));
             }
 
-            _BenificierRepository.Delete(Benificier);
+            _BenificierRepository.Delete(benificier);
             SaveChanges();
         }
 
