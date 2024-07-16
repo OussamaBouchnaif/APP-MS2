@@ -1,0 +1,54 @@
+﻿@model IEnumerable<MS2Api.Model.Utilisateur>
+
+@{
+    ViewData["Title"] = "Utilisateurs";
+}
+
+@section Styles {
+    <!-- grig js -->
+    <link href="~/assets/libs/gridjs/theme/mermaid.min.css" rel="stylesheet" />
+}
+ 
+      
+
+        <a href="@Url.Action("Add", "Utilisateur")" class="btn btn-primary">Ajouter Utilisateur</a>
+    
+
+@if (Model != null && Model.Any())
+{
+    <div id="grid"></div>
+}
+else
+{
+    <p>No Users found.</p>
+}
+@section Scripts {
+
+    <script src="~/assets/libs/gridjs/gridjs.umd.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            new gridjs.Grid({
+                columns: [
+                    'Nom',
+                    'Prenom',
+                    'Age',
+                    'Sexe',
+                    'Tele',
+                   
+                ],
+                pagination: {
+                    limit: 10
+                },
+                search: true,
+                data: @Html.Raw(Json.Serialize(Model.Select(b => new object[] {
+                b.Nom,
+                b.Prenom,
+                b.Age,
+                b.Sexe,
+                b.Tele,
+              
+            })))
+                        }).render(document.getElementById('grid'));
+        });
+    </script>
+}
