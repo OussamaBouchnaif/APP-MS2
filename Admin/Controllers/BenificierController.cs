@@ -58,5 +58,12 @@ namespace Admin.Controllers
             }
             return View(benificier);
         }
+
+        public IActionResult Delete(int Id) 
+        {
+            Benificier benificier = _beneficiaryService.GetBenificierById(Id);
+            _beneficiaryService.DeleteBenificier(benificier);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

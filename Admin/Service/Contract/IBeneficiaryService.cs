@@ -12,7 +12,7 @@ namespace Admin.Service.Contract
         IEnumerable<Benificier> FindManyBeneficiariesByExpression(Expression<Func<Benificier, bool>> predicate);
         void AddBenificier(BenificierVM benificierVM);
         void UpdateBenificier( BenificierVM benificierVM, Benificier benificier);
-        void DeleteBenificier(int id);
+        void DeleteBenificier(Benificier benificier);
         void SaveChanges();
     }
 }

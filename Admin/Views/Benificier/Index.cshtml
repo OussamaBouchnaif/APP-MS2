@@ -45,7 +45,7 @@
                             @* <td>@beneficiary.TypeDetection</td>
                             <td>@beneficiary.codeUnique</td> *@
                             <td class="text-center">
-                                <a asp-action="Delete" asp-route-id="@beneficiary.Id" class="text-danger">
+                                <a asp-action="Delete" asp-route-id="@beneficiary.Id" class="text-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet élément ?');">
                                     <i class="fa-solid fa-trash"></i>
                                 </a>
                                 <a asp-action="Update" asp-route-id="@beneficiary.Id">

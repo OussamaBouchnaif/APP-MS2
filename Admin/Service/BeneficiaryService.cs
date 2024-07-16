@@ -63,15 +63,14 @@ namespace Admin.Service
             SaveChanges();
         }
 
-        public void DeleteBenificier(int id)
+        public void DeleteBenificier(Benificier benificier)
         {
-            var Benificier = _BenificierRepository.FindById(id);
-            if (Benificier == null)
+            if (benificier == null)
             {
-                throw new ArgumentNullException(nameof(Benificier));
+                throw new ArgumentNullException(nameof(benificier));
             }
 
-            _BenificierRepository.Delete(Benificier);
+            _BenificierRepository.Delete(benificier);
             SaveChanges();
         }
 
