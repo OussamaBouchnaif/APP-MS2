@@ -1,10 +1,12 @@
 ﻿using Admin.Service.Contract;
 using Admin.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MS2Api.Model;
 
 namespace Admin.Controllers
 {
+    [Authorize(Roles = "Admin, Agent")]
     public class BenificierController : Controller
     {
         private readonly IBeneficiaryService _beneficiaryService;
@@ -22,22 +24,21 @@ namespace Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult Add() 
+        public IActionResult Add()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult Add(BenificierVM benificierVM) 
+        public IActionResult Add(BenificierVM benificierVM)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 _beneficiaryService.AddBenificier(benificierVM);
-                return RedirectToAction(nameof(Index));   
+                return RedirectToAction(nameof(Index));
             }
 
             return View(benificierVM);
-
         }
 
         [HttpGet]

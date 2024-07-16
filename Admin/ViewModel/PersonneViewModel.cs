@@ -4,7 +4,6 @@ namespace Admin.ViewModel
 {
     public class PersonneViewModel
     {
-
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Le nom est requis.")]
@@ -28,5 +27,4 @@ namespace Admin.ViewModel
         [StringLength(15, ErrorMessage = "Le numéro de téléphone ne peut pas dépasser 15 caractères.")]
         public string Tele { get; set; }
     }
-
 }

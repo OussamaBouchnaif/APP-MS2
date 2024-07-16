@@ -1,10 +1,12 @@
 ﻿using Admin.Service.Contract;
 using Admin.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Admin.Controllers
 {
+    //[Authorize(Roles = "Admin")]
     public class UtilisateurController : Controller
     {
         private readonly IUtilisateurService _utilisateurService;
@@ -25,6 +27,7 @@ namespace Admin.Controllers
         {
             ViewBag.Sexes = _utilisateurService.GetSexesList();
             ViewBag.Roles = _utilisateurService.GetRolesList();
+
             return View();
         }
 
@@ -50,7 +53,9 @@ namespace Admin.Controllers
             {
                 return NotFound();
             }
-
+            
+            return View(utilisateurVM);
+        }
             var utilisateurVM = _utilisateurService.GetUtilisateurById(id);
             if (utilisateur == null)
             {

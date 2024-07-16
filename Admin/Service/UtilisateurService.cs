@@ -64,13 +64,11 @@ namespace Admin.Service
             };
         }
 
-        public List<SelectListItem> GetRolesList()
+        List<SelectListItem> IUtilisateurService.GetRolesList()
         {
-            return new List<SelectListItem>
-            {
-                new SelectListItem { Value = "Admin", Text = "Admin" },
-                new SelectListItem { Value = "Agent", Text = "Agent" }
-            };
+            return Role.Roles
+                   .Select(role => new SelectListItem { Value = role, Text = role })
+                   .ToList();
         }
 
         public void UpdateUtilisateur(UtilisateurVM utilisateurVM)

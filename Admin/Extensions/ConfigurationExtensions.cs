@@ -1,4 +1,9 @@
-﻿namespace Admin.Extensions
+﻿using Admin.Models;
+using Microsoft.AspNetCore.Identity;
+using MS2Api.Data;
+using MS2Api.Model;
+
+namespace Admin.Extensions
 {
     public static class ConfigurationExtensions
     {
@@ -10,6 +15,13 @@
                    .AddEnvironmentVariables();
 
             return builder;
+        }
+
+        public static void ConfigureIdentity(this IServiceCollection services)
+        {
+            services.AddIdentity<Personne, Role>()
+                .AddEntityFrameworkStores<MyContext>()
+                .AddDefaultTokenProviders();
         }
     }
 }

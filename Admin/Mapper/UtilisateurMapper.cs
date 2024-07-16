@@ -15,13 +15,14 @@ namespace Admin.Mapper
                 Prenom = utilisateurVM.Prenom,
                 Age = utilisateurVM.Age,
                 Sexe = utilisateurVM.Sexe,
-                Tele = utilisateurVM.Tele,
-                Role = utilisateurVM.Role,
+                PhoneNumber = utilisateurVM.Tele,
+                //Role = utilisateurVM.Role,
             };
         }
 
         public UtilisateurVM MapToUtilisateurVM(Utilisateur utilisateur)
         {
+            if (utilisateurVM == null || utilisateur == null)
             return new UtilisateurVM
             {
                 Id = utilisateur.Id,
@@ -36,13 +37,19 @@ namespace Admin.Mapper
 
         public void UpdateUtilisateur(UtilisateurVM utilisateurVM, Utilisateur utilisateur)
         {
+            if (utilisateurVM == null || utilisateur == null)
+            {
+                return null;
+            }
             utilisateur.Id = utilisateurVM.Id;
             utilisateur.Nom = utilisateurVM.Nom;
             utilisateur.Prenom = utilisateurVM.Prenom;
             utilisateur.Age = utilisateurVM.Age;
             utilisateur.Sexe = utilisateurVM.Sexe;
-            utilisateur.Tele = utilisateurVM.Tele;
-            utilisateur.Role = utilisateurVM.Role;
+            utilisateur.PhoneNumber = utilisateurVM.Tele;
+            //utilisateur.Role = utilisateurVM.Role;
+
+            return utilisateur;
         }
     }
 }

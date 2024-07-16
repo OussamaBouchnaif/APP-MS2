@@ -2,14 +2,13 @@
 using Admin.ViewModel;
 using MS2Api.Model;
 
-
 namespace Admin.Mapper
 {
     public class BenificierMapper : IBenificierMapper
     {
         public Benificier MapToBenificier(BenificierVM benificierVm)
         {
-            if(benificierVm == null)
+            if (benificierVm == null)
             {
                 return null;
             }
@@ -19,7 +18,7 @@ namespace Admin.Mapper
                 Prenom = benificierVm.Prenom,
                 Age = benificierVm.Age,
                 Sexe = benificierVm.Sexe,
-                Tele = benificierVm.Tele,
+                PhoneNumber = benificierVm.Tele,
                 TeleUrgent = benificierVm.TeleUrgent,
                 PaysOrigin = benificierVm.PaysOrigin,
                 Nationalite = benificierVm.Nationalite,
@@ -41,7 +40,7 @@ namespace Admin.Mapper
             benificier.Prenom = benificierVm.Prenom;
             benificier.Age = benificierVm.Age;
             benificier.Sexe = benificierVm.Sexe;
-            benificier.Tele = benificierVm.Tele;
+            benificier.PhoneNumber = benificierVm.Tele;
             benificier.TeleUrgent = benificierVm.TeleUrgent;
             benificier.PaysOrigin = benificierVm.PaysOrigin;
             benificier.Nationalite = benificierVm.Nationalite;
