@@ -30,6 +30,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Benificier}/{action=Index}");
+    pattern: "{controller=Benificier}/{action=Index}/{id?}");
 
 app.Run();

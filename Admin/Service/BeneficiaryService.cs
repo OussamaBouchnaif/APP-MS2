@@ -50,14 +50,16 @@ namespace Admin.Service
             SaveChanges();
         }
 
-        public void UpdateBenificier(Benificier Benificier)
+        public void UpdateBenificier( BenificierVM benificierVM, Benificier existingBenificier)
         {
-            if (Benificier == null)
+            if (benificierVM == null || existingBenificier == null)
             {
-                throw new ArgumentNullException(nameof(Benificier));
+                throw new ArgumentNullException(nameof(benificierVM));
             }
 
-            _BenificierRepository.Update(Benificier);
+            _benificerMapper.UpdateBenificier(benificierVM, existingBenificier);
+
+            _BenificierRepository.Update(existingBenificier);
             SaveChanges();
         }
 
