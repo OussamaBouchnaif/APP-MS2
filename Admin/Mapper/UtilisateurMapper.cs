@@ -21,17 +21,14 @@ namespace Admin.Mapper
                 Prenom = utilisateurVM.Prenom,
                 Age = utilisateurVM.Age,
                 Sexe = utilisateurVM.Sexe,
-                Tele = utilisateurVM.Tele,
-                Role = utilisateurVM.Role,
-
+                PhoneNumber = utilisateurVM.Tele,
+                //Role = utilisateurVM.Role,
             };
-            
-
         }
 
         public Utilisateur UpdateUtilisateru(UtilisateurVM utilisateurVM, Utilisateur utilisateur)
         {
-            if(utilisateurVM == null|| utilisateur == null)
+            if (utilisateurVM == null || utilisateur == null)
             {
                 return null;
             }
@@ -40,9 +37,9 @@ namespace Admin.Mapper
             utilisateur.Prenom = utilisateurVM.Prenom;
             utilisateur.Age = utilisateurVM.Age;
             utilisateur.Sexe = utilisateurVM.Sexe;
-            utilisateur.Tele = utilisateurVM.Tele;
-            utilisateur.Role = utilisateurVM.Role;
-           
+            utilisateur.PhoneNumber = utilisateurVM.Tele;
+            //utilisateur.Role = utilisateurVM.Role;
+
             return utilisateur;
         }
     }

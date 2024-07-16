@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Admin.Controllers
 {
     [Route("Erreur/{statusCode}")]
+    [Authorize]
     public class ErreurController : Controller
     {
         public IActionResult Index(int statusCode)

@@ -1,4 +1,5 @@
 ﻿using Admin.Mapper.Contract;
+using Admin.Models;
 using Admin.Repository;
 using Admin.Service.Contract;
 using Admin.ViewModel;
@@ -12,11 +13,11 @@ namespace Admin.Service
     {
         private readonly IRepository<Utilisateur> _UtilisateurRepository;
         private readonly IUtilisateurMapper _UtilisateurMapper;
+
         public UtilisateurService(IRepository<Utilisateur> UtilisateurRepository, IUtilisateurMapper UtilisateurMapper)
         {
             _UtilisateurRepository = UtilisateurRepository;
-            _UtilisateurMapper=UtilisateurMapper;
-
+            _UtilisateurMapper = UtilisateurMapper;
         }
 
         public void AddUtilisateur(UtilisateurVM utilisateurVM)
@@ -25,7 +26,7 @@ namespace Admin.Service
             {
                 throw new ArgumentNullException(nameof(utilisateurVM));
             }
-            Utilisateur utilisateur= _UtilisateurMapper.MapToUtilisateur(utilisateurVM);
+            Utilisateur utilisateur = _UtilisateurMapper.MapToUtilisateur(utilisateurVM);
             _UtilisateurRepository.Insert(utilisateur);
             _UtilisateurRepository.SaveChanges();
         }
@@ -47,7 +48,7 @@ namespace Admin.Service
 
         public void SaveChanges()
         {
-            _UtilisateurRepository.SaveChanges();   
+            _UtilisateurRepository.SaveChanges();
         }
 
         public void UpdateUtilisateur(Utilisateur utilisateur)
@@ -58,7 +59,6 @@ namespace Admin.Service
             }
             _UtilisateurRepository.Update(utilisateur);
             SaveChanges();
-
         }
 
         List<SelectListItem> IUtilisateurService.GetSexesList()
@@ -72,11 +72,9 @@ namespace Admin.Service
 
         List<SelectListItem> IUtilisateurService.GetRolesList()
         {
-            return new List<SelectListItem>
-            {
-                 new SelectListItem { Value = "Admin", Text = "Admin" },
-                new SelectListItem { Value = "Agent", Text = "Agent" }
-            };
+            return Role.Roles
+                   .Select(role => new SelectListItem { Value = role, Text = role })
+                   .ToList();
         }
     }
 }

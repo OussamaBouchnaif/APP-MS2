@@ -1,12 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using MS2Api.Model;
 using Admin.ViewModel;
+using Admin.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace MS2Api.Data
 {
-    public class MyContext:DbContext
+    public class MyContext : IdentityDbContext<Personne, Role, int>
     {
-        public MyContext(DbContextOptions<MyContext> options) : base(options) { }
+        public MyContext(DbContextOptions<MyContext> options) : base(options)
+        {
+        }
 
         public DbSet<Benificier> Benificier { get; set; }
         public DbSet<Utilisateur> Utilisateur { get; set; }
@@ -21,15 +26,15 @@ namespace MS2Api.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<IdentityUserLogin<int>>().HasNoKey();
+            modelBuilder.Entity<IdentityUserRole<int>>().HasNoKey();
+            modelBuilder.Entity<IdentityUserToken<int>>().HasNoKey();
             // Configurer les noms des tables pour TPH
             modelBuilder.Entity<Personne>()
                 .ToTable("Personnes")
                 .HasDiscriminator<string>("PersonneType")
                 .HasValue<Benificier>("Benificier")
                 .HasValue<Utilisateur>("Utilisateur");
-
         }
-
-
     }
 }

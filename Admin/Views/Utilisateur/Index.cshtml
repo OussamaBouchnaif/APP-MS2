@@ -8,11 +8,11 @@
     <!-- grig js -->
     <link href="~/assets/libs/gridjs/theme/mermaid.min.css" rel="stylesheet" />
 }
- 
-      
+
+
 
         <a href="@Url.Action("Add", "Utilisateur")" class="btn btn-primary">Ajouter Utilisateur</a>
-    
+
 
 @if (Model != null && Model.Any())
 {
@@ -34,7 +34,7 @@ else
                     'Age',
                     'Sexe',
                     'Tele',
-                   
+
                 ],
                 pagination: {
                     limit: 10
@@ -45,8 +45,8 @@ else
                 b.Prenom,
                 b.Age,
                 b.Sexe,
-                b.Tele,
-              
+                b.PhoneNumber,
+
             })))
                         }).render(document.getElementById('grid'));
         });

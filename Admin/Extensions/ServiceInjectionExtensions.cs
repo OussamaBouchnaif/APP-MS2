@@ -24,6 +24,9 @@ namespace Admin.Extensions
 
             // Ajouter le mapper des bénéficiaires
             services.AddScoped<IUtilisateurService, UtilisateurService>();
+
+            // Enregistrer le service de gestion des utilisateurs
+            services.AddScoped<IUserIdentityService, UserIdentityService>();
         }
     }
 }
