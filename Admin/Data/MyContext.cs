@@ -30,6 +30,8 @@ namespace MS2Api.Data
 
         }
 
+        public DbSet<Admin.ViewModel.UtilisateurVM>? UtilisateurVM { get; set; }
+
 
     }
 }
