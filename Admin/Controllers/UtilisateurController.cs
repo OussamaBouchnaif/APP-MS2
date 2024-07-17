@@ -55,8 +55,12 @@ namespace Admin.Controllers
             {
                 return NotFound();
             }
-            var utilisateurVM = _utilisateurMapper.MapToUtilisateurVM(utilisateur);
 
+            var utilisateurVM = _utilisateurService.GetUtilisateurById(id);
+            if (utilisateur == null)
+            {
+                return NotFound();
+            }
             ViewBag.Sexes = _utilisateurService.GetSexesList();
             ViewBag.Roles = _utilisateurService.GetRolesList();
 
@@ -68,26 +72,25 @@ namespace Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var utilisateur = _utilisateurService.GetUtilisateurById(utilisateurVM.Id);
-                if (utilisateur == null)
-                {
-                    return NotFound();
-                }
-                _utilisateurService.UpdateUtilisateur(utilisateurVM, utilisateur);
+                _utilisateurService.UpdateUtilisateur(utilisateurVM);
                 return RedirectToAction("Index");
             }
 
             ViewBag.Sexes = _utilisateurService.GetSexesList();
             ViewBag.Roles = _utilisateurService.GetRolesList();
-
             return View(utilisateurVM);
         }
 
-        public IActionResult Delete(int Id)
+        public IActionResult Delete(int id)
         {
-            Utilisateur utilisateur = _utilisateurService.GetUtilisateurById(Id);
-            _utilisateurService.DeleteUtilisateur(utilisateur);
-            return RedirectToAction(nameof(Index));
+            var utilisateur = _utilisateurService.GetUtilisateurById(id);
+            if (utilisateur == null)
+            {
+                return NotFound();
+            }
+
+            _utilisateurService.DeleteUtilisateur(id);
+            return RedirectToAction("Index");
         }
     }
 }
