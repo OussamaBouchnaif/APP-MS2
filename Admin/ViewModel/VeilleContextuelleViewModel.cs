@@ -1,4 +1,4 @@
-﻿using Admin.Enums;
+using Admin.Enums;
 using Admin.Flags;
 using IdentityServer4.Models;
 using System.ComponentModel.DataAnnotations;

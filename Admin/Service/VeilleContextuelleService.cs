@@ -1,4 +1,4 @@
-﻿using Admin.Enums;
+using Admin.Enums;
 using Admin.Flags;
 using Admin.Mapper.Contract;
 using Admin.Models;
