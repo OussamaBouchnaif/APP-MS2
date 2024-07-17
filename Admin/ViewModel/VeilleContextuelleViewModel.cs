@@ -1,4 +1,4 @@
-﻿using Admin.Enums;
+using Admin.Enums;
 using Admin.Flags;
 using IdentityServer4.Models;
 using System.ComponentModel.DataAnnotations;
@@ -39,6 +39,8 @@ namespace Admin.ViewModel
         public string? AutresNationalites { get; set; }
 
         public int UtilisateurId { get; set; }
+
+        public VerificationStatus VerificationStatus { get; set; } = VerificationStatus.Rejete;
 
         public int? NombreHommes { get; set; }
         public int? NombreFemmes { get; set; }

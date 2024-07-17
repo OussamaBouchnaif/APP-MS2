@@ -1,4 +1,5 @@
-﻿using Admin.Flags;
+using Admin.Enums;
+using Admin.Flags;
 using Admin.Mapper.Contract;
 using Admin.Models;
 using Admin.Repository;
@@ -29,9 +30,34 @@ namespace Admin.Service
             _veilleContextuelleRepository.SaveChanges();
         }
 
+        public IEnumerable<VeilleContextuelleViewModel> GetFilteredVeilles()
+        {
+            return _veilleContextuelleRepository.GetAll()
+                .Select(v => new VeilleContextuelleViewModel
+                {
+                    Id = v.Id,
+                    DateEvenement = v.DateEvenement,
+                    TypeEvenement = v.TypeEvenement,
+                    SourceInformation = v.SourceInformation,
+                    DetailsEvenement = v.DetailsEvenement,
+                    VerificationStatus = v.VerificationStatus,
+                }).ToList();
+        }
+
         public IEnumerable<VeilleContextuelle> GetAllVeilles()
         {
             return _veilleContextuelleRepository.GetAll().ToList();
+        }
+
+        public void UpdateVerificationStatus(int veilleId, VerificationStatus status)
+        {
+            var veille = _veilleContextuelleRepository.FindById(veilleId);
+            if (veille != null)
+            {
+                veille.VerificationStatus = status;
+                _veilleContextuelleRepository.Update(veille);
+                _veilleContextuelleRepository.SaveChanges();
+            }
         }
     }
 }

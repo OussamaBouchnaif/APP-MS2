@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Admin.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20240717081710_AddEmailAndPAssword")]
-    partial class AddEmailAndPAssword
+    [Migration("20240717165059_addVerificationStatusVeilleContextuelles")]
+    partial class addVerificationStatusVeilleContextuelles
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,100 @@ namespace Admin.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("Admin.Models.VeilleContextuelle", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("AutresNationalites")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("AutresSourceInformation")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<DateTime>("DateEvenement")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DetailsEvenement")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<int>("Nationalites")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("NombreAutreNationalites")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("NombreCameroun")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("NombreCotedIvoire")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("NombreEnfants")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("NombreFemmes")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("NombreGuinee")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("NombreHommes")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("NombreMENA")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("NombreMali")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NombreMigrants")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("NombreNigeria")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("NombreRDC")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("NombreSenegal")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("NombreSoudan")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("NombreSudsoudan")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SourceInformation")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TypeEvenement")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TypeMigrants")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UtilisateurId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VerificationStatus")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UtilisateurId");
+
+                    b.ToTable("VeilleContextuelle");
+                });
 
             modelBuilder.Entity("MS2Api.Model.DossierPersonnel", b =>
                 {
@@ -100,14 +194,6 @@ namespace Admin.Migrations
 
                     b.Property<int>("Age")
                         .HasColumnType("int");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MotDePasse")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nom")
                         .IsRequired()
@@ -368,11 +454,30 @@ namespace Admin.Migrations
                 {
                     b.HasBaseType("MS2Api.Model.Personne");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MotDePasse")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("Utilisateur");
+                });
+
+            modelBuilder.Entity("Admin.Models.VeilleContextuelle", b =>
+                {
+                    b.HasOne("MS2Api.Model.Utilisateur", "Utilisateur")
+                        .WithMany("veilleContextuelles")
+                        .HasForeignKey("UtilisateurId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Utilisateur");
                 });
 
             modelBuilder.Entity("MS2Api.Model.DossierPersonnel", b =>
@@ -458,6 +563,11 @@ namespace Admin.Migrations
             modelBuilder.Entity("MS2Api.Model.Benificier", b =>
                 {
                     b.Navigation("Dossier");
+                });
+
+            modelBuilder.Entity("MS2Api.Model.Utilisateur", b =>
+                {
+                    b.Navigation("veilleContextuelles");
                 });
 #pragma warning restore 612, 618
         }

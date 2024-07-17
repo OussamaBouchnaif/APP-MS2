@@ -1,4 +1,4 @@
-﻿@model Admin.ViewModel.VeilleContextuelleViewModel
+@model Admin.ViewModel.VeilleContextuelleViewModel
 
 @{
     ViewData["Title"] = "Ajouter une Veille Contextuelle";
@@ -6,88 +6,138 @@
     var autreNationalitesValue = (int)Admin.Flags.Nationalites.Autres;
 }
 
-<form asp-action="Create" method="post">
-    <div class="form-group">
-        <input asp-for="UtilisateurId" class="form-control" type="hidden" />
-    </div>
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+@section Styles{
+    <link rel="stylesheet" href="~/assets/libs/sweetalert2/sweetalert2.min.css">
+}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Formulaire de veille Contextuelle</h4>
+                <p class="card-title-desc">Veuillez remplir les informations ci-dessous.</p>
+            </div>
+            <div class="card-body">
+            <form id="veilleForm">
+                <div class="form-group">
+                    <input asp-for="UtilisateurId" class="form-control" type="hidden" />
+                </div>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-    <div class="mb-3">
-        <label>Type d'événement</label>
-        <select asp-for="TypeEvenement" class="form-control">
-            @foreach (var item in Enum.GetValues(typeof(Admin.Enums.TypeEvenement)))
-            {
-                <option value="@((int)item)">@item</option>
-            }
-        </select>
-        <span asp-validation-for="TypeEvenement" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label>Détails de l'événement</label>
-        <input asp-for="DetailsEvenement" class="form-control" />
-        <span asp-validation-for="DetailsEvenement" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label>Source d'information</label> <br />
-        <div class="btn-group" role="group" aria-label="Sources d'information">
-            @foreach (Admin.Flags.SourceInformation source in Enum.GetValues(typeof(Admin.Flags.SourceInformation)))
-            {
-                <input type="checkbox" class="btn-check source-checkbox" id="source_@((int)source)" name="SourceInformation" value="@((int)source)" autocomplete="off" data-is-other="@((int)source == autreSourceInformationValue)">
-                <label class="btn btn-outline-primary" for="source_@((int)source)">@source</label>
-            }
-        </div>
-    </div>
-    <div class="mb-3">
-        <label>Autres sources d'information</label>
-        <input asp-for="AutresSourceInformation" id="AutresSourceInformation" class="form-control" disabled />
-        <span asp-validation-for="AutresSourceInformation" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label>Nombre de migrants</label>
-        <input asp-for="NombreMigrants" type="number" class="form-control" />
-        <span asp-validation-for="NombreMigrants" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label>Type de migrants</label> <br />
-        <div class="btn-group" role="group" aria-label="Types de migrants">
-            @foreach (Admin.Flags.TypeMigrants type in Enum.GetValues(typeof(Admin.Flags.TypeMigrants)))
-            {
-                <input type="checkbox" class="btn-check type-checkbox" id="type_@((int)type)" name="TypeMigrants" value="@((int)type)" autocomplete="off" data-target-id="typeInputs_@((int)type)">
-                <label class="btn btn-outline-primary" for="type_@((int)type)">@type</label>
-            }
-        </div>
-        @foreach (Admin.Flags.TypeMigrants type in Enum.GetValues(typeof(Admin.Flags.TypeMigrants)))
-        {
-            <div id="typeInputs_@((int)type)" class="type-input mt-2" style="display: none;">
-                <input name="typeInputs_@((int)type)" type="number" class="form-control" placeholder="Nombre de @type" />
+                <div class="mb-3">
+                    <label>Type d'événement</label>
+                    <select asp-for="TypeEvenement" class="form-control">
+                        @foreach (var item in Enum.GetValues(typeof(Admin.Enums.TypeEvenement)))
+                        {
+                            <option value="@((int)item)">@item</option>
+                        }
+                    </select>
+                    <span asp-validation-for="TypeEvenement" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label>Détails de l'événement</label>
+                    <input asp-for="DetailsEvenement" class="form-control" />
+                    <span asp-validation-for="DetailsEvenement" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label>Source d'information</label> <br />
+                    <div class="btn-group" role="group" aria-label="Sources d'information">
+                        @foreach (Admin.Flags.SourceInformation source in Enum.GetValues(typeof(Admin.Flags.SourceInformation)))
+                        {
+                            <input type="checkbox" class="btn-check source-checkbox" id="source_@((int)source)" name="SourceInformation" value="@((int)source)" autocomplete="off" data-is-other="@((int)source == autreSourceInformationValue)">
+                            <label class="btn btn-outline-primary" for="source_@((int)source)">@source</label>
+                        }
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label>Autres sources d'information</label>
+                    <input asp-for="AutresSourceInformation" id="AutresSourceInformation" class="form-control" disabled />
+                    <span asp-validation-for="AutresSourceInformation" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label>Nombre de migrants</label>
+                    <input asp-for="NombreMigrants" type="number" class="form-control" />
+                    <span asp-validation-for="NombreMigrants" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label>Type de migrants</label> <br />
+                    <div class="btn-group" role="group" aria-label="Types de migrants">
+                        @foreach (Admin.Flags.TypeMigrants type in Enum.GetValues(typeof(Admin.Flags.TypeMigrants)))
+                        {
+                            <input type="checkbox" class="btn-check type-checkbox" id="type_@((int)type)" name="TypeMigrants" value="@((int)type)" autocomplete="off" data-target-id="typeInputs_@((int)type)">
+                            <label class="btn btn-outline-primary" for="type_@((int)type)">@type</label>
+                        }
+                    </div>
+                    <div>
+                        <div id="typeInputs_1" class="type-input mt-2" style="display: none;">
+                            <input asp-for="NombreHommes" type="number" class="form-control" placeholder="Nombre d'hommes" />
+                        </div>
+                        <div id="typeInputs_2" class="type-input mt-2" style="display: none;">
+                            <input asp-for="NombreFemmes" type="number" class="form-control" placeholder="Nombre de femmes" />
+                        </div>
+                        <div id="typeInputs_4" class="type-input mt-2" style="display: none;">
+                            <input asp-for="NombreMENA" type="number" class="form-control" placeholder="Nombre de MENA" />
+                        </div>
+                        <div id="typeInputs_8" class="type-input mt-2" style="display: none;">
+                            <input asp-for="NombreEnfants" type="number" class="form-control" placeholder="Nombre d'enfants" />
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label>Nationalités</label> <br />
+                    <div class="btn-group" role="group" aria-label="Nationalités">
+                        @foreach (Admin.Flags.Nationalites nationalite in Enum.GetValues(typeof(Admin.Flags.Nationalites)))
+                        {
+                            <input type="checkbox" class="btn-check nationality-checkbox" id="nationalite_@((int)nationalite)" name="Nationalites" value="@((int)nationalite)" autocomplete="off" data-target-id="nationalityInputs_@((int)nationalite)" data-is-other="@((int)nationalite == autreNationalitesValue)">
+                            <label class="btn btn-outline-primary" for="nationalite_@((int)nationalite)">@nationalite</label>
+                        }
+                    </div>
+                    <div>
+                        <div id="nationalityInputs_1" class="nationality-input mt-2" style="display: none;">
+                            <input asp-for="NombreSoudan" type="number" class="form-control" placeholder="Nombre de Soudan" />
+                        </div>
+                        <div id="nationalityInputs_2" class="nationality-input mt-2" style="display: none;">
+                            <input asp-for="NombreSudsoudan" type="number" class="form-control" placeholder="Nombre de Sud Soudan" />
+                        </div>
+                        <div id="nationalityInputs_4" class="nationality-input mt-2" style="display: none;">
+                            <input asp-for="NombreGuinee" type="number" class="form-control" placeholder="Nombre de Guinee" />
+                        </div>
+                        <div id="nationalityInputs_8" class="nationality-input mt-2" style="display: none;">
+                            <input asp-for="NombreCameroun" type="number" class="form-control" placeholder="Nombre de Cameroun" />
+                        </div>
+                        <div id="nationalityInputs_16" class="nationality-input mt-2" style="display: none;">
+                            <input asp-for="NombreCotedIvoire" type="number" class="form-control" placeholder="Nombre de Côte d'Ivoire" />
+                        </div>
+                        <div id="nationalityInputs_32" class="nationality-input mt-2" style="display: none;">
+                            <input asp-for="NombreMali" type="number" class="form-control" placeholder="Nombre de Mali" />
+                        </div>
+                        <div id="nationalityInputs_64" class="nationality-input mt-2" style="display: none;">
+                            <input asp-for="NombreNigeria" type="number" class="form-control" placeholder="Nombre de Nigeria" />
+                        </div>
+                        <div id="nationalityInputs_128" class="nationality-input mt-2" style="display: none;">
+                            <input asp-for="NombreSenegal" type="number" class="form-control" placeholder="Nombre de Senegal" />
+                        </div>
+                        <div id="nationalityInputs_256" class="nationality-input mt-2" style="display: none;">
+                            <input asp-for="NombreRDC" type="number" class="form-control" placeholder="Nombre de RDC" />
+                        </div>
+                        <div id="nationalityInputs_512" class="nationality-input mt-2" style="display: none;">
+                            <input asp-for="NombreAutreNationalites" type="number" class="form-control" placeholder="Nombre d'autres nationalités" />
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label>Autres nationalités</label>
+                    <input asp-for="AutresNationalites" id="AutresNationalites" class="form-control" disabled />
+                    <span asp-validation-for="AutresNationalites" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
             </div>
-        }
-    </div>
-    <div class="mb-3">
-        <label>Nationalités</label> <br />
-        <div class="btn-group" role="group" aria-label="Nationalités">
-            @foreach (Admin.Flags.Nationalites nationalite in Enum.GetValues(typeof(Admin.Flags.Nationalites)))
-            {
-                <input type="checkbox" class="btn-check nationality-checkbox" id="nationalite_@((int)nationalite)" name="Nationalites" value="@((int)nationalite)" autocomplete="off" data-target-id="nationalityInputs_@((int)nationalite)" data-is-other="@((int)nationalite == autreNationalitesValue)">
-                <label class="btn btn-outline-primary" for="nationalite_@((int)nationalite)">@nationalite</label>
-            }
         </div>
-        @foreach (Admin.Flags.Nationalites nationalite in Enum.GetValues(typeof(Admin.Flags.Nationalites)))
-        {
-            <div id="nationalityInputs_@((int)nationalite)" class="nationality-input mt-2" style="display: none;">
-                <input name="nationalityInputs_@((int)nationalite)" type="number" class="form-control" placeholder="Nombre de @nationalite" />
-            </div>
-        }
     </div>
-    <div class="mb-3">
-        <label>Autres nationalités</label>
-        <input asp-for="AutresNationalites" id="AutresNationalites" class="form-control" disabled />
-        <span asp-validation-for="AutresNationalites" class="text-danger"></span>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+</div>
 
 @section Scripts {
+    <script src="~/assets/libs/sweetalert2/sweetalert2.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             function toggleInput(checkbox, inputId) {
@@ -104,7 +154,7 @@
                         targetInput.disabled = false;
                     } else {
                         targetInput.disabled = true;
-                        targetInput.value = '';  // Clear the input value when the checkbox is unchecked
+                        targetInput.value = '';
                     }
                 }
             }
@@ -119,16 +169,65 @@
 
             document.querySelectorAll('.type-checkbox').forEach(function (checkbox) {
                 checkbox.addEventListener('change', function () {
-                    toggleInput(checkbox, 'typeInputs_' + checkbox.id.split('_')[1]);
+                    toggleInput(checkbox, 'typeInputs_' + checkbox.value);
                 });
             });
 
             document.querySelectorAll('.nationality-checkbox').forEach(function (checkbox) {
                 checkbox.addEventListener('change', function () {
-                    toggleInput(checkbox, 'nationalityInputs_' + checkbox.id.split('_')[1]);
+                    toggleInput(checkbox, 'nationalityInputs_' + checkbox.value);
                     if (checkbox.getAttribute('data-is-other') === 'True') {
                         toggleDisabled(checkbox, 'AutresNationalites');
                     }
+                });
+            });
+
+            document.getElementById('veilleForm').addEventListener('submit', function (event) {
+                event.preventDefault();
+                Swal.fire({
+                    title: 'En cours...',
+                    text: 'Veuillez patienter',
+                    icon: 'info',
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                    willOpen: () => {
+                        Swal.showLoading()
+                    }
+                });
+
+                const form = this;
+                const formData = new FormData(form);
+
+                fetch(form.action, {
+                    method: 'POST',
+                    body: formData
+                }).then(response => {
+                    if (response.ok) {
+                        Swal.fire({
+                            title: 'Succès!',
+                            text: 'La veille contextuelle a été ajoutée avec succès.',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            window.location.href = '/VeilleContextuelle/Index';
+                        });
+                    } else {
+                        response.text().then(text => {
+                            Swal.fire({
+                                title: 'Erreur',
+                                text: text,
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        });
+                    }
+                }).catch(error => {
+                    Swal.fire({
+                        title: 'Erreur',
+                        text: error,
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
                 });
             });
         });
