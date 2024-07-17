@@ -1,17 +1,15 @@
 ﻿using Admin.Enums;
 using Admin.Flags;
 using IdentityServer4.Models;
-using MS2Api.Model;
 using System.ComponentModel.DataAnnotations;
 
-namespace Admin.Models
+namespace Admin.ViewModel
 {
-    public class VeilleContextuelle
+    public class VeilleContextuelleViewModel
     {
         [Key]
         public int Id { get; set; }
 
-        [Required]
         [DataType(DataType.Date)]
         public DateTime DateEvenement { get; set; }
 
@@ -40,7 +38,6 @@ namespace Admin.Models
         [StringLength(255)]
         public string? AutresNationalites { get; set; }
 
-        public Utilisateur Utilisateur { get; set; }
         public int UtilisateurId { get; set; }
 
         public int? NombreHommes { get; set; }

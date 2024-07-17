@@ -24,6 +24,7 @@ namespace MS2Api.Data
         public DbSet<SituationPsychologique> SituationPsychologique { get; set; }
         public DbSet<SituationSocioEconomique> SituationSocioEconomique { get; set; }
         public DbSet<SituationViolence> SituationViolence { get; set; }
+        public DbSet<VeilleContextuelle> VeilleContextuelle { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

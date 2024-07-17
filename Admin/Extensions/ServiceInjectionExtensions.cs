@@ -34,6 +34,11 @@ namespace Admin.Extensions
             services.AddScoped<IPasswordHasher<Utilisateur>, PasswordHasher<Utilisateur>>();
 
             services.AddScoped<AuthenticationFilter>();
+            // Enregistrer IVeilleContextuelleService
+            services.AddScoped<IVeilleContextuelleService, VeilleContextuelleService>();
+
+            // Enregistrer IVeilleContextuelleMapper
+            services.AddScoped<IVeilleContextuelleMapper, VeilleContextuelleMapper>();
         }
     }
 }

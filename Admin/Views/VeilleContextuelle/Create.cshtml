@@ -1,0 +1,136 @@
+﻿@model Admin.ViewModel.VeilleContextuelleViewModel
+
+@{
+    ViewData["Title"] = "Ajouter une Veille Contextuelle";
+    var autreSourceInformationValue = (int)Admin.Flags.SourceInformation.Autres;
+    var autreNationalitesValue = (int)Admin.Flags.Nationalites.Autres;
+}
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <input asp-for="UtilisateurId" class="form-control" type="hidden" />
+    </div>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label>Type d'événement</label>
+        <select asp-for="TypeEvenement" class="form-control">
+            @foreach (var item in Enum.GetValues(typeof(Admin.Enums.TypeEvenement)))
+            {
+                <option value="@((int)item)">@item</option>
+            }
+        </select>
+        <span asp-validation-for="TypeEvenement" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label>Détails de l'événement</label>
+        <input asp-for="DetailsEvenement" class="form-control" />
+        <span asp-validation-for="DetailsEvenement" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label>Source d'information</label> <br />
+        <div class="btn-group" role="group" aria-label="Sources d'information">
+            @foreach (Admin.Flags.SourceInformation source in Enum.GetValues(typeof(Admin.Flags.SourceInformation)))
+            {
+                <input type="checkbox" class="btn-check source-checkbox" id="source_@((int)source)" name="SourceInformation" value="@((int)source)" autocomplete="off" data-is-other="@((int)source == autreSourceInformationValue)">
+                <label class="btn btn-outline-primary" for="source_@((int)source)">@source</label>
+            }
+        </div>
+    </div>
+    <div class="mb-3">
+        <label>Autres sources d'information</label>
+        <input asp-for="AutresSourceInformation" id="AutresSourceInformation" class="form-control" disabled />
+        <span asp-validation-for="AutresSourceInformation" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label>Nombre de migrants</label>
+        <input asp-for="NombreMigrants" type="number" class="form-control" />
+        <span asp-validation-for="NombreMigrants" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label>Type de migrants</label> <br />
+        <div class="btn-group" role="group" aria-label="Types de migrants">
+            @foreach (Admin.Flags.TypeMigrants type in Enum.GetValues(typeof(Admin.Flags.TypeMigrants)))
+            {
+                <input type="checkbox" class="btn-check type-checkbox" id="type_@((int)type)" name="TypeMigrants" value="@((int)type)" autocomplete="off" data-target-id="typeInputs_@((int)type)">
+                <label class="btn btn-outline-primary" for="type_@((int)type)">@type</label>
+            }
+        </div>
+        @foreach (Admin.Flags.TypeMigrants type in Enum.GetValues(typeof(Admin.Flags.TypeMigrants)))
+        {
+            <div id="typeInputs_@((int)type)" class="type-input mt-2" style="display: none;">
+                <input name="typeInputs_@((int)type)" type="number" class="form-control" placeholder="Nombre de @type" />
+            </div>
+        }
+    </div>
+    <div class="mb-3">
+        <label>Nationalités</label> <br />
+        <div class="btn-group" role="group" aria-label="Nationalités">
+            @foreach (Admin.Flags.Nationalites nationalite in Enum.GetValues(typeof(Admin.Flags.Nationalites)))
+            {
+                <input type="checkbox" class="btn-check nationality-checkbox" id="nationalite_@((int)nationalite)" name="Nationalites" value="@((int)nationalite)" autocomplete="off" data-target-id="nationalityInputs_@((int)nationalite)" data-is-other="@((int)nationalite == autreNationalitesValue)">
+                <label class="btn btn-outline-primary" for="nationalite_@((int)nationalite)">@nationalite</label>
+            }
+        </div>
+        @foreach (Admin.Flags.Nationalites nationalite in Enum.GetValues(typeof(Admin.Flags.Nationalites)))
+        {
+            <div id="nationalityInputs_@((int)nationalite)" class="nationality-input mt-2" style="display: none;">
+                <input name="nationalityInputs_@((int)nationalite)" type="number" class="form-control" placeholder="Nombre de @nationalite" />
+            </div>
+        }
+    </div>
+    <div class="mb-3">
+        <label>Autres nationalités</label>
+        <input asp-for="AutresNationalites" id="AutresNationalites" class="form-control" disabled />
+        <span asp-validation-for="AutresNationalites" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            function toggleInput(checkbox, inputId) {
+                const inputDiv = document.getElementById(inputId);
+                if (inputDiv) {
+                    inputDiv.style.display = checkbox.checked ? 'block' : 'none';
+                }
+            }
+
+            function toggleDisabled(checkbox, targetId) {
+                const targetInput = document.getElementById(targetId);
+                if (targetInput) {
+                    if (checkbox.checked) {
+                        targetInput.disabled = false;
+                    } else {
+                        targetInput.disabled = true;
+                        targetInput.value = '';  // Clear the input value when the checkbox is unchecked
+                    }
+                }
+            }
+
+            document.querySelectorAll('.source-checkbox').forEach(function (checkbox) {
+                checkbox.addEventListener('change', function () {
+                    if (checkbox.getAttribute('data-is-other') === 'True') {
+                        toggleDisabled(checkbox, 'AutresSourceInformation');
+                    }
+                });
+            });
+
+            document.querySelectorAll('.type-checkbox').forEach(function (checkbox) {
+                checkbox.addEventListener('change', function () {
+                    toggleInput(checkbox, 'typeInputs_' + checkbox.id.split('_')[1]);
+                });
+            });
+
+            document.querySelectorAll('.nationality-checkbox').forEach(function (checkbox) {
+                checkbox.addEventListener('change', function () {
+                    toggleInput(checkbox, 'nationalityInputs_' + checkbox.id.split('_')[1]);
+                    if (checkbox.getAttribute('data-is-other') === 'True') {
+                        toggleDisabled(checkbox, 'AutresNationalites');
+                    }
+                });
+            });
+        });
+    </script>
+}

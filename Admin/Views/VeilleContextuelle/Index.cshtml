@@ -1,0 +1,87 @@
+﻿@model IEnumerable<Admin.Models.VeilleContextuelle>
+
+@{
+    ViewData["Title"] = "Liste des Veilles Contextuelles";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="container">
+    <a asp-action="Create" class="btn btn-primary" id="bn">Ajouter une Veille Contextuelle</a>
+    @if (Model != null && Model.Any())
+    {
+        <table id="myTable" class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Date de l'événement</th>
+                    <th>Type d'événement</th>
+                    <th>Source d'information</th>
+                    <th>Nombre de migrants</th>
+                    <th>Type de migrants</th>
+                    <th>Nationalités</th>
+                    <th>Détails</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.DateEvenement.ToShortDateString()</td>
+                        <td>@item.TypeEvenement</td>
+                        <td>
+                            @{
+                                var sources = Enum.GetValues(typeof(Admin.Flags.SourceInformation)).Cast<Admin.Flags.SourceInformation>()
+                                .Where(s => item.SourceInformation.HasFlag(s))
+                                .Select(s => s.ToString());
+                                foreach (var source in sources)
+                                {
+                                    <span>@source<br /></span>
+                                }
+                            }
+                        </td>
+                        <td>@item.NombreMigrants</td>
+                        <td>
+                            @{
+                                var types = Enum.GetValues(typeof(Admin.Flags.TypeMigrants)).Cast<Admin.Flags.TypeMigrants>()
+                                .Where(t => item.TypeMigrants.HasFlag(t))
+                                .Select(t => t.ToString());
+                                foreach (var type in types)
+                                {
+                                    <span>@type<br /></span>
+                                }
+                            }
+                        </td>
+                        <td>
+                            @{
+                                var nationalities = Enum.GetValues(typeof(Admin.Flags.Nationalites)).Cast<Admin.Flags.Nationalites>()
+                                .Where(n => item.Nationalites.HasFlag(n))
+                                .Select(n => n.ToString());
+                                foreach (var nationality in nationalities)
+                                {
+                                    <span>@nationality<br /></span>
+                                }
+                            }
+                        </td>
+                        <td>@item.DetailsEvenement</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-info" role="alert">
+            Aucun enregistrement trouvé.
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/assets/DataTables/datatables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+}
