@@ -26,7 +26,6 @@ namespace Admin.ViewModel
         public string? AutresSourceInformation { get; set; }
 
         [Required]
-        [Range(10, 200, ErrorMessage = "Le nombre de migrants doit être un multiple de 10 entre 10 et 200")]
         public int NombreMigrants { get; set; }
 
         [Required]
