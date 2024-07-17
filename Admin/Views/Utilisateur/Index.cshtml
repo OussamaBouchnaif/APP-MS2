@@ -4,8 +4,9 @@
     ViewData["Title"] = "Utilisateurs";
 }
 
+<div class="content">
     <div class="container">
-    <a asp-action="Signin" asp-controller="Account" class="btn btn-primary" id="bn">Ajouter un Utilisateur</a>
+        <a href="Utilisateur/Add" class="btn btn-primary" id="bn">Ajouter un Utilisateur</a>
         @if (Model != null && Model.Any())
         {
 
@@ -48,11 +49,10 @@
         }
         else
         {
-        <div class="alert alert-info" role="alert">
-            Aucun utilisateur trouvé.
-        </div>
+            <p>No beneficiaries found.</p>
         }
     </div>
+</div>
 
 
 @section Scripts {
