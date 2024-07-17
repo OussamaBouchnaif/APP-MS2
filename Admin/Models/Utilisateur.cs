@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Admin.Models;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MS2Api.Model
@@ -8,5 +9,7 @@ namespace MS2Api.Model
         public string Email { get; set; }
         public string MotDePasse { get; set; }
         public string Role { get; set; }
+
+        public IList<VeilleContextuelle> veilleContextuelles { get; set; }
     }
 }
