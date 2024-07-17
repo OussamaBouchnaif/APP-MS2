@@ -4,10 +4,11 @@ using MS2Api.Model;
 using Admin.ViewModel;
 using Admin.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace MS2Api.Data
 {
-    public class MyContext : IdentityDbContext<Personne, Role, int>
+    public class MyContext : DbContext
     {
         public MyContext(DbContextOptions<MyContext> options) : base(options)
         {
@@ -26,9 +27,14 @@ namespace MS2Api.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<IdentityUserLogin<int>>().HasNoKey();
-            modelBuilder.Entity<IdentityUserRole<int>>().HasNoKey();
-            modelBuilder.Entity<IdentityUserToken<int>>().HasNoKey();
+            //// Ignore the SelectListGroup entity
+            //modelBuilder.Ignore<SelectListGroup>();
+            //modelBuilder.Ignore<SelectListItem>();
+
+            //modelBuilder.Entity<IdentityUserLogin<int>>().HasNoKey();
+            //modelBuilder.Entity<IdentityUserRole<int>>().HasNoKey();
+            //modelBuilder.Entity<IdentityUserToken<int>>().HasNoKey();
+
             // Configurer les noms des tables pour TPH
             modelBuilder.Entity<Personne>()
                 .ToTable("Personnes")
@@ -36,7 +42,5 @@ namespace MS2Api.Data
                 .HasValue<Benificier>("Benificier")
                 .HasValue<Utilisateur>("Utilisateur");
         }
-        
-        public DbSet<Admin.ViewModel.UtilisateurVM>? UtilisateurVM { get; set; }
     }
 }

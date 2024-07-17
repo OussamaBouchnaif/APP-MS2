@@ -53,7 +53,7 @@
                                     <p class="text-muted">Connectez-vous pour continuer sur MS2 ADMIN.</p>
                                 </div>
                                 <div class="p-2 mt-4">
-                                    @if (ViewData.ModelState != null && ViewData.ModelState.ErrorCount > 0)
+                                    @* @if (ViewData.ModelState != null && ViewData.ModelState.ErrorCount > 0)
                                     {
                                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                             <i class="mdi mdi-block-helper me-2"></i>
@@ -63,7 +63,14 @@
                                             }
                                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                         </div>
-                                    }
+                                    } *@
+
+                                    @* @if (TempData["SuccessMessage"] != null)
+                                    {
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                            @TempData["SuccessMessage"]
+                                        </div>
+                                    } *@
                                     <form method="post" asp-action="Login">
 
                                         <div class="mb-3">

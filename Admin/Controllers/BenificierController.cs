@@ -1,4 +1,5 @@
-﻿using Admin.Service.Contract;
+﻿using Admin.Mapper.Contract;
+using Admin.Service.Contract;
 using Admin.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -6,14 +7,16 @@ using MS2Api.Model;
 
 namespace Admin.Controllers
 {
-    [Authorize(Roles = "Admin, Agent")]
+    [ServiceFilter(typeof(AuthenticationFilter))]
     public class BenificierController : Controller
     {
         private readonly IBeneficiaryService _beneficiaryService;
+        private readonly IBenificierMapper _benificierMapper;
 
-        public BenificierController(IBeneficiaryService beneficiaryService)
+        public BenificierController(IBeneficiaryService beneficiaryService, IBenificierMapper benificierMapper)
         {
             _beneficiaryService = beneficiaryService;
+            _benificierMapper = benificierMapper;
         }
 
         public IActionResult Index()
@@ -42,25 +45,26 @@ namespace Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult Update(int Id) 
+        public IActionResult Update(int Id)
         {
             Benificier benificier = _beneficiaryService.GetBenificierById(Id);
-            return View(benificier);    
+            var benificierVM = _benificierMapper.MapToBenificierVM(benificier);
+            return View(benificierVM);
         }
 
         [HttpPost]
-        public IActionResult Update(BenificierVM benificierVM,int Id)
+        public IActionResult Update(BenificierVM benificierVM, int Id)
         {
             Benificier benificier = _beneficiaryService.GetBenificierById(Id);
-            if(ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
-                _beneficiaryService.UpdateBenificier( benificierVM, benificier);
+                _beneficiaryService.UpdateBenificier(benificierVM, benificier);
                 return RedirectToAction(nameof(Index));
             }
-            return View(benificier);
+            return View(benificierVM);
         }
 
-        public IActionResult Delete(int Id) 
+        public IActionResult Delete(int Id)
         {
             Benificier benificier = _beneficiaryService.GetBenificierById(Id);
             _beneficiaryService.DeleteBenificier(benificier);

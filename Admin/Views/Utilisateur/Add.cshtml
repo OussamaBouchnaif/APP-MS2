@@ -1,5 +1,9 @@
 ﻿@model Admin.ViewModel.UtilisateurVM
 
+@{
+    ViewData["Title"] = "Ajouter Utilisateur";
+}
+
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -46,6 +50,7 @@
                             <span asp-validation-for="Tele" class="text-danger"></span>
                         </div>
                     </div>
+
                     <div class="mb-3 row">
                         <label for="Role" class="col-md-2 col-form-label">Role</label>
                         <div class="col-md-10">
@@ -55,6 +60,23 @@
                             <span asp-validation-for="Role" class="text-danger"></span>
                         </div>
                     </div>
+
+                    <div class="mb-3 row">
+                        <label for="Email" class="col-md-2 col-form-label">Email</label>
+                        <div class="col-md-10">
+                            <input asp-for="Email" class="form-control"  placeholder="Entrez l'émail'" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <label for="Password" class="col-md-2 col-form-label">Mot de passe</label>
+                        <div class="col-md-10">
+                            <input asp-for="MotDePasse" class="form-control" placeholder="Entrez le mot de passe" />
+                            <span asp-validation-for="MotDePasse" class="text-danger"></span>
+                        </div>
+                    </div>
+
                     <div class="row left">
                         <div class="col-md-10 offset-md-2">
                             <button type="submit" class="btn btn-primary">Soumettre</button>

@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace Admin.Controllers
 {
-    [Authorize]
+    [ServiceFilter(typeof(AuthenticationFilter))]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

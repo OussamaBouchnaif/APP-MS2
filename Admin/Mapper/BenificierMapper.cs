@@ -18,7 +18,7 @@ namespace Admin.Mapper
                 Prenom = benificierVm.Prenom,
                 Age = benificierVm.Age,
                 Sexe = benificierVm.Sexe,
-                PhoneNumber = benificierVm.Tele,
+                Tele = benificierVm.Tele,
                 TeleUrgent = benificierVm.TeleUrgent,
                 PaysOrigin = benificierVm.PaysOrigin,
                 Nationalite = benificierVm.Nationalite,
@@ -40,7 +40,7 @@ namespace Admin.Mapper
             benificier.Prenom = benificierVm.Prenom;
             benificier.Age = benificierVm.Age;
             benificier.Sexe = benificierVm.Sexe;
-            benificier.PhoneNumber = benificierVm.Tele;
+            benificier.Tele = benificierVm.Tele;
             benificier.TeleUrgent = benificierVm.TeleUrgent;
             benificier.PaysOrigin = benificierVm.PaysOrigin;
             benificier.Nationalite = benificierVm.Nationalite;
@@ -50,6 +50,29 @@ namespace Admin.Mapper
             benificier.codeUnique = benificierVm.codeUnique;
 
             return benificier;
+        }
+
+        public BenificierVM MapToBenificierVM(Benificier benificier)
+        {
+            if (benificier == null)
+            {
+                return null;
+            }
+            return new BenificierVM
+            {
+                Nom = benificier.Nom,
+                Prenom = benificier.Prenom,
+                Age = benificier.Age,
+                Sexe = benificier.Sexe,
+                Tele = benificier.Tele,
+                TeleUrgent = benificier.TeleUrgent,
+                PaysOrigin = benificier.PaysOrigin,
+                Nationalite = benificier.Nationalite,
+                Address = benificier.Address,
+                Ville = benificier.Ville,
+                TypeDetection = benificier.TypeDetection,
+                codeUnique = benificier.codeUnique
+            };
         }
     }
 }

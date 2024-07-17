@@ -1,5 +1,4 @@
-﻿
-using Admin.Mapper.Contract;
+﻿using Admin.Mapper.Contract;
 using Admin.Repository;
 using Admin.Service.Contract;
 using Admin.ViewModel;
@@ -13,7 +12,7 @@ namespace Admin.Service
         private readonly IRepository<Benificier> _BenificierRepository;
         private readonly IBenificierMapper _benificerMapper;
 
-        public BenificierService(IRepository<Benificier> BenificierRepository ,IBenificierMapper benificierMapper)
+        public BenificierService(IRepository<Benificier> BenificierRepository, IBenificierMapper benificierMapper)
         {
             _BenificierRepository = BenificierRepository;
             _benificerMapper = benificierMapper;
@@ -45,12 +44,12 @@ namespace Admin.Service
             {
                 throw new ArgumentNullException(nameof(benificierVM));
             }
-            Benificier benificier = _benificerMapper.MapToBenificier(benificierVM); 
+            Benificier benificier = _benificerMapper.MapToBenificier(benificierVM);
             _BenificierRepository.Insert(benificier);
             SaveChanges();
         }
 
-        public void UpdateBenificier( BenificierVM benificierVM, Benificier existingBenificier)
+        public void UpdateBenificier(BenificierVM benificierVM, Benificier existingBenificier)
         {
             if (benificierVM == null || existingBenificier == null)
             {
@@ -77,6 +76,6 @@ namespace Admin.Service
         public void SaveChanges()
         {
             _BenificierRepository.SaveChanges();
-        }   
+        }
     }
 }

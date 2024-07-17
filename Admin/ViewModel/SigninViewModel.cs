@@ -18,6 +18,10 @@ namespace Admin.ViewModel
         [Range(18, 90, ErrorMessage = "L'âge doit être compris entre 18 et 90 ans")]
         public int Age { get; set; }
 
+        [Required(ErrorMessage = "Le numéro du téléphone est requis")]
+        [RegularExpression(@"^(06|07)\d{8}$", ErrorMessage = "Le numéro de téléphone doit commencer par 06 ou 07 et contenir 10 chiffres")]
+        public string Tele { get; set; }
+
         [Required(ErrorMessage = "Le sexe est requis")]
         [RegularExpression("^(Homme|Femme|Autre)$", ErrorMessage = "Le sexe doit être Homme, Femme ou Autre")]
         public string Sexe { get; set; }
