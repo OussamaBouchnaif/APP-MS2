@@ -5,6 +5,8 @@ namespace MS2Api.Model
 {
     public class Utilisateur : Personne
     {
-        //public string Role {  get; set; }
+        public string Email { get; set; }
+        public string MotDePasse { get; set; }
+        public string Role { get; set; }
     }
 }

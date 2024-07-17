@@ -1,20 +1,31 @@
-﻿using Admin.Service;
+﻿using Admin.Models;
+using Admin.Repository;
 using Admin.Service.Contract;
 using Admin.ViewModel;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using MS2Api.Model;
 
 namespace Admin.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly IUserIdentityService userService;
-        private readonly IUtilisateurService utilisateurService;
+        private readonly IRepository<Utilisateur> _userRepository;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IPasswordHasher<Utilisateur> _passwordHasher;
+        private readonly IUtilisateurService _utilisateurService;
 
-        public AccountController(IUserIdentityService userService, IUtilisateurService utilisateurService)
+        public AccountController(
+            IRepository<Utilisateur> userRepository,
+            IHttpContextAccessor httpContextAccessor,
+            IPasswordHasher<Utilisateur> passwordHasher,
+            IUtilisateurService utilisateurService)
         {
-            this.userService = userService;
-            this.utilisateurService = utilisateurService;
+            _userRepository = userRepository;
+            _httpContextAccessor = httpContextAccessor;
+            _passwordHasher = passwordHasher;
+            _utilisateurService = utilisateurService;
         }
 
         [HttpGet]
@@ -26,22 +37,22 @@ namespace Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return View(model);
-            }
+                var user = _userRepository.FindByExpression(u => u.Email == model.Email);
+                if (user != null)
+                {
+                    var verificationResult = _passwordHasher.VerifyHashedPassword(user, user.MotDePasse, model.Password);
+                    if (verificationResult == PasswordVerificationResult.Success)
+                    {
+                        _httpContextAccessor.HttpContext.Session.SetObjectAsJson("User", user);
 
-            var result = await this.userService.PasswordSignInAsync(model);
-
-            if (result.Succeeded)
-            {
-                return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "Benificier");
+                    }
+                }
+                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             }
-            else
-            {
-                ModelState.AddModelError("Errors", "Identifiant incorrect");
-                return View(model);
-            }
+            return View(model);
         }
 
         [HttpGet]
@@ -49,7 +60,7 @@ namespace Admin.Controllers
         {
             var model = new SigninViewModel
             {
-                Roles = utilisateurService.GetRolesList()
+                Roles = _utilisateurService.GetRolesList()
             };
             return View(model);
         }
@@ -57,47 +68,39 @@ namespace Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Signin(SigninViewModel model)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                model.Roles = utilisateurService.GetRolesList();
-                return View(model);
-            }
-
-            var (result, utilisateur) = await this.userService.CreateUserAsync(model);
-
-            if (result.Succeeded)
-            {
-                //var resultRole = await this.userService.AddToRoleAsync(utilisateur, model.RoleSelected);
-                //if (resultRole.Succeeded)
-                //{
-                //    return RedirectToAction("Index", "Home");
-                //}
-                //else
-                //{
-                //    foreach (var item in result.Errors)
-                //    {
-                //        ModelState.AddModelError(item.Code, item.Description);
-                //    }
-                //    model.Roles = utilisateurService.GetRolesList();
-                //    return View(model);
-                //}
-                return RedirectToAction("Login");
-            }
-            else
-            {
-                foreach (var item in result.Errors)
+                var newUser = new Utilisateur
                 {
-                    ModelState.AddModelError(item.Code, item.Description);
-                }
-                model.Roles = utilisateurService.GetRolesList();
-                return View(model);
+                    Nom = model.Nom,
+                    Prenom = model.Prenom,
+                    Age = model.Age,
+                    Tele = model.Tele,
+                    Sexe = model.Sexe,
+                    Email = model.Email,
+                    Role = model.RoleSelected
+                };
+
+                newUser.MotDePasse = _passwordHasher.HashPassword(newUser, model.Password);
+
+                _userRepository.Insert(newUser);
+                _userRepository.SaveChanges();
+
+                _httpContextAccessor.HttpContext.Session.SetObjectAsJson("User", newUser);
+
+                TempData["SuccessMessage"] = "Vous êtes connecté avec succès.";
+
+                return RedirectToAction("Index", "Utilisateur");
             }
+            model.Roles = _utilisateurService.GetRolesList();
+            return View(model);
         }
 
         [HttpGet]
         public async Task<IActionResult> Logout()
         {
-            await this.userService.SignOutAsync();
+            // Supprimer les informations de la session
+            _httpContextAccessor.HttpContext.Session.Clear();
             return RedirectToAction("Login");
         }
     }

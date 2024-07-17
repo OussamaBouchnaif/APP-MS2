@@ -8,5 +8,7 @@ namespace Admin.Mapper.Contract
         Benificier MapToBenificier(BenificierVM benificierVm);
 
         Benificier UpdateBenificier(BenificierVM benificierVm, Benificier benificier);
+
+        BenificierVM MapToBenificierVM(Benificier benificier);
     }
 }

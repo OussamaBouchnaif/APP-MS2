@@ -3,6 +3,8 @@ using Admin.Service.Contract;
 using Admin.Service;
 using Admin.Mapper.Contract;
 using Admin.Mapper;
+using Microsoft.AspNetCore.Identity;
+using MS2Api.Model;
 
 namespace Admin.Extensions
 {
@@ -25,8 +27,13 @@ namespace Admin.Extensions
             // Ajouter le mapper des bénéficiaires
             services.AddScoped<IUtilisateurService, UtilisateurService>();
 
-            // Enregistrer le service de gestion des utilisateurs
-            services.AddScoped<IUserIdentityService, UserIdentityService>();
+            // Enregistrer IHttpContextAccessor
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            // Enregistrer IPasswordHasher
+            services.AddScoped<IPasswordHasher<Utilisateur>, PasswordHasher<Utilisateur>>();
+
+            services.AddScoped<AuthenticationFilter>();
         }
     }
 }

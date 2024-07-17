@@ -26,5 +26,14 @@ namespace Admin.ViewModel
         [Phone(ErrorMessage = "Le numéro de téléphone n'est pas valide.")]
         [StringLength(15, ErrorMessage = "Le numéro de téléphone ne peut pas dépasser 15 caractères.")]
         public string Tele { get; set; }
+
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        [StringLength(100, MinimumLength = 6)]
+        public string MotDePasse { get; set; }
     }
 }

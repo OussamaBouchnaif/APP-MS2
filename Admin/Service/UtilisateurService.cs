@@ -1,12 +1,10 @@
 ﻿using Admin.Mapper.Contract;
+using Admin.Models;
 using Admin.Repository;
 using Admin.Service.Contract;
 using Admin.ViewModel;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MS2Api.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Admin.Service
 {
@@ -33,16 +31,15 @@ namespace Admin.Service
             _utilisateurRepository.SaveChanges();
         }
 
-        public void DeleteUtilisateur(int id)
+        public void DeleteUtilisateur(Utilisateur utilisateur)
         {
-            var utilisateur = _utilisateurRepository.FindById(id);
             if (utilisateur == null)
             {
-                throw new ArgumentException("Utilisateur non trouvé", nameof(id));
+                throw new ArgumentNullException(nameof(utilisateur));
             }
 
             _utilisateurRepository.Delete(utilisateur);
-            _utilisateurRepository.SaveChanges();
+            SaveChanges();
         }
 
         public IEnumerable<Utilisateur> GetAllUtilisateurs()
@@ -64,28 +61,29 @@ namespace Admin.Service
             };
         }
 
-        List<SelectListItem> IUtilisateurService.GetRolesList()
+        public List<SelectListItem> GetRolesList()
         {
-            return Role.Roles
-                   .Select(role => new SelectListItem { Value = role, Text = role })
-                   .ToList();
+            return new List<SelectListItem>
+            {
+                 new SelectListItem { Value = "Admin", Text = "Admin" },
+                 new SelectListItem { Value = "Agent", Text = "Agent" }
+            };
         }
 
-        public void UpdateUtilisateur(UtilisateurVM utilisateurVM)
+        public void UpdateUtilisateur(UtilisateurVM utilisateurVM, Utilisateur exestingUtilisateur)
         {
-            if (utilisateurVM == null)
+            if (utilisateurVM == null || exestingUtilisateur == null)
             {
                 throw new ArgumentNullException(nameof(utilisateurVM));
             }
 
-            var utilisateur = _utilisateurRepository.FindById(utilisateurVM.Id);
-            if (utilisateur == null)
-            {
-                throw new ArgumentException("Utilisateur non trouvé", nameof(utilisateurVM.Id));
-            }
+            _utilisateurMapper.UpdateUtilisateur(utilisateurVM, exestingUtilisateur);
+            _utilisateurRepository.Update(exestingUtilisateur);
+            SaveChanges();
+        }
 
-            _utilisateurMapper.UpdateUtilisateur(utilisateurVM, utilisateur);
-            _utilisateurRepository.Update(utilisateur);
+        public void SaveChanges()
+        {
             _utilisateurRepository.SaveChanges();
         }
     }

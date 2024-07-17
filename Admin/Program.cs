@@ -13,16 +13,17 @@ builder.Configuration.AddCustomConfiguration(builder.Environment);
 builder.AddGestionCommandesContext();
 builder.Services.AddCustomServices();
 
-// configuration de Identity
-builder.Services.ConfigureIdentity();
+//// configuration de Identity
+//builder.Services.ConfigureIdentity();
 
-builder.Services.AddAuthorization(options =>
+//builder.Services.ConfigureApplicationCookie(option => option.LoginPath = "/Account/Login");
+
+builder.Services.AddSession(options =>
 {
-    options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
-    options.AddPolicy("Agent", policy => policy.RequireRole("Agent"));
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
 });
-
-builder.Services.ConfigureApplicationCookie(option => option.LoginPath = "/Account/Login");
 
 var app = builder.Build();
 
@@ -45,15 +46,17 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
+app.UseSession();
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Account}/{action=Login}");
 
 // Créer les rôles
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-    await RoleInitializer.CreateRoles(services);
-}
+//using (var scope = app.Services.CreateScope())
+//{
+//    var services = scope.ServiceProvider;
+//    await RoleInitializer.CreateRoles(services);
+//}
 
 app.Run();

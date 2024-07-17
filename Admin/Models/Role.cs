@@ -2,8 +2,8 @@
 
 namespace Admin.Models
 {
-    public class Role : IdentityRole<int>
+    public class Role
     {
-        public static string[] Roles { get; set; } = new string[] { "Admin", "Agent", "Benificer" };
+        public static string[] Roles { get; set; } = new string[] { "Admin", "Agent" };
     }
 }

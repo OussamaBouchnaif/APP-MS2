@@ -8,11 +8,17 @@ namespace Admin.Service.Contract
     public interface IUtilisateurService
     {
         IEnumerable<Utilisateur> GetAllUtilisateurs();
+
         Utilisateur GetUtilisateurById(int id);
+
         void AddUtilisateur(UtilisateurVM utilisateurVM);
-        void UpdateUtilisateur(UtilisateurVM utilisateurVM);
-        void DeleteUtilisateur(int id);
+
+        void UpdateUtilisateur(UtilisateurVM utilisateurVM, Utilisateur utilisateur);
+
+        void DeleteUtilisateur(Utilisateur utilisateur);
+
         List<SelectListItem> GetSexesList();
+
         List<SelectListItem> GetRolesList();
     }
 }

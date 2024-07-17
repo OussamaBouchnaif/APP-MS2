@@ -4,9 +4,8 @@
     ViewData["Title"] = "Beneficiaries";
 }
 
-<div class="content">
     <div class="container">
-        <a href="Benificier/Add" class="btn btn-primary" id="bn">Ajouter un Benificier</a>
+    <a asp-action="Add" asp-controller="Benificier" class="btn btn-primary" id="bn">Ajouter un Benificier</a>
         @if (Model != null && Model.Any())
         {
 
@@ -58,7 +57,7 @@
                                     <i class="fa-solid fa-folder-plus"></i>
                                 </a>
                             </td>
-                        
+
                         </tr>
                     }
                 </tbody>
@@ -69,10 +68,11 @@
         }
         else
         {
-            <p>No beneficiaries found.</p>
+        <div class="alert alert-info" role="alert">
+            Aucun bénéficiaire trouvé.
+        </div>
         }
     </div>
-</div>
 
 
 @section Scripts {
