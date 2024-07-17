@@ -1,4 +1,5 @@
-﻿using Admin.Models;
+﻿using Admin.Enums;
+using Admin.Models;
 using Admin.ViewModel;
 
 namespace Admin.Service.Contract
@@ -8,5 +9,9 @@ namespace Admin.Service.Contract
         IEnumerable<VeilleContextuelle> GetAllVeilles();
 
         void AddVeille(VeilleContextuelleViewModel model, int[] sourceInformation, int[] typeMigrants, int[] nationalites);
+
+        IEnumerable<VeilleContextuelleViewModel> GetFilteredVeilles();
+
+        void UpdateVerificationStatus(int veilleId, VerificationStatus status);
     }
 }

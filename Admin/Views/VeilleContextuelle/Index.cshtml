@@ -1,87 +1,150 @@
-﻿@model IEnumerable<Admin.Models.VeilleContextuelle>
+﻿@model IEnumerable<Admin.ViewModel.VeilleContextuelleViewModel>
 
 @{
     ViewData["Title"] = "Liste des Veilles Contextuelles";
 }
 
-<h2>@ViewData["Title"]</h2>
+@section Styles {
+    <link rel="stylesheet" href="~/assets/libs/sweetalert2/sweetalert2.min.css">
+}
 
-<div class="container">
-    <a asp-action="Create" class="btn btn-primary" id="bn">Ajouter une Veille Contextuelle</a>
-    @if (Model != null && Model.Any())
-    {
-        <table id="myTable" class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Date de l'événement</th>
-                    <th>Type d'événement</th>
-                    <th>Source d'information</th>
-                    <th>Nombre de migrants</th>
-                    <th>Type de migrants</th>
-                    <th>Nationalités</th>
-                    <th>Détails</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Liste des Veilles Contextuelles</h4>
+                <p class="card-title-desc">Vous trouvez ici toutes les veilles contextuelles saisies.</p>
+            </div>
+            <div class="card-body">
+                <a asp-action="Create" class="btn btn-primary" id="bn">Ajouter une Veille Contextuelle</a>
+                @if (Model != null && Model.Any())
                 {
-                    <tr>
-                        <td>@item.DateEvenement.ToShortDateString()</td>
-                        <td>@item.TypeEvenement</td>
-                        <td>
-                            @{
-                                var sources = Enum.GetValues(typeof(Admin.Flags.SourceInformation)).Cast<Admin.Flags.SourceInformation>()
-                                .Where(s => item.SourceInformation.HasFlag(s))
-                                .Select(s => s.ToString());
-                                foreach (var source in sources)
+                    <table id="myTable" class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Date de l'événement</th>
+                                <th>Type d'événement</th>
+                                <th>Source d'information</th>
+                                <th>Détails</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var veille in Model)
+                            {
+                                var rowClass = veille.VerificationStatus switch
                                 {
-                                    <span>@source<br /></span>
-                                }
+                                    Admin.Enums.VerificationStatus.Rejete => "table-danger",
+                                    Admin.Enums.VerificationStatus.CinquanteCinquante => "table-warning",
+                                    Admin.Enums.VerificationStatus.Accepte => "table-success",
+                                    _ => ""
+                                };
+
+                                <tr class="@rowClass">
+                                    <td>@veille.DateEvenement.ToString("dd/MM/yyyy")</td>
+                                    <td>@veille.TypeEvenement  @veille.VerificationStatus</td>
+                                    <td>@veille.SourceInformation</td>
+                                    <td>@veille.DetailsEvenement</td>
+                                    <td class="text-center">
+                                        <button type="button" class="btn btn-subtle-primary waves-effect waves-light"><i class="fa-solid fa-circle-info"></i></button>
+                                        @if (veille.VerificationStatus != Admin.Enums.VerificationStatus.Rejete)
+                                        {
+                                            <button type="button" class="btn btn-subtle-danger  waves-effect waves-light" onclick="confirmUpdateStatus(@veille.Id, 0)"><i class="bx bx-block font-size-16 align-middle"></i></button>
+                                        }
+                                        @if (veille.VerificationStatus != Admin.Enums.VerificationStatus.CinquanteCinquante)
+                                        {
+                                            <button type="button" class="btn btn-subtle-warning waves-effect waves-light" onclick="confirmUpdateStatus(@veille.Id, 1)"><i class="bx bx-error font-size-16 align-middle"></i></button>
+                                        }
+                                        @if (veille.VerificationStatus != Admin.Enums.VerificationStatus.Accepte)
+                                        {
+                                            <button type="button" class="btn btn-subtle-success waves-effect waves-light" onclick="confirmUpdateStatus(@veille.Id, 2)"><i class="bx bx-check-double font-size-16 align-middle"></i></button>
+                                        }
+                                    </td>
+                                </tr>
                             }
-                        </td>
-                        <td>@item.NombreMigrants</td>
-                        <td>
-                            @{
-                                var types = Enum.GetValues(typeof(Admin.Flags.TypeMigrants)).Cast<Admin.Flags.TypeMigrants>()
-                                .Where(t => item.TypeMigrants.HasFlag(t))
-                                .Select(t => t.ToString());
-                                foreach (var type in types)
-                                {
-                                    <span>@type<br /></span>
-                                }
-                            }
-                        </td>
-                        <td>
-                            @{
-                                var nationalities = Enum.GetValues(typeof(Admin.Flags.Nationalites)).Cast<Admin.Flags.Nationalites>()
-                                .Where(n => item.Nationalites.HasFlag(n))
-                                .Select(n => n.ToString());
-                                foreach (var nationality in nationalities)
-                                {
-                                    <span>@nationality<br /></span>
-                                }
-                            }
-                        </td>
-                        <td>@item.DetailsEvenement</td>
-                    </tr>
+                        </tbody>
+                    </table>
                 }
-            </tbody>
-        </table>
-    }
-    else
-    {
-        <div class="alert alert-info" role="alert">
-            Aucun enregistrement trouvé.
+                else
+                {
+                    <div class="alert alert-info" role="alert">
+                        Aucun enregistrement trouvé.
+                    </div>
+                }
+            </div>
         </div>
-    }
+    </div>
 </div>
 
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/assets/libs/sweetalert2/sweetalert2.min.js"></script>
     <script src="~/assets/DataTables/datatables.js"></script>
     <script>
         $(document).ready(function () {
             $('#myTable').DataTable();
         });
+
+        function confirmUpdateStatus(veilleId, status) {
+            Swal.fire({
+                title: 'Êtes-vous sûr?',
+                text: "Vous êtes sur le point de mettre à jour le statut de cette veille contextuelle.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Oui, mettre à jour!',
+                cancelButtonText: 'Annuler'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    showLoading();
+                    updateStatus(veilleId, status);
+                }
+            });
+        }
+
+        function showLoading() {
+            Swal.fire({
+                title: 'Veuillez patienter',
+                text: 'Mise à jour en cours...',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+        }
+
+        function updateStatus(veilleId, status) {
+            $.ajax({
+                url: '@Url.Action("UpdateStatus", "VeilleContextuelle")',
+                type: 'POST',
+                data: {
+                    veilleId: veilleId,
+                    status: status
+                },
+                success: function (result) {
+                    Swal.close();
+                    Swal.fire({
+                        title: 'Succès!',
+                        text: 'Le statut a été mis à jour avec succès.',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        location.reload();
+                    });
+                },
+                error: function (xhr, status, error) {
+                    Swal.close();
+                    Swal.fire({
+                        title: 'Erreur',
+                        text: 'Une erreur s\'est produite lors de la mise à jour du statut.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            });
+        }
     </script>
 }

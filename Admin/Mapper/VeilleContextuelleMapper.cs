@@ -36,6 +36,7 @@ namespace Admin.Mapper
                 NombreSenegal = model.NombreSenegal,
                 NombreRDC = model.NombreRDC,
                 NombreAutreNationalites = model.NombreAutreNationalites,
+                VerificationStatus = model.VerificationStatus
             };
         }
 
@@ -68,6 +69,7 @@ namespace Admin.Mapper
                 NombreSenegal = entity.NombreSenegal,
                 NombreRDC = entity.NombreRDC,
                 NombreAutreNationalites = entity.NombreAutreNationalites,
+                VerificationStatus = entity.VerificationStatus
             };
         }
     }

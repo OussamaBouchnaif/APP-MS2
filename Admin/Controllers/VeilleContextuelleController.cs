@@ -1,4 +1,5 @@
-﻿using Admin.Repository;
+﻿using Admin.Enums;
+using Admin.Repository;
 using Admin.Service.Contract;
 using Admin.ViewModel;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +21,7 @@ namespace Admin.Controllers
 
         public IActionResult Index()
         {
-            var veilleList = veilleContextuelleService.GetAllVeilles();
+            var veilleList = veilleContextuelleService.GetFilteredVeilles();
             return View(veilleList);
         }
 
@@ -41,11 +42,18 @@ namespace Admin.Controllers
             if (ModelState.IsValid)
             {
                 veilleContextuelleService.AddVeille(model, SourceInformation, TypeMigrants, Nationalites);
-                return RedirectToAction("Index");
+                return Ok(new { message = "La veille contextuelle a été ajoutée avec succès." });
             }
             var user = httpContextAccessor.HttpContext.Session.GetObjectFromJson<Utilisateur>("User");
             model.UtilisateurId = user.Id;
-            return View(model);
+            return BadRequest(ModelState);
+        }
+
+        [HttpPost]
+        public IActionResult UpdateStatus(int veilleId, VerificationStatus status)
+        {
+            veilleContextuelleService.UpdateVerificationStatus(veilleId, status);
+            return Ok(new { message = "Le statut a été mis à jour avec succès." });
         }
     }
 }
