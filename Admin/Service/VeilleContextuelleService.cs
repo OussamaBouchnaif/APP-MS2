@@ -112,5 +112,28 @@ namespace Admin.Controllers
 
             return Json(data);
         }
+
+        public (string, int)[] GetTopNationalities(VeilleContextuelle veille)
+        {
+            var nationalities = new Dictionary<string, int>
+                {
+                    { "Soudan", veille.NombreSoudan ?? 0 },
+                    { "Sud Soudan", veille.NombreSudsoudan ?? 0 },
+                    { "Guinée", veille.NombreGuinee ?? 0 },
+                    { "Cameroun", veille.NombreCameroun ?? 0 },
+                    { "Côte d'Ivoire", veille.NombreCotedIvoire ?? 0 },
+                    { "Mali", veille.NombreMali ?? 0 },
+                    { "Nigeria", veille.NombreNigeria ?? 0 },
+                    { "Sénégal", veille.NombreSenegal ?? 0 },
+                    { "RDC", veille.NombreRDC ?? 0 },
+                    { "Autres", veille.NombreAutreNationalites ?? 0 }
+                };
+
+            return nationalities
+                .OrderByDescending(n => n.Value)
+                .Take(3)
+                .Select(n => (n.Key, n.Value))
+                .ToArray();
+        }
     }
 }

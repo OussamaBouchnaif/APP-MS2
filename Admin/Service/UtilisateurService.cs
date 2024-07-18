@@ -1,10 +1,8 @@
-﻿using Admin.Mapper.Contract;
+using Admin.Mapper.Contract;
 using Admin.Models;
 using Admin.Repository;
 using Admin.Service.Contract;
 using Admin.ViewModel;
-using IdentityServer4.Extensions;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MS2Api.Model;
 using System;
@@ -17,13 +15,11 @@ namespace Admin.Service
     {
         private readonly IRepository<Utilisateur> _utilisateurRepository;
         private readonly IUtilisateurMapper _utilisateurMapper;
-        private readonly IPasswordHasher<Utilisateur> _passwordHasher;
 
-        public UtilisateurService(IRepository<Utilisateur> utilisateurRepository, IUtilisateurMapper utilisateurMapper, IPasswordHasher<Utilisateur> passwordHasher)
+        public UtilisateurService(IRepository<Utilisateur> utilisateurRepository, IUtilisateurMapper utilisateurMapper)
         {
             _utilisateurRepository = utilisateurRepository;
             _utilisateurMapper = utilisateurMapper;
-            _passwordHasher = passwordHasher;
         }
 
         public void AddUtilisateur(UtilisateurVM utilisateurVM)
@@ -34,7 +30,6 @@ namespace Admin.Service
             }
 
             var utilisateur = _utilisateurMapper.MapToUtilisateur(utilisateurVM);
-            utilisateur.MotDePasse = _passwordHasher.HashPassword(utilisateur, utilisateurVM.MotDePasse);
             _utilisateurRepository.Insert(utilisateur);
             _utilisateurRepository.SaveChanges();
         }
@@ -79,35 +74,32 @@ namespace Admin.Service
             };
         }
 
-        public void UpdateUtilisateur(UtilisateurVM utilisateurVM,Utilisateur existingutilisateur)
+        //////public void UpdateUtilisateur(UtilisateurVM utilisateurVM)
+        //////{
+        //////    if (utilisateurVM == null)
+        //////    {
+        //////        throw new ArgumentNullException(nameof(utilisateurVM));
+        //////    }
+
+        //////    var utilisateur = _utilisateurRepository.FindById(utilisateurVM.Id);
+        //////    if (utilisateur == null)
+        //////    {
+        //////        throw new ArgumentException("Utilisateur non trouvé", nameof(utilisateurVM.Id));
+        //////    }
+
+        //////    _utilisateurMapper.UpdateUtilisateur(utilisateurVM, utilisateur);
+        //////    _utilisateurRepository.Update(utilisateur);
+        //////    _utilisateurRepository.SaveChanges();
+        //////}
+
+        public void UpdateUtilisateur(UtilisateurVM utilisateurVM, Utilisateur utilisateur)
         {
-            if (utilisateurVM == null || existingutilisateur == null)
-            {
-                throw new ArgumentNullException(nameof(utilisateurVM));
-            }
-
-            _utilisateurMapper.UpdateUtilisateur(utilisateurVM, existingutilisateur);
-
-            if (!string.IsNullOrEmpty(utilisateurVM.MotDePasse))
-            {
-                existingutilisateur.MotDePasse = _passwordHasher.HashPassword(existingutilisateur, utilisateurVM.MotDePasse);
-            }
-
-            _utilisateurRepository.Update(existingutilisateur);
-            _utilisateurRepository.SaveChanges();
-
-
+            throw new NotImplementedException();
         }
 
         public void DeleteUtilisateur(Utilisateur utilisateur)
         {
-            if (utilisateur == null)
-            {
-                throw new NotImplementedException();
-            }
-            _utilisateurRepository.Delete(utilisateur);
-            _utilisateurRepository.SaveChanges();
-
+            throw new NotImplementedException();
         }
     }
 }
