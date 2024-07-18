@@ -72,7 +72,7 @@ namespace Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                _utilisateurService.UpdateUtilisateur(utilisateurVM);
+                //_utilisateurService.UpdateUtilisateur(utilisateurVM);
                 return RedirectToAction("Index");
             }
 
@@ -89,7 +89,7 @@ namespace Admin.Controllers
                 return NotFound();
             }
 
-            _utilisateurService.DeleteUtilisateur(id);
+            //_utilisateurService.DeleteUtilisateur(id);
             return RedirectToAction("Index");
         }
     }

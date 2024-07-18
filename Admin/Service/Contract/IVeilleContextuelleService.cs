@@ -15,5 +15,7 @@ namespace Admin.Service.Contract
         void UpdateVerificationStatus(int veilleId, VerificationStatus status);
 
         VeilleContextuelle GetVeilleById(int id);
+
+        (string, int)[] GetTopNationalities(VeilleContextuelle veille);
     }
 }

@@ -1,6 +1,7 @@
 using Admin.Enums;
 using Admin.Mapper.Contract;
 using Admin.Repository;
+using Admin.Service;
 using Admin.Service.Contract;
 using Admin.ViewModel;
 using Microsoft.AspNetCore.Mvc;
@@ -69,6 +70,10 @@ namespace Admin.Controllers
             }
             var veilleVM = veilleContextuelleMapper.MapToViewModel(veille);
             veilleVM.AgentMS2 = veille.Utilisateur != null ? veille.Utilisateur.Nom + ' ' + veille.Utilisateur.Prenom : "N/A";
+
+            var topNationalities = veilleContextuelleService.GetTopNationalities(veille);
+            ViewBag.TopNationalities = topNationalities;
+
             return View(veilleVM);
         }
 
