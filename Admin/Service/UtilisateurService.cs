@@ -111,5 +111,15 @@ namespace Admin.Service
         {
             throw new NotImplementedException();
         }
+
+        public void UpdateUtilisateur(UtilisateurVM utilisateurVM, Utilisateur utilisateur)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteUtilisateur(Utilisateur utilisateur)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
