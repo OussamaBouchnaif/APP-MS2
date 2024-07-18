@@ -17,6 +17,8 @@ namespace Admin.Mapper
                 Sexe = utilisateurVM.Sexe,
                 Tele = utilisateurVM.Tele,
                 Role = utilisateurVM.Role,
+                Email = utilisateurVM.Email,
+                MotDePasse = utilisateurVM.MotDePasse
             };
         }
 
@@ -31,6 +33,8 @@ namespace Admin.Mapper
                 Sexe = utilisateur.Sexe,
                 Tele = utilisateur.Tele,
                 Role = utilisateur.Role,
+                Email = utilisateur.Email,
+                MotDePasse = utilisateur.MotDePasse
             };
         }
 
@@ -43,6 +47,8 @@ namespace Admin.Mapper
             utilisateur.Sexe = utilisateurVM.Sexe;
             utilisateur.Tele = utilisateurVM.Tele;
             utilisateur.Role = utilisateurVM.Role;
+            utilisateur.Email= utilisateurVM.Email;
+            utilisateur.MotDePasse=utilisateurVM.MotDePasse;
 
             return utilisateur;
         }

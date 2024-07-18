@@ -13,7 +13,7 @@ namespace Admin.Service.Contract
 
         void AddUtilisateur(UtilisateurVM utilisateurVM);
 
-        void UpdateUtilisateur(UtilisateurVM utilisateurVM, Utilisateur utilisateur);
+        void UpdateUtilisateur(UtilisateurVM  utilisateurVM , Utilisateur utilisateur);
 
         void DeleteUtilisateur(Utilisateur utilisateur);
 
