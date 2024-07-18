@@ -47,50 +47,50 @@ namespace Admin.Controllers
             return View(utilisateurVM);
         }
 
-        [HttpGet]
-        public IActionResult Edit(int id)
-        {
-            var utilisateur = _utilisateurService.GetUtilisateurById(id);
-            if (utilisateur == null)
-            {
-                return NotFound();
-            }
+        //[HttpGet]
+        //public IActionResult Edit(int id)
+        //{
+        //    var utilisateur = _utilisateurService.GetUtilisateurById(id);
+        //    if (utilisateur == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var utilisateurVM = _utilisateurService.GetUtilisateurById(id);
-            if (utilisateur == null)
-            {
-                return NotFound();
-            }
-            ViewBag.Sexes = _utilisateurService.GetSexesList();
-            ViewBag.Roles = _utilisateurService.GetRolesList();
+        //    var utilisateurVM = _utilisateurService.GetUtilisateurById(id);
+        //    if (utilisateur == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    ViewBag.Sexes = _utilisateurService.GetSexesList();
+        //    ViewBag.Roles = _utilisateurService.GetRolesList();
 
-            return View(utilisateurVM);
-        }
+        //    return View(utilisateurVM);
+        //}
 
-        [HttpPost]
-        public IActionResult Edit(UtilisateurVM utilisateurVM)
-        {
-            if (ModelState.IsValid)
-            {
-                _utilisateurService.UpdateUtilisateur(utilisateurVM);
-                return RedirectToAction("Index");
-            }
+        //[HttpPost]
+        //public IActionResult Edit(UtilisateurVM utilisateurVM)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _utilisateurService.UpdateUtilisateur(utilisateurVM);
+        //        return RedirectToAction("Index");
+        //    }
 
-            ViewBag.Sexes = _utilisateurService.GetSexesList();
-            ViewBag.Roles = _utilisateurService.GetRolesList();
-            return View(utilisateurVM);
-        }
+        //    ViewBag.Sexes = _utilisateurService.GetSexesList();
+        //    ViewBag.Roles = _utilisateurService.GetRolesList();
+        //    return View(utilisateurVM);
+        //}
 
-        public IActionResult Delete(int id)
-        {
-            var utilisateur = _utilisateurService.GetUtilisateurById(id);
-            if (utilisateur == null)
-            {
-                return NotFound();
-            }
+        //public IActionResult Delete(int id)
+        //{
+        //    var utilisateur = _utilisateurService.GetUtilisateurById(id);
+        //    if (utilisateur == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _utilisateurService.DeleteUtilisateur(id);
-            return RedirectToAction("Index");
-        }
+        //    _utilisateurService.DeleteUtilisateur(id);
+        //    return RedirectToAction("Index");
+        //}
     }
 }
