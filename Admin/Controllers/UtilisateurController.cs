@@ -1,8 +1,7 @@
-﻿using Admin.Mapper.Contract;
+using Admin.Mapper.Contract;
 using Admin.Service.Contract;
 using Admin.ViewModel;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using MS2Api.Model;
 
 namespace Admin.Controllers
@@ -39,6 +38,38 @@ namespace Admin.Controllers
             if (ModelState.IsValid)
             {
                 _utilisateurService.AddUtilisateur(utilisateurVM);
+                return RedirectToAction(nameof(Index));
+            }
+
+            ViewBag.Sexes = _utilisateurService.GetSexesList();
+            ViewBag.Roles = _utilisateurService.GetRolesList();
+            return View(utilisateurVM);
+        }
+
+
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var utilisateur = _utilisateurService.GetUtilisateurById(id);
+            if (utilisateur == null)
+            {
+                return NotFound();
+            }
+
+            var utilisateurVM = _utilisateurMapper.MapToUtilisateurVM(utilisateur);
+            ViewBag.Sexes = _utilisateurService.GetSexesList();
+            ViewBag.Roles = _utilisateurService.GetRolesList();
+            return View(utilisateurVM);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(UtilisateurVM utilisateurVM,int Id )
+        {
+            Utilisateur utilisateur=_utilisateurService.GetUtilisateurById(Id); 
+            if (ModelState.IsValid)
+            {
+                _utilisateurService.UpdateUtilisateur(utilisateurVM,utilisateur);
                 return RedirectToAction("Index");
             }
 
@@ -47,50 +78,11 @@ namespace Admin.Controllers
             return View(utilisateurVM);
         }
 
-        //[HttpGet]
-        //public IActionResult Edit(int id)
-        //{
-        //    var utilisateur = _utilisateurService.GetUtilisateurById(id);
-        //    if (utilisateur == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var utilisateurVM = _utilisateurService.GetUtilisateurById(id);
-        //    if (utilisateur == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    ViewBag.Sexes = _utilisateurService.GetSexesList();
-        //    ViewBag.Roles = _utilisateurService.GetRolesList();
-
-        //    return View(utilisateurVM);
-        //}
-
-        //[HttpPost]
-        //public IActionResult Edit(UtilisateurVM utilisateurVM)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _utilisateurService.UpdateUtilisateur(utilisateurVM);
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    ViewBag.Sexes = _utilisateurService.GetSexesList();
-        //    ViewBag.Roles = _utilisateurService.GetRolesList();
-        //    return View(utilisateurVM);
-        //}
-
-        //public IActionResult Delete(int id)
-        //{
-        //    var utilisateur = _utilisateurService.GetUtilisateurById(id);
-        //    if (utilisateur == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    _utilisateurService.DeleteUtilisateur(id);
-        //    return RedirectToAction("Index");
-        //}
-    }
+        public IActionResult Delete(int Id)
+        {
+            Utilisateur utilisateur = _utilisateurService.GetUtilisateurById(Id);
+            _utilisateurService.DeleteUtilisateur(utilisateur);
+            return RedirectToAction(nameof(Index));
+        }
+    }      
 }

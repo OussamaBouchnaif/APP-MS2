@@ -1,23 +1,21 @@
-﻿@model MS2Api.Model.Utilisateur
+﻿@model Admin.ViewModel.UtilisateurVM
 
 @{
     ViewData["Title"] = "Modifier Utilisateur";
 }
 
-<h1>Edit</h1>
-
-<h4>Utilisateur</h4>
-<hr />
-
 <div class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Modifier Utilisateur</h4>
+                <h4 class="card-title">Formulaire de Modification D'Utilisateur</h4>
                 <p class="card-title-desc">Veuillez remplir les informations ci-dessous.</p>
             </div>
             <div class="card-body">
-                <form asp-action="Add" method="post">
+                <form asp-action="Edit" method="post">
+                    <div class="form-group">
+                        <input asp-for="Id" class="form-control" type="hidden" />
+                    </div>
                     <div class="mb-3 row">
                         <label for="Nom" class="col-md-2 col-form-label">Nom</label>
                         <div class="col-md-10">
@@ -55,6 +53,7 @@
                             <span asp-validation-for="Tele" class="text-danger"></span>
                         </div>
                     </div>
+
                     <div class="mb-3 row">
                         <label for="Role" class="col-md-2 col-form-label">Role</label>
                         <div class="col-md-10">
@@ -64,6 +63,23 @@
                             <span asp-validation-for="Role" class="text-danger"></span>
                         </div>
                     </div>
+
+                    <div class="mb-3 row">
+                        <label for="Email" class="col-md-2 col-form-label">Email</label>
+                        <div class="col-md-10">
+                            <input asp-for="Email" class="form-control" placeholder="Entrez l'émail'" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <label for="Password" class="col-md-2 col-form-label">Mot de passe</label>
+                        <div class="col-md-10">
+                            <input asp-for="MotDePasse" class="form-control" placeholder="Entrez le mot de passe" />
+                            <span asp-validation-for="MotDePasse" class="text-danger"></span>
+                        </div>
+                    </div>
+
                     <div class="row left">
                         <div class="col-md-10 offset-md-2">
                             <button type="submit" class="btn btn-primary">Soumettre</button>
@@ -75,7 +91,3 @@
         </div>
     </div>
 </div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
