@@ -39,7 +39,9 @@ namespace Admin.ViewModel
 
         public int UtilisateurId { get; set; }
 
-        public VerificationStatus VerificationStatus { get; set; } = VerificationStatus.Rejete;
+        public VerificationStatus VerificationStatus { get; set; } = VerificationStatus.CinquanteCinquante;
+
+        public string AgentMS2 { get; set; }
 
         public int? NombreHommes { get; set; }
         public int? NombreFemmes { get; set; }

@@ -13,5 +13,7 @@ namespace Admin.Service.Contract
         IEnumerable<VeilleContextuelleViewModel> GetFilteredVeilles();
 
         void UpdateVerificationStatus(int veilleId, VerificationStatus status);
+
+        VeilleContextuelle GetVeilleById(int id);
     }
 }
