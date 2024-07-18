@@ -74,22 +74,32 @@ namespace Admin.Service
             };
         }
 
-        public void UpdateUtilisateur(UtilisateurVM utilisateurVM)
+        //////public void UpdateUtilisateur(UtilisateurVM utilisateurVM)
+        //////{
+        //////    if (utilisateurVM == null)
+        //////    {
+        //////        throw new ArgumentNullException(nameof(utilisateurVM));
+        //////    }
+
+        //////    var utilisateur = _utilisateurRepository.FindById(utilisateurVM.Id);
+        //////    if (utilisateur == null)
+        //////    {
+        //////        throw new ArgumentException("Utilisateur non trouvé", nameof(utilisateurVM.Id));
+        //////    }
+
+        //////    _utilisateurMapper.UpdateUtilisateur(utilisateurVM, utilisateur);
+        //////    _utilisateurRepository.Update(utilisateur);
+        //////    _utilisateurRepository.SaveChanges();
+        //////}
+
+        public void UpdateUtilisateur(UtilisateurVM utilisateurVM, Utilisateur utilisateur)
         {
-            if (utilisateurVM == null)
-            {
-                throw new ArgumentNullException(nameof(utilisateurVM));
-            }
+            throw new NotImplementedException();
+        }
 
-            var utilisateur = _utilisateurRepository.FindById(utilisateurVM.Id);
-            if (utilisateur == null)
-            {
-                throw new ArgumentException("Utilisateur non trouvé", nameof(utilisateurVM.Id));
-            }
-
-            _utilisateurMapper.UpdateUtilisateur(utilisateurVM, utilisateur);
-            _utilisateurRepository.Update(utilisateur);
-            _utilisateurRepository.SaveChanges();
+        public void DeleteUtilisateur(Utilisateur utilisateur)
+        {
+            throw new NotImplementedException();
         }
 
         public void UpdateUtilisateur(UtilisateurVM utilisateurVM, Utilisateur utilisateur)

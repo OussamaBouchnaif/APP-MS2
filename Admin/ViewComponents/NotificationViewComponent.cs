@@ -23,6 +23,7 @@ namespace Admin.ViewComponents
 
     public class Notification
     {
+        public int Id { get; set; }
         public string UserName { get; set; }
         public string Message { get; set; }
         public string TimeAgo { get; set; }
