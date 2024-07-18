@@ -95,6 +95,8 @@ namespace Admin.Service
 
             _utilisateurRepository.Update(existingutilisateur);
             _utilisateurRepository.SaveChanges();
+
+
         }
 
         public void DeleteUtilisateur(Utilisateur utilisateur)
@@ -105,6 +107,7 @@ namespace Admin.Service
             }
             _utilisateurRepository.Delete(utilisateur);
             _utilisateurRepository.SaveChanges();
+
         }
     }
 }

@@ -31,6 +31,7 @@ namespace Admin.Service
             // Transformer les données en objets Notification
             var notifications = veilleContextuelles.Select(v => new Notification
             {
+                Id = v.Id,
                 UserName = v.Utilisateur?.Nom ?? "Unknown User", // Utiliser "Unknown User" si Utilisateur est null
                 Message = v.DetailsEvenement,
                 TimeAgo = v.DateEvenement.ToString("f"), // Format de la date selon vos besoins
