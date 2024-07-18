@@ -5,7 +5,7 @@
         NouveauxEntrees,
         DeplacementForce,
         Arrestations,
-        Eloignement,
-        Autres
+        Eloignement
+        //Autres
     }
 }

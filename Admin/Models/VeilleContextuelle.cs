@@ -44,7 +44,7 @@ namespace Admin.Models
         public int UtilisateurId { get; set; }
 
         [Required]
-        public VerificationStatus VerificationStatus { get; set; } = VerificationStatus.Rejete;
+        public VerificationStatus VerificationStatus { get; set; } = VerificationStatus.CinquanteCinquante;
 
         public int? NombreHommes { get; set; }
         public int? NombreFemmes { get; set; }

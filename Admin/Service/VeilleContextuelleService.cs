@@ -1,10 +1,12 @@
 using Admin.Enums;
 using Admin.Flags;
+using Admin.Mapper;
 using Admin.Mapper.Contract;
 using Admin.Models;
 using Admin.Repository;
 using Admin.Service.Contract;
 using Admin.ViewModel;
+using Microsoft.EntityFrameworkCore;
 
 namespace Admin.Service
 {
@@ -58,6 +60,17 @@ namespace Admin.Service
                 _veilleContextuelleRepository.Update(veille);
                 _veilleContextuelleRepository.SaveChanges();
             }
+        }
+
+        public VeilleContextuelle GetVeilleById(int id)
+        {
+            var veille = _veilleContextuelleRepository.GetAll()
+            .Include(v => v.Utilisateur)
+            .FirstOrDefault(v => v.Id == id);
+
+            if (veille == null)
+                return null;
+            return veille;
         }
     }
 }
