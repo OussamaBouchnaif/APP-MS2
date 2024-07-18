@@ -43,5 +43,7 @@ namespace MS2Api.Data
                 .HasValue<Benificier>("Benificier")
                 .HasValue<Utilisateur>("Utilisateur");
         }
+
+        public DbSet<Admin.ViewModel.UtilisateurVM>? UtilisateurVM { get; set; }
     }
 }
