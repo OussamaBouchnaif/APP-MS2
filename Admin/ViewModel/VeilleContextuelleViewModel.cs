@@ -17,6 +17,7 @@ namespace Admin.ViewModel
         public TypeEvenement TypeEvenement { get; set; }
 
         [StringLength(255)]
+        [Required]
         public string DetailsEvenement { get; set; }
 
         [Required]

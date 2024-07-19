@@ -6,66 +6,86 @@
 
 @section Styles {
     <link rel="stylesheet" href="~/assets/libs/sweetalert2/sweetalert2.min.css">
+    <link rel="stylesheet" href="~/assets/css/veilleContextuelle.css">
 }
 
 <div class="row">
     <div class="col-12">
         <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">Liste des Veilles Contextuelles</h4>
-                <p class="card-title-desc">Vous trouvez ici toutes les veilles contextuelles saisies.</p>
+            <div class="card-header d-flex align-items-center">
+                <i class='bx bx-list-ul bx-lg ml-3 mr-3 text-primary'></i>
+                <div>
+                    <h2 class="h2 text-primary m-0">Liste des Veilles Contextuelles</h2>
+                    @* <p class="card-title-desc">Vous trouvez ici toutes les veilles contextuelles saisies.</p> *@
+                </div>
             </div>
+
             <div class="card-body">
-                <a asp-action="Create" class="btn btn-primary" id="bn">Ajouter une Veille Contextuelle</a>
+                <a asp-action="Create" type="button" class="btn btn-primary waves-effect waves-light w-sm">
+                    <i class='bx bx-plus d-block font-size-16'></i> Ajouter
+                </a>
                 @if (Model != null && Model.Any())
                 {
-                    <table id="myTable" class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Date de l'événement</th>
-                                <th>Type d'événement</th>
-                                <th>Source d'information</th>
-                                <th>Détails</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var veille in Model)
-                            {
-                                var rowClass = veille.VerificationStatus switch
-                                {
-                                    Admin.Enums.VerificationStatus.Rejete => "table-danger",
-                                    Admin.Enums.VerificationStatus.CinquanteCinquante => "table-warning",
-                                    Admin.Enums.VerificationStatus.Accepte => "table-success",
-                                    _ => ""
-                                };
-
-                                <tr class="@rowClass">
-                                    <td>@veille.DateEvenement.ToString("dd/MM/yyyy")</td>
-                                    <td>@veille.TypeEvenement</td>
-                                    <td>@veille.SourceInformation</td>
-                                    <td>@veille.DetailsEvenement</td>
-                                    <td class="text-center">
-                                        <a asp-action="Details" asp-route-id="@veille.Id" class="btn btn-subtle-primary waves-effect waves-light">
-                                            <i class="fas fa-chart-pie font-size-16 align-middle"></i>
-                                        </a>
-                                        @if (veille.VerificationStatus != Admin.Enums.VerificationStatus.Rejete)
-                                        {
-                                            <button type="button" class="btn btn-subtle-danger  waves-effect waves-light" onclick="confirmUpdateStatus(@veille.Id, 0)"><i class="bx bx-block font-size-16 align-middle"></i></button>
-                                        }
-                                        @if (veille.VerificationStatus != Admin.Enums.VerificationStatus.CinquanteCinquante)
-                                        {
-                                            <button type="button" class="btn btn-subtle-warning waves-effect waves-light" onclick="confirmUpdateStatus(@veille.Id, 1)"><i class="bx bx-error font-size-16 align-middle"></i></button>
-                                        }
-                                        @if (veille.VerificationStatus != Admin.Enums.VerificationStatus.Accepte)
-                                        {
-                                            <button type="button" class="btn btn-subtle-success waves-effect waves-light" onclick="confirmUpdateStatus(@veille.Id, 2)"><i class="bx bx-check-double font-size-16 align-middle"></i></button>
-                                        }
-                                    </td>
+                    <div class="table-responsive">
+                        <table id="myTable" class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Date de l'événement</th>
+                                    <th>Type d'événement</th>
+                                    <th>Source d'information</th>
+                                    <th>Agent/Admin</th>
+                                    <th>Actions</th>
                                 </tr>
-                            }
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach (var veille in Model)
+                                {
+                                    var rowClass = veille.VerificationStatus switch
+                                    {
+                                        Admin.Enums.VerificationStatus.Rejete => "table-danger",
+                                        Admin.Enums.VerificationStatus.CinquanteCinquante => "table-warning",
+                                        Admin.Enums.VerificationStatus.Accepte => "table-success",
+                                        _ => ""
+                                    };
+
+                                    <tr class="@rowClass">
+                                        <td>
+                                            <strong>@veille.DateEvenement.ToString("dd/MM/yyyy")</strong> @veille.DateEvenement.ToString("HH:mm:ss")
+                                        </td>
+                                        <td>@veille.TypeEvenement</td>
+                                        <td>@veille.SourceInformation</td>
+                                        @{
+                                            var words = veille.AgentMS2.Split(' ');
+                                            var lastWord = words.Last();
+                                            var otherWords = string.Join(" ", words.Take(words.Length - 1));
+                                        }
+                                        <td>
+                                            <strong>@otherWords</strong> @lastWord
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="btn-group" role="group" aria-label="Actions">
+                                                <a asp-action="Details" asp-route-id="@veille.Id" class="btn btn-subtle-primary btn-sm waves-effect waves-light">
+                                                    <i class="fas fa-chart-pie font-size-16 align-middle"></i>
+                                                </a>
+                                                @if (veille.VerificationStatus != Admin.Enums.VerificationStatus.Rejete)
+                                                {
+                                                    <button type="button" class="btn btn-subtle-danger btn-sm waves-effect waves-light" onclick="confirmUpdateStatus(@veille.Id, 0)"><i class="bx bx-block font-size-16 align-middle"></i></button>
+                                                }
+                                                @if (veille.VerificationStatus != Admin.Enums.VerificationStatus.CinquanteCinquante)
+                                                {
+                                                    <button type="button" class="btn btn-subtle-warning btn-sm waves-effect waves-light" onclick="confirmUpdateStatus(@veille.Id, 1)"><i class="bx bx-error font-size-16 align-middle"></i></button>
+                                                }
+                                                @if (veille.VerificationStatus != Admin.Enums.VerificationStatus.Accepte)
+                                                {
+                                                    <button type="button" class="btn btn-subtle-success btn-sm waves-effect waves-light" onclick="confirmUpdateStatus(@veille.Id, 2)"><i class="bx bx-check-double font-size-16 align-middle"></i></button>
+                                                }
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                 }
                 else
                 {
@@ -79,7 +99,7 @@
 </div>
 
 @section Scripts {
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/assets/libs/jquery/jquery-3.6.0.min.js"></script>
     <script src="~/assets/libs/sweetalert2/sweetalert2.min.js"></script>
     <script src="~/assets/DataTables/datatables.js"></script>
     <script>

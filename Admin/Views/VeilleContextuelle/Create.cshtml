@@ -8,13 +8,57 @@
 
 @section Styles {
     <link rel="stylesheet" href="~/assets/libs/sweetalert2/sweetalert2.min.css">
+    <style>
+        .form-check-inline {
+            margin-right: 0;
+        }
+
+        .type-input,
+        .nationality-input,
+        #AutresSourceInformationWrapper,
+        #AutresNationalitesWrapper {
+            display: none;
+            max-height: 0;
+            opacity: 0;
+            transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+            overflow: hidden;
+        }
+
+            .type-input.show,
+            .nationality-input.show,
+            #AutresSourceInformationWrapper.show,
+            #AutresNationalitesWrapper.show {
+                display: block;
+                max-height: 200px; /* Adjust this value based on the content height */
+                opacity: 1;
+            }
+
+            .type-input.hide,
+            .nationality-input.hide,
+            #AutresSourceInformationWrapper.hide,
+            #AutresNationalitesWrapper.hide {
+                max-height: 0;
+                opacity: 0;
+            }
+
+        .required-label::after {
+            content: ' *';
+            color: red;
+        }
+
+        .required-label:hover::after {
+            content: ' * This field is required';
+            color: red;
+        }
+    </style>
 }
+
 <div class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Formulaire de veille Contextuelle</h4>
-                <p class="card-title-desc">Veuillez remplir les informations ci-dessous.</p>
+                <h2 class="h2 text-primary"><i class='bx bx-pencil'></i> Formulaire de veille Contextuelle</h2>
+                <p class="card-title-desc"><i class='bx bx-info-circle'></i> Veuillez remplir les informations ci-dessous.</p>
             </div>
             <div class="card-body">
                 <form id="veilleForm" asp-action="Create" method="post">
@@ -24,7 +68,7 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                     <div class="mb-3">
-                        <label>Type d'événement</label>
+                        <label class="required-label"><i class='bx bx-calendar'></i> Type d'événement</label>
                         <select asp-for="TypeEvenement" class="form-control">
                             @foreach (var item in Enum.GetValues(typeof(Admin.Enums.TypeEvenement)))
                             {
@@ -34,107 +78,115 @@
                         <span asp-validation-for="TypeEvenement" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
-                        <label>Détails de l'événement</label>
-                        <input asp-for="DetailsEvenement" class="form-control" />
+                        <label class="required-label"><i class='bx bx-detail'></i> Détails de l'événement</label>
+                        <textarea asp-for="DetailsEvenement" class="form-control"></textarea>
                         <span asp-validation-for="DetailsEvenement" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
-                        <label>Source d'information</label> <br />
-                        <div class="btn-group" role="group" aria-label="Sources d'information">
+                        <label class="required-label"><i class='bx bx-news'></i> Source d'information</label> <br />
+                        <div class="d-flex flex-wrap">
                             @foreach (Admin.Flags.SourceInformation source in Enum.GetValues(typeof(Admin.Flags.SourceInformation)))
                             {
-                                <input type="checkbox" class="btn-check source-checkbox" id="source_@((int)source)" name="SourceInformation" value="@((int)source)" autocomplete="off" data-is-other="@((int)source == autreSourceInformationValue)">
-                                <label class="btn btn-outline-primary" for="source_@((int)source)">@source</label>
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" class="btn-check source-checkbox" id="source_@((int)source)" name="SourceInformation" value="@((int)source)" autocomplete="off" data-is-other="@((int)source == autreSourceInformationValue)">
+                                    <label class="btn btn-outline-primary" for="source_@((int)source)">
+                                        <i class='bx bx-info-circle'></i> @source
+                                    </label>
+                                </div>
                             }
                         </div>
-                    </div>
-                    <div class="mb-3">
-                        <label>Autres sources d'information</label>
-                        <input asp-for="AutresSourceInformation" id="AutresSourceInformation" class="form-control" disabled />
-                        <span asp-validation-for="AutresSourceInformation" class="text-danger"></span>
+                        <div id="AutresSourceInformationWrapper" class="mt-2">
+                            <input asp-for="AutresSourceInformation" id="AutresSourceInformation" class="form-control" disabled placeholder="Precise quelle source d'information" />
+                            <span asp-validation-for="AutresSourceInformation" class="text-danger"></span>
+                        </div>
                     </div>
                     <div class="mb-3">
                         <input asp-for="NombreMigrants" type="hidden" class="form-control" id="NombreMigrants" />
-                        <span asp-validation-for="NombreMigrants" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
-                        <label>Type de migrants</label> <br />
-                        <div class="btn-group" role="group" aria-label="Types de migrants">
+                        <label class="required-label"><i class='bx bx-group'></i> Type de migrants</label> <br />
+                        <div class="d-flex flex-wrap">
                             @foreach (Admin.Flags.TypeMigrants type in Enum.GetValues(typeof(Admin.Flags.TypeMigrants)))
                             {
-                                <input type="checkbox" class="btn-check type-checkbox" id="type_@((int)type)" name="TypeMigrants" value="@((int)type)" autocomplete="off" data-target-id="typeInputs_@((int)type)">
-                                <label class="btn btn-outline-primary" for="type_@((int)type)">@type</label>
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" class="btn-check type-checkbox" id="type_@((int)type)" name="TypeMigrants" value="@((int)type)" autocomplete="off" data-target-id="typeInputs_@((int)type)">
+                                    <label class="btn btn-outline-primary" for="type_@((int)type)">
+                                        <i class='bx bx-user'></i> @type
+                                    </label>
+                                </div>
                             }
                         </div>
                         <div>
-                            <div id="typeInputs_1" class="type-input mt-2" style="display: none;">
+                            <div id="typeInputs_1" class="type-input mt-2">
                                 <input asp-for="NombreHommes" type="number" class="form-control migrant-input" placeholder="Nombre d'hommes" />
                             </div>
-                            <div id="typeInputs_2" class="type-input mt-2" style="display: none;">
+                            <div id="typeInputs_2" class="type-input mt-2">
                                 <input asp-for="NombreFemmes" type="number" class="form-control migrant-input" placeholder="Nombre de femmes" />
                             </div>
-                            <div id="typeInputs_4" class="type-input mt-2" style="display: none;">
+                            <div id="typeInputs_4" class="type-input mt-2">
                                 <input asp-for="NombreMENA" type="number" class="form-control migrant-input" placeholder="Nombre de MENA" />
                             </div>
-                            <div id="typeInputs_8" class="type-input mt-2" style="display: none;">
+                            <div id="typeInputs_8" class="type-input mt-2">
                                 <input asp-for="NombreEnfants" type="number" class="form-control migrant-input" placeholder="Nombre d'enfants" />
                             </div>
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label>Nationalités</label> <br />
-                        <div class="btn-group" role="group" aria-label="Nationalités">
+                        <label class="required-label"><i class='bx bx-globe'></i> Nationalités</label> <br />
+                        <div class="d-flex flex-wrap">
                             @foreach (Admin.Flags.Nationalites nationalite in Enum.GetValues(typeof(Admin.Flags.Nationalites)))
                             {
-                                <input type="checkbox" class="btn-check nationality-checkbox" id="nationalite_@((int)nationalite)" name="Nationalites" value="@((int)nationalite)" autocomplete="off" data-target-id="nationalityInputs_@((int)nationalite)" data-is-other="@((int)nationalite == autreNationalitesValue)">
-                                <label class="btn btn-outline-primary" for="nationalite_@((int)nationalite)">@nationalite</label>
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" class="btn-check nationality-checkbox" id="nationalite_@((int)nationalite)" name="Nationalites" value="@((int)nationalite)" autocomplete="off" data-target-id="nationalityInputs_@((int)nationalite)" data-is-other="@((int)nationalite == autreNationalitesValue)">
+                                    <label class="btn btn-outline-primary" for="nationalite_@((int)nationalite)">
+                                        <i class='bx bx-flag'></i> @nationalite
+                                    </label>
+                                </div>
                             }
                         </div>
                         <div>
-                            <div id="nationalityInputs_1" class="nationality-input mt-2" style="display: none;">
+                            <div id="nationalityInputs_1" class="nationality-input mt-2">
                                 <input asp-for="NombreSoudan" type="number" class="form-control migrant-input" placeholder="Nombre de Soudan" />
                             </div>
-                            <div id="nationalityInputs_2" class="nationality-input mt-2" style="display: none;">
+                            <div id="nationalityInputs_2" class="nationality-input mt-2">
                                 <input asp-for="NombreSudsoudan" type="number" class="form-control migrant-input" placeholder="Nombre de Sud Soudan" />
                             </div>
-                            <div id="nationalityInputs_4" class="nationality-input mt-2" style="display: none;">
+                            <div id="nationalityInputs_4" class="nationality-input mt-2">
                                 <input asp-for="NombreGuinee" type="number" class="form-control migrant-input" placeholder="Nombre de Guinee" />
                             </div>
-                            <div id="nationalityInputs_8" class="nationality-input mt-2" style="display: none;">
+                            <div id="nationalityInputs_8" class="nationality-input mt-2">
                                 <input asp-for="NombreCameroun" type="number" class="form-control migrant-input" placeholder="Nombre de Cameroun" />
                             </div>
-                            <div id="nationalityInputs_16" class="nationality-input mt-2" style="display: none;">
+                            <div id="nationalityInputs_16" class="nationality-input mt-2">
                                 <input asp-for="NombreCotedIvoire" type="number" class="form-control migrant-input" placeholder="Nombre de Côte d'Ivoire" />
                             </div>
-                            <div id="nationalityInputs_32" class="nationality-input mt-2" style="display: none;">
+                            <div id="nationalityInputs_32" class="nationality-input mt-2">
                                 <input asp-for="NombreMali" type="number" class="form-control migrant-input" placeholder="Nombre de Mali" />
                             </div>
-                            <div id="nationalityInputs_64" class="nationality-input mt-2" style="display: none;">
+                            <div id="nationalityInputs_64" class="nationality-input mt-2">
                                 <input asp-for="NombreNigeria" type="number" class="form-control migrant-input" placeholder="Nombre de Nigeria" />
                             </div>
-                            <div id="nationalityInputs_128" class="nationality-input mt-2" style="display: none;">
+                            <div id="nationalityInputs_128" class="nationality-input mt-2">
                                 <input asp-for="NombreSenegal" type="number" class="form-control migrant-input" placeholder="Nombre de Senegal" />
                             </div>
-                            <div id="nationalityInputs_256" class="nationality-input mt-2" style="display: none;">
+                            <div id="nationalityInputs_256" class="nationality-input mt-2">
                                 <input asp-for="NombreRDC" type="number" class="form-control migrant-input" placeholder="Nombre de RDC" />
                             </div>
-                            <div id="nationalityInputs_512" class="nationality-input mt-2" style="display: none;">
+                            <div id="nationalityInputs_512" class="nationality-input mt-2">
                                 <input asp-for="NombreAutreNationalites" type="number" class="form-control migrant-input" placeholder="Nombre d'autres nationalités" />
                             </div>
                         </div>
+                        <div id="AutresNationalitesWrapper" class="mt-2">
+                            <input asp-for="AutresNationalites" id="AutresNationalites" class="form-control" disabled placeholder="Precise quelle nationnalité" />
+                            <span asp-validation-for="AutresNationalites" class="text-danger"></span>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label>Autres nationalités</label>
-                        <input asp-for="AutresNationalites" id="AutresNationalites" class="form-control" disabled />
-                        <span asp-validation-for="AutresNationalites" class="text-danger"></span>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary"><i class='bx bx-check-circle'></i> Submit</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
-
 @section Scripts {
     <script src="~/assets/libs/sweetalert2/sweetalert2.min.js"></script>
     <script>
@@ -142,7 +194,19 @@
             function toggleInput(checkbox, inputId) {
                 const inputDiv = document.getElementById(inputId);
                 if (inputDiv) {
-                    inputDiv.style.display = checkbox.checked ? 'block' : 'none';
+                    if (checkbox.checked) {
+                        inputDiv.style.display = 'block';
+                        requestAnimationFrame(() => {
+                            inputDiv.classList.add('show');
+                            inputDiv.classList.remove('hide');
+                        });
+                    } else {
+                        inputDiv.classList.add('hide');
+                        inputDiv.classList.remove('show');
+                        inputDiv.addEventListener('transitionend', () => {
+                            inputDiv.style.display = 'none';
+                        }, { once: true });
+                    }
                     inputDiv.querySelector('input').disabled = !checkbox.checked;
                 }
             }
@@ -161,15 +225,47 @@
 
             function updateNombreMigrants() {
                 let total = 0;
-                document.querySelectorAll('.migrant-input').forEach(function (input) {
-                    total += parseInt(input.value) || 0;
+                document.querySelectorAll('.type-input input').forEach(function (input) {
+                    if (!input.disabled) {
+                        total += parseInt(input.value) || 0;
+                    }
                 });
                 document.getElementById('NombreMigrants').value = total;
+            }
+
+            function validateForm() {
+                const totalMigrants = parseInt(document.getElementById('NombreMigrants').value) || 0;
+                let typeMigrantsSum = 0;
+                let nationalitiesSum = 0;
+
+                document.querySelectorAll('.type-input input').forEach(function (input) {
+                    if (!input.disabled) {
+                        typeMigrantsSum += parseInt(input.value) || 0;
+                    }
+                });
+
+                document.querySelectorAll('.nationality-input input').forEach(function (input) {
+                    if (!input.disabled) {
+                        nationalitiesSum += parseInt(input.value) || 0;
+                    }
+                });
+
+                if (totalMigrants !== typeMigrantsSum || totalMigrants !== nationalitiesSum) {
+                    Swal.fire({
+                        title: 'Erreur',
+                        text: 'La somme des valeurs des types de migrants et des nationalités doit être égale au nombre total de migrants.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                    return false;
+                }
+                return true;
             }
 
             document.querySelectorAll('.source-checkbox').forEach(function (checkbox) {
                 checkbox.addEventListener('change', function () {
                     if (checkbox.getAttribute('data-is-other') === 'True') {
+                        toggleInput(checkbox, 'AutresSourceInformationWrapper');
                         toggleDisabled(checkbox, 'AutresSourceInformation');
                     }
                 });
@@ -186,6 +282,7 @@
                 checkbox.addEventListener('change', function () {
                     toggleInput(checkbox, 'nationalityInputs_' + checkbox.value);
                     if (checkbox.getAttribute('data-is-other') === 'True') {
+                        toggleInput(checkbox, 'AutresNationalitesWrapper');
                         toggleDisabled(checkbox, 'AutresNationalites');
                     }
                     updateNombreMigrants();
@@ -198,51 +295,53 @@
 
             document.getElementById('veilleForm').addEventListener('submit', function (event) {
                 event.preventDefault();
-                Swal.fire({
-                    title: 'En cours...',
-                    text: 'Veuillez patienter',
-                    icon: 'info',
-                    allowOutsideClick: false,
-                    showConfirmButton: false,
-                    willOpen: () => {
-                        Swal.showLoading()
-                    }
-                });
-
-                const form = this;
-                const formData = new FormData(form);
-
-                fetch(form.action, {
-                    method: 'POST',
-                    body: formData
-                }).then(response => {
-                    if (response.ok) {
-                        Swal.fire({
-                            title: 'Succès!',
-                            text: 'La veille contextuelle a été ajoutée avec succès.',
-                            icon: 'success',
-                            confirmButtonText: 'OK'
-                        }).then(() => {
-                            window.location.href = '/VeilleContextuelle/Index';
-                        });
-                    } else {
-                        response.text().then(text => {
-                            Swal.fire({
-                                title: 'Erreur',
-                                text: text,
-                                icon: 'error',
-                                confirmButtonText: 'OK'
-                            });
-                        });
-                    }
-                }).catch(error => {
+                if (validateForm()) {
                     Swal.fire({
-                        title: 'Erreur',
-                        text: error,
-                        icon: 'error',
-                        confirmButtonText: 'OK'
+                        title: 'En cours...',
+                        text: 'Veuillez patienter',
+                        icon: 'info',
+                        allowOutsideClick: false,
+                        showConfirmButton: false,
+                        willOpen: () => {
+                            Swal.showLoading()
+                        }
                     });
-                });
+
+                    const form = this;
+                    const formData = new FormData(form);
+
+                    fetch(form.action, {
+                        method: 'POST',
+                        body: formData
+                    }).then(response => {
+                        if (response.ok) {
+                            Swal.fire({
+                                title: 'Succès!',
+                                text: 'La veille contextuelle a été ajoutée avec succès.',
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            }).then(() => {
+                                window.location.href = '/VeilleContextuelle/Index';
+                            });
+                        } else {
+                            response.text().then(text => {
+                                Swal.fire({
+                                    title: 'Erreur',
+                                    text: text,
+                                    icon: 'error',
+                                    confirmButtonText: 'OK'
+                                });
+                            });
+                        }
+                    }).catch(error => {
+                        Swal.fire({
+                            title: 'Erreur',
+                            text: error,
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    });
+                }
             });
         });
     </script>
