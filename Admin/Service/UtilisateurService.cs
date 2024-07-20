@@ -3,6 +3,8 @@ using Admin.Models;
 using Admin.Repository;
 using Admin.Service.Contract;
 using Admin.ViewModel;
+using IdentityServer4.Extensions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MS2Api.Model;
 using System;
@@ -15,11 +17,13 @@ namespace Admin.Service
     {
         private readonly IRepository<Utilisateur> _utilisateurRepository;
         private readonly IUtilisateurMapper _utilisateurMapper;
+        private readonly IPasswordHasher<Utilisateur> _passwordHasher;
 
-        public UtilisateurService(IRepository<Utilisateur> utilisateurRepository, IUtilisateurMapper utilisateurMapper)
+        public UtilisateurService(IRepository<Utilisateur> utilisateurRepository, IUtilisateurMapper utilisateurMapper, IPasswordHasher<Utilisateur> passwordHasher)
         {
             _utilisateurRepository = utilisateurRepository;
             _utilisateurMapper = utilisateurMapper;
+            _passwordHasher = passwordHasher;
         }
 
         public void AddUtilisateur(UtilisateurVM utilisateurVM)
@@ -30,6 +34,7 @@ namespace Admin.Service
             }
 
             var utilisateur = _utilisateurMapper.MapToUtilisateur(utilisateurVM);
+            utilisateur.MotDePasse = _passwordHasher.HashPassword(utilisateur, utilisateurVM.MotDePasse);
             _utilisateurRepository.Insert(utilisateur);
             _utilisateurRepository.SaveChanges();
         }
@@ -74,6 +79,7 @@ namespace Admin.Service
             };
         }
 
+
         public void UpdateUtilisateur(UtilisateurVM utilisateurVM)
         {
             if (utilisateurVM == null)
@@ -92,14 +98,26 @@ namespace Admin.Service
             _utilisateurRepository.SaveChanges();
         }
 
-        public void UpdateUtilisateur(UtilisateurVM utilisateurVM, Utilisateur utilisateur)
+        public void UpdateUtilisateur(UtilisateurVM utilisateurVM, Utilisateur existingutilisateur)
         {
-            throw new NotImplementedException();
+            if (utilisateurVM == null || existingutilisateur == null)
+            {
+                throw new ArgumentNullException(nameof(utilisateurVM));
+            }
+
+            _utilisateurMapper.UpdateUtilisateur(utilisateurVM, existingutilisateur);
+
+
+            if (!string.IsNullOrEmpty(utilisateurVM.MotDePasse))
+            {
+                existingutilisateur.MotDePasse = _passwordHasher.HashPassword(existingutilisateur, utilisateurVM.MotDePasse);
+            }
         }
 
-        public void DeleteUtilisateur(Utilisateur utilisateur)
-        {
-            throw new NotImplementedException();
+            public void DeleteUtilisateur(Utilisateur utilisateur)
+            {
+                throw new NotImplementedException();
+            }
         }
-    }
 }
+
