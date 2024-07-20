@@ -1,8 +1,9 @@
-﻿using MS2Api.Model;
+﻿using Admin.Builder.Contract;
+using MS2Api.Model;
 
 namespace Admin.Builder
 {
-    public class DossierPersonnelBuilder
+    public class DossierPersonnelBuilder : IDossierPersonnelBuilder
     {
         private DossierPersonnel _dossierPersonnel;
 

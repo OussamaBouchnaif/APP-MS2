@@ -94,5 +94,43 @@ namespace Admin.Mapper
             };
         }
 
+        public SituationPsychologique MapToSituationPsychologique(SituationPsychologiqueViewModel viewModel)
+        {
+            if (viewModel == null)
+            {
+                throw new ArgumentNullException(nameof(viewModel));
+            }
+
+            return new SituationPsychologique
+            {
+                Id = viewModel.Id,
+                Enceinte = viewModel.Enceinte,
+                MaladieChronique = viewModel.MaladieChronique,
+                SituationDeDetresse = viewModel.SituationDeDetresse,
+                MaladieMentale = viewModel.MaladieMentale,
+                Autre = viewModel.Autre,
+                Handicap = viewModel.Handicap,
+                DossierPersonnelId = viewModel.DossierPersonnelId
+            };
+        }
+
+        public SituationViolence MapToSituationViolence(SituationViolenceViewModel viewModel)
+        {
+            if (viewModel == null)
+            {
+                throw new ArgumentNullException(nameof(viewModel));
+            }
+
+            return new SituationViolence
+            {
+                Id = viewModel.Id,
+                Victim = viewModel.Victim,
+                Indicateur = viewModel.Indicateur,
+                VictimArretation = viewModel.VictimArretation,
+                Victimrefoulement = viewModel.Victimrefoulement,
+                DossierPersonnelId = viewModel.DossierPersonnelId
+            };
+        }
+
     }
 }
