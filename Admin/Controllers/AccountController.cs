@@ -47,7 +47,7 @@ namespace Admin.Controllers
                     {
                         _httpContextAccessor.HttpContext.Session.SetObjectAsJson("User", user);
 
-                        return RedirectToAction("Index", "Benificier");
+                        return RedirectToAction("Index", "Dashboard");
                     }
                 }
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
