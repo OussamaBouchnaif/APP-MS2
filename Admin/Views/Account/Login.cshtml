@@ -16,7 +16,8 @@
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesdesign" name="author" />
     <!-- App favicon -->
-    <link rel="shortcut icon" href="~/assets/images/favicon-dark.ico">
+    <link rel="shortcut icon" href="~/assets/images/favicon-dark.ico" media="(prefers-color-scheme: dark)">
+    <link rel="shortcut icon" href="~/assets/images/favicon-light.ico" media="(prefers-color-scheme: light)">
 
     <!-- Bootstrap Css -->
     <link href="~/assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
@@ -72,7 +73,6 @@
                                         </div>
                                     } *@
                                     <form method="post" asp-action="Login">
-
                                         <div class="mb-3">
                                             <label class="form-label" for="email" asp-for="Email">
                                                 Email

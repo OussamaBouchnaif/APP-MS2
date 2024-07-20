@@ -5,49 +5,47 @@
     ViewData["Title"] = "Utilisateurs";
 }
 
-<div class="content">
-    <div class="container">
-        <a asp-action="Add" asp-controller="Utilisateur" class="btn btn-primary" id="bn">Ajouter un Utilisateur</a>
-        @if (Model != null && Model.Any())
-        {
-            <table id="myTable" class="table table-hover">
-                <thead>
+<div class="container">
+    <a asp-action="Add" asp-controller="Utilisateur" class="btn btn-primary" id="bn">Ajouter un Utilisateur</a>
+    @if (Model != null && Model.Any())
+    {
+        <table id="myTable" class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>Age</th>
+                    <th>Sexe</th>
+                    <th>Tele</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var utilisateur in Model)
+                {
                     <tr>
-                        <th>Nom</th>
-                        <th>Prenom</th>
-                        <th>Age</th>
-                        <th>Sexe</th>
-                        <th>Tele</th>
-                        <th>Action</th>
+                        <td>@utilisateur.Nom</td>
+                        <td>@utilisateur.Prenom</td>
+                        <td>@utilisateur.Age</td>
+                        <td>@utilisateur.Sexe</td>
+                        <td>@utilisateur.Tele</td>
+                        <td class="text-center">
+                            <a href="javascript:void(0);" onclick="confirmDelete('@utilisateur.Id')" class="text-danger">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                            <a asp-action="Edit" asp-route-id="@utilisateur.Id"><i class="fas fa-edit"></i></a>
+                            <a asp-action="Details" asp-route-id="@utilisateur.Id" class="text-info"><i class="fas fa-info-circle"></i></a>
+                            <a asp-action="Add" class="text-warning"><i class="fas fa-folder-plus"></i></a>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach (var utilisateur in Model)
-                    {
-                        <tr>
-                            <td>@utilisateur.Nom</td>
-                            <td>@utilisateur.Prenom</td>
-                            <td>@utilisateur.Age</td>
-                            <td>@utilisateur.Sexe</td>
-                            <td>@utilisateur.Tele</td>
-                            <td class="text-center">
-                                <a href="javascript:void(0);" onclick="confirmDelete('@utilisateur.Id')" class="text-danger">
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>
-                                <a asp-action="Edit" asp-route-id="@utilisateur.Id"><i class="fas fa-edit"></i></a>
-                                <a asp-action="Details" asp-route-id="@utilisateur.Id" class="text-info"><i class="fas fa-info-circle"></i></a>
-                                <a asp-action="Add" class="text-warning"><i class="fas fa-folder-plus"></i></a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        }
-        else
-        {
-            <p>No beneficiaries found.</p>
-        }
-    </div>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No beneficiaries found.</p>
+    }
 </div>
 
 @section Scripts {
