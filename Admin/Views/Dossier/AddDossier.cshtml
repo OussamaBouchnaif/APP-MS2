@@ -1,0 +1,570 @@
+﻿
+@model Admin.ViewModel.DossierPersonnel.DossierPersonnelViewModel
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Forms Steps</h4>
+                </div><!-- end card header -->
+                <div class="card-body">
+                <form asp-action="AddDossier" method="post" asp-controller="Dossier">
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    @if (ViewBag.Errors != null)
+                    {
+                        <ul class="text-danger">
+                            @foreach (var error in ViewBag.Errors)
+                            {
+                                <li>@error</li>
+                            }
+                        </ul>
+                    }
+                    <div class="form-group">
+                        <input asp-for="BenificierId" class="form-control" value="@ViewData["Id"]" type="hidden" />
+                    </div>
+                        <ul class="wizard-nav mb-5">
+                            <li class="wizard-list-item">
+                                <div class="list-item">
+                                    <div class="step-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                                         title="Situation familial">
+                                        <i class="bx bx-user-circle"></i>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="wizard-list-item">
+                                <div class="list-item">
+                                    <div class="step-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                                         title="Situation Administrative">
+                                        <i class="bx bx-file"></i>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="wizard-list-item">
+                                <div class="list-item">
+                                    <div class="step-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                                     title="Parcours Migratoire">
+                                        <i class="bx bx-edit"></i>
+                                    </div>
+                                </div>
+                            </li>
+                        <li class="wizard-list-item">
+                            <div class="list-item">
+                                <div class="step-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                                     title="Situation socio-Economique">
+                                    <i class="bx bx-edit"></i>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="wizard-list-item">
+                            <div class="list-item">
+                                <div class="step-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                                     title="Situation Psychologique">
+                                    <i class="bx bx-edit"></i>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="wizard-list-item">
+                            <div class="list-item">
+                                <div class="step-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                                     title="Situation Violence">
+                                    <i class="bx bx-edit"></i>
+                                </div>
+                            </div>
+                        </li>
+                        </ul>
+
+                        <!-- wizard-nav -->
+
+                        <div class="wizard-tab">
+                            <div class="text-center mb-4">
+                            <h5>Détails de la Situation Familiale</h5>
+                            <p class="card-title-desc">Veuillez remplir les informations ci-dessous</p>
+                            </div>
+                            <div>
+                            <div class="row">
+                                <div class=" mb-3">
+                                    <label asp-for="LieuxDintervention" class="form-label"></label>
+                                    <input asp-for="LieuxDintervention" class="form-control" type="text" />
+                                    <span asp-validation-for="LieuxDintervention" class="text-danger"></span>
+                                </div>
+                                <div class="form-check form-switch mb-3">
+                                    <label asp-for="Familiale.Mineur" class="form-label"></label>
+                                    <input asp-for="Familiale.Mineur" class="form-check-input" id="mineurSwitch" type="checkbox" value="true" />
+                                    <input name="Familiale.Mineur" type="hidden" value="false" />
+                                    <span asp-validation-for="Familiale.Mineur" class="text-danger"></span>
+                                </div>
+                                <div class="form-check form-switch mb-3">
+                                    <label asp-for="Familiale.Accompagne" class="form-label"></label>
+                                    <input asp-for="Familiale.Accompagne" class="form-check-input" id="accompagneSwitch" type="checkbox" value="true" />
+                                    <input name="Familiale.Accompagne" type="hidden" value="false" />
+                                    <span asp-validation-for="Familiale.Accompagne" class="text-danger"></span>
+                                </div>
+                            </div><!-- end row -->
+
+                            <div class="row">
+                                <div class="mb-3" id="nameFieldContainer" style="display:none;">
+                                    <label asp-for="Familiale.Name" class="form-label"></label>
+                                    <input asp-for="Familiale.Name" class="form-control" />
+                                    <span asp-validation-for="Familiale.Name" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3" id="linkFieldContainer" style="display:none;">
+                                    <label asp-for="Familiale.Link" class="form-label"></label>
+                                    <input asp-for="Familiale.Link" class="form-control" />
+                                    <span asp-validation-for="Familiale.Link" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3" id="contactFieldContainer" style="display:none;">
+                                    <label asp-for="Familiale.Contact" class="form-label"></label>
+                                    <input asp-for="Familiale.Contact" class="form-control" />
+                                    <span asp-validation-for="Familiale.Contact" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="Familiale.SituationMatrimoniale" class="form-label"></label>
+                                    <input asp-for="Familiale.SituationMatrimoniale" class="form-control" />
+                                    <span asp-validation-for="Familiale.SituationMatrimoniale" class="text-danger"></span>
+                                </div>
+                            </div><!-- end row -->
+                                <div class="row">
+                                    <div class="form-check form-switch mb-3">
+                                        <label asp-for="Familiale.EnfantAcharge" class="form-label"></label>
+                                        <input asp-for="Familiale.EnfantAcharge" class="form-check-input" type="checkbox" id="customSwitchsizelg" value="true" />
+                                        <input name="Familiale.EnfantAcharge" type="hidden" value="false" />
+                                        <span asp-validation-for="Familiale.EnfantAcharge" class="text-danger"></span>
+                                    </div>
+                                    <div class="mb-3" id="nombreFieldContainer" style="display:none;">
+                                        <label asp-for="Familiale.Nombre" class="form-label"></label>
+                                        <input asp-for="Familiale.Nombre" class="form-control" />
+                                        <span asp-validation-for="Familiale.Nombre" class="text-danger"></span>
+                                    </div>
+                                    <div class="mb-3" id="ageFieldContainer" style="display:none;">
+                                        <label asp-for="Familiale.Age" class="form-label"></label>
+                                        <input asp-for="Familiale.Age" class="form-control" />
+                                        <span asp-validation-for="Familiale.Age" class="text-danger"></span>
+                                    </div>
+                                </div><!-- end row -->
+                            </div>
+
+                        </div>
+                        <!-- wizard-tab -->
+
+                        <div class="wizard-tab">
+                        <div class="text-center mb-4">
+                            <h5>Détails de la situation administrative</h5>
+                            <p class="card-title-desc">Veuillez remplir les informations ci-dessous</p>
+                        </div>
+                        <div>
+                            <div class="row">
+                                <div class="form-check form-switch mb-3">
+                                    <label asp-for="Administrative.CarteMarocaine" class="form-label"></label>
+                                    <input asp-for="Administrative.CarteMarocaine" class="form-check-input" type="checkbox" id="carteMarocaineSwitch" value="true" />
+                                    <input name="CarteMarocaine" type="hidden" value="false" />
+                                    <span asp-validation-for="Administrative.CarteMarocaine" class="text-danger"></span>
+                                </div>
+                                <div class="form-check form-switch mb-3">
+                                    <label asp-for="Administrative.ValidationPassport" class="form-label"></label>
+                                    <input asp-for="Administrative.ValidationPassport" class="form-check-input" type="checkbox" id="validationPassportSwitch" value="true" />
+                                    <input name="ValidationPassport" type="hidden" value="false" />
+                                    <span asp-validation-for="Administrative.ValidationPassport" class="text-danger"></span>
+                                </div>
+                                <div class="form-check form-switch mb-3">
+                                    <label asp-for="Administrative.CarteConsulaire" class="form-label"></label>
+                                    <input asp-for="Administrative.CarteConsulaire" class="form-check-input" type="checkbox" id="carteConsulaireSwitch" value="true" />
+                                    <input name="CarteConsulaire" type="hidden" value="false" />
+                                    <span asp-validation-for="Administrative.CarteConsulaire" class="text-danger"></span>
+                                </div>
+                                <div class="form-check form-switch mb-3">
+                                    <label asp-for="Administrative.ActeDeNaissance" class="form-label"></label>
+                                    <input asp-for="Administrative.ActeDeNaissance" class="form-check-input" type="checkbox" id="acteDeNaissanceSwitch" value="true" />
+                                    <input name="ActeDeNaissance" type="hidden" value="false" />
+                                    <span asp-validation-for="Administrative.ActeDeNaissance" class="text-danger"></span>
+                                </div>
+                                <div class="form-check form-switch mb-3">
+                                    <label asp-for="Administrative.CarteSejourValid" class="form-label"></label>
+                                    <input asp-for="Administrative.CarteSejourValid" class="form-check-input" type="checkbox" id="carteSejourValidSwitch" value="true" />
+                                    <input name="CarteSejourValid" type="hidden" value="false" />
+                                    <span asp-validation-for="Administrative.CarteSejourValid" class="text-danger"></span>
+                                </div>
+                                <div class="form-check form-switch mb-3">
+                                    <label asp-for="Administrative.StatusDeRefugie" class="form-label"></label>
+                                    <input asp-for="Administrative.StatusDeRefugie" class="form-check-input" type="checkbox" id="statusDeRefugieSwitch" value="true" />
+                                    <input name="StatusDeRefugie" type="hidden" value="false" />
+                                    <span asp-validation-for="Administrative.StatusDeRefugie" class="text-danger"></span>
+                                </div>
+                                <div class="form-check form-switch mb-3">
+                                    <label asp-for="Administrative.RecepisseDedemande" class="form-label"></label>
+                                    <input asp-for="Administrative.RecepisseDedemande" class="form-check-input" type="checkbox" id="recepisseDedemandeSwitch" value="true" />
+                                    <input name="RecepisseDedemande" type="hidden" value="false" />
+                                    <span asp-validation-for="Administrative.RecepisseDedemande" class="text-danger"></span>
+                                </div>
+                                <div class="form-check form-switch mb-3">
+                                    <label asp-for="Administrative.Visa" class="form-label"></label>
+                                    <input asp-for="Administrative.Visa" class="form-check-input" type="checkbox" id="visaSwitch" value="true" />
+                                    <input name="Visa" type="hidden" value="false" />
+                                    <span asp-validation-for="Administrative.Visa" class="text-danger"></span>
+                                </div>
+                            </div><!-- end row -->
+
+                            @* <div class="row">
+                                <div class="mb-3">
+                                    <label asp-for="DossierPersonnelId" class="form-label"></label>
+                                    <input asp-for="DossierPersonnelId" class="form-control" />
+                                    <span asp-validation-for="DossierPersonnelId" class="text-danger"></span>
+                                </div>
+                            </div><!-- end row --> *@
+                        </div>
+                    </div>
+
+                        <div class="wizard-tab">
+                            <div>
+                                <div class="text-center mb-4">
+                                <h5>Détails de Parcours Migratoire</h5>
+                                <p class="card-title-desc">Veuillez remplir les informations ci-dessous</p>
+                                </div>
+                                <div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <label for="basicpill-namecard-input"
+                                                   class="form-label">Annee Entree</label>
+                                                <input type="date" asp-for="ParcoursMigratoire.AnneeEntree" class="form-control"  id="basicpill-namecard-input">
+                                            </div>
+                                        </div><!-- end col -->
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">motif départ</label>
+                                                <select class="form-select" asp-for="ParcoursMigratoire.MotifDepart">
+                                                    <option selected>Selectionner un motif</option>
+                                                    <option value="Etude">Etude</option>
+                                                    <option value="Regroupement familial">Regroupement familial</option>
+                                                    <option value="Guerre et conflits">Guerre et conflits</option>
+                                                    <option value="Discrimination et persécution">Discrimination et persécution</option>
+                                                    <option value="Conflits familiaux">Conflits familiaux</option>
+                                                    <option value="Raisons soico-éconique">Raisons soico-éconique</option>
+                                                </select>
+                                            </div>
+                                        </div><!-- end col -->
+                                    </div><!-- end row -->
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Voie</label>
+                                                <select class="form-select" asp-for="ParcoursMigratoire.Voie">
+                                                    <option selected>Selectionner le Voie</option>
+                                                    <option value="terrestre">terrestre</option>
+                                                    <option value="maritime">maritime</option>
+                                                    <option value="aérienne">aérienne</option>
+                                                   
+                                                </select>
+                                            </div>
+                                        </div><!-- end col -->
+
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <label for="basicpill-card-verification-input"
+                                                   class="form-label">Nouvelle Arrivante(dans la ville)</label><br />
+
+                                                <input type="radio" asp-for="ParcoursMigratoire.NouvelleArrivante"  name="na" value="true">oui (-3mois)
+                                                <input type="radio" asp-for="ParcoursMigratoire.NouvelleArrivante" name="na" value="false">Non (+3mois)
+                                                
+                                            </div>
+                                        </div><!-- end col -->
+                                    </div><!-- end row -->
+
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label for="basicpill-card-verification-input"
+                                                   class="form-label">Ville d'entrée</label>
+                                            <input type="text" asp-for="ParcoursMigratoire.VilleEntree" class="form-control" id="basicpill-card-verification-input">
+
+                                        </div>
+                                    </div>
+                                    <!-- end col -->
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <label for="basicpill-card-verification-input"
+                                                       class="form-label">Duree</label>
+                                                <input type="text" asp-for="ParcoursMigratoire.Duree" class="form-control" id="basicpill-card-verification-input">
+                                            </div>
+                                        </div>
+                                    </div><!-- end row -->
+
+                                
+                                </div><!-- end form -->
+
+                            </div>
+                        </div>
+                        <!-- wizard-tab -->
+
+                        <div class="wizard-tab">
+                            <div>
+                                <div class="text-center mb-4">
+                                    <h5>Détails de la situation socio Economique</h5>
+                                <p class="card-title-desc">Veuillez remplir les informations ci-dessous</p>
+                                </div>
+                                <div>
+                                    <div class="row">
+                                    
+                                        <div class="col-md-5">
+                                            <div>
+                                                <h5 class="font-size-14 mb-4">Niveau Education</h5>
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="radio" asp-for="SocioEconomique.NiveauEducation" value="primaire" name="sn"
+                                                           id="formRadios1" checked>
+                                                    <label class="form-check-label" for="formRadios1">
+                                                        primaire
+                                                    </label>
+                                                </div>
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" asp-for="SocioEconomique.NiveauEducation" type="radio" value="secondaire" name="sn"
+                                                           id="formRadios2">
+                                                    <label class="form-check-label" for="formRadios2">
+                                                        secondaire
+                                                    </label>
+                                                </div>
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" asp-for="SocioEconomique.NiveauEducation" value="superieur" type="radio" name="sn"
+                                                           id="formRadios3">
+                                                    <label class="form-check-label" for="formRadios2">
+                                                        superieur
+                                                    </label>
+                                                </div>
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" asp-for="SocioEconomique.NiveauEducation" value="formation professionnelle" id="formationProfessionnelle" type="radio" name="sn"
+                                                          >
+                                                    <label class="form-check-label" for="formRadios2">
+                                                        formation professionnelle
+                                                    </label>
+                                                </div>
+                                                <div class="mb-3" id="fpFieldContainer" style="display:none;">
+                                                    <label asp-for="SocioEconomique.FormationPersonnel" class="form-label"></label>
+                                                    <input asp-for="SocioEconomique.FormationPersonnel" class="form-control" />
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                   
+                                    </div><!-- end row -->
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div>
+                                                <h5 class="font-size-14 mb-4">Source de revenus</h5>
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="radio" asp-for="SocioEconomique.Source" value="Mendicite" name="ss"
+                                                           id="formRadios1" checked>
+                                                    <label class="form-check-label" for="formRadios1">
+                                                        Mendicite
+                                                    </label>
+                                                </div>
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" asp-for="SocioEconomique.Source" type="radio" value="Epargne" name="ss"
+                                                           id="formRadios2">
+                                                    <label class="form-check-label" for="formRadios2">
+                                                        Epargne
+                                                    </label>
+                                                </div>
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" asp-for="SocioEconomique.Source" value="travail informel" type="radio" name="ss"
+                                                           id="formRadios3">
+                                                    <label class="form-check-label" for="formRadios2">
+                                                        travail informel
+                                                    </label>
+                                                </div>
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" asp-for="SocioEconomique.Source" value="travail informel" type="radio" name="ss">
+                                                    <label class="form-check-label" for="formRadios2">
+                                                        travail informel
+                                                    </label>
+                                                </div>
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" asp-for="SocioEconomique.Source" value="travail formel"  type="radio" name="ss">
+                                                    <label class="form-check-label" for="formRadios2">
+                                                        travail formel
+                                                    </label>
+                                                </div>
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" asp-for="SocioEconomique.Source" value="transfert de fonds" id="formationProfessionnelle" type="radio" name="ss">
+                                                    <label class="form-check-label" for="formRadios2">
+                                                        transfert de fonds
+                                                    </label>
+                                                </div>
+                                           
+
+                                            </div>
+                                        </div>
+
+                                   
+                                    </div><!-- end row -->
+                                    <div class="row">
+
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Habit</label>
+                                                <select class="form-select" asp-for="SocioEconomique.Habit">
+                                                    <option selected>Selectionner </option>
+                                                    <option value="Logement individuel ou familial">Logement individuel ou familial</option>
+                                                    <option value="logement partagé">logement partagé</option>
+                                                    <option value="chambre partagée">chambre partagée</option>
+                                                    <option value="Maison d'urgence">Maison d'urgence</option>
+                                                    <option value="Squats">Squats</option>
+                                                    <option value="compement">Situation de rue/compement</option>
+
+                                                </select>
+                                            </div>
+                                        </div><!-- end col -->
+
+                                    </div>
+                                
+                                </div><!-- end form -->
+
+                            </div>
+                        </div>
+
+                        <div class="wizard-tab">
+                        <div class="text-center mb-4">
+                            <h5>Détails de la Situation Psychologique</h5>
+                            <p class="card-title-desc">Veuillez remplir les informations ci-dessous</p>
+                        </div>
+                        <div>
+                            <div class="row">
+                                <div class="mb-3">
+                                    <label asp-for="Psychologique.Enceinte" class="form-label">Date Enceinte</label>
+                                    <input asp-for="Psychologique.Enceinte" class="form-control" type="date" />
+                                    <span asp-validation-for="Psychologique.Enceinte" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="Psychologique.MaladieChronique" class="form-label">Maladie Chronique</label>
+                                    <input asp-for="Psychologique.MaladieChronique" class="form-control" type="text" />
+                                    <span asp-validation-for="Psychologique.MaladieChronique" class="text-danger"></span>
+                                </div>
+                                <div class="form-check form-switch mb-3">
+                                    <label asp-for="Psychologique.SituationDeDetresse" class="form-label">Situation de Détresse</label>
+                                    <input asp-for="Psychologique.SituationDeDetresse" class="form-check-input" type="checkbox" value="true" />
+                                    <input name="SituationDeDetresse" type="hidden" value="false" />
+                                    <span asp-validation-for="Psychologique.SituationDeDetresse" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="Psychologique.MaladieMentale" class="form-label">Maladie Mentale</label>
+                                    <input asp-for="Psychologique.MaladieMentale" class="form-control" type="text" />
+                                    <span asp-validation-for="Psychologique.MaladieMentale" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="Psychologique.Autre" class="form-label">Autre</label>
+                                    <input asp-for="Psychologique.Autre" class="form-control" type="text" />
+                                    <span asp-validation-for="Psychologique.Autre" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="Psychologique.Handicap" class="form-label">Handicap</label>
+                                    <input asp-for="Psychologique.Handicap" class="form-control" type="text" />
+                                    <span asp-validation-for="Psychologique.Handicap" class="text-danger"></span>
+                                </div>
+                                @* <div class="mb-3">
+                                    <label asp-for="DossierPersonnelId" class="form-label">ID Dossier Personnel</label>
+                                    <input asp-for="DossierPersonnelId" class="form-control" type="number" />
+                                    <span asp-validation-for="DossierPersonnelId" class="text-danger"></span>
+                                </div> *@
+                            </div><!-- end row -->
+                        </div>
+                    </div>
+
+                        <div class="wizard-tab">
+                            <div class="text-center mb-4">
+                                <h5>Détails de la Situation de Violence</h5>
+                                <p class="card-title-desc">Veuillez remplir les informations ci-dessous</p>
+                            </div>
+                            <div>
+                                <div class="row">
+                                    <div class="mb-3">
+                                        <label asp-for="Violence.Victim" class="form-label">Victime</label>
+                                    <input asp-for="Violence.Victim" class="form-control" type="text" />
+                                    <span asp-validation-for="Violence.Victim" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-check form-switch mb-3">
+                                    <label asp-for="Violence.Indicateur" class="form-label">Indicateur</label>
+                                    <input asp-for="Violence.Indicateur" class="form-check-input" type="checkbox" />
+                                        <input name="Indicateur" type="hidden" value="false" />
+                                    <span asp-validation-for="Violence.Indicateur" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-check form-switch mb-3">
+                                    <label asp-for="Violence.VictimArretation" class="form-label">Victime d'Arrestation</label>
+                                    <input asp-for="Violence.VictimArretation" class="form-check-input" type="checkbox" />
+                                        <input name="VictimArretation" type="hidden" value="false" />
+                                    <span asp-validation-for="Violence.VictimArretation" class="text-danger"></span>
+                                    </div>
+                                    <div class="mb-3">
+                                    <label asp-for="Violence.Victimrefoulement" class="form-label">Victime de Refoulement</label>
+                                    <input asp-for="Violence.Victimrefoulement" class="form-control" type="text" />
+                                    <span asp-validation-for="Violence.Victimrefoulement" class="text-danger"></span>
+                                    </div>
+                                    
+                                </div><!-- end row -->
+                            </div>
+                        </div>
+
+
+                        <div class="d-flex align-items-start gap-3 mt-4">
+                            <button type="button" class="btn btn-primary w-sm" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+                            <button type="button" class="btn btn-primary w-sm ms-auto" id="nextBtn" onclick="nextPrev(1)">Next</button>
+                        </div>
+                    <button type="submit" class="btn btn-primary w-sm ms-auto" id="nextBtn" >Ajouter</button>
+                    </form>
+                </div>
+            </div>
+        </div><!-- end col -->
+    </div><!-- end row -->
+@section Scripts {
+    <script>
+        document.getElementById('accompagneSwitch').addEventListener('change', function () {
+            var nameFieldContainer = document.getElementById('nameFieldContainer');
+            var linkFieldContainer = document.getElementById('linkFieldContainer');
+            var contactFieldContainer = document.getElementById('contactFieldContainer');
+
+            if (this.checked) {
+                nameFieldContainer.style.display = 'block';
+                linkFieldContainer.style.display = 'block';
+                contactFieldContainer.style.display = 'block';
+            } else {
+                nameFieldContainer.style.display = 'none';
+                linkFieldContainer.style.display = 'none';
+                contactFieldContainer.style.display = 'none';
+            }
+        });
+
+        document.getElementById('customSwitchsizelg').addEventListener('change', function () {
+            var nombreFieldContainer = document.getElementById('nombreFieldContainer');
+            var ageFieldContainer = document.getElementById('ageFieldContainer');
+
+            if (this.checked) {
+                nombreFieldContainer.style.display = 'block';
+                ageFieldContainer.style.display = 'block';
+            } else {
+                nombreFieldContainer.style.display = 'none';
+                ageFieldContainer.style.display = 'none';
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var radios = document.querySelectorAll('input[name="sn"]');
+            var fp = document.getElementById('fpFieldContainer');
+
+            radios.forEach(function (radio) {
+                radio.addEventListener('change', function () {
+                    if (document.getElementById('formationProfessionnelle').checked) {
+                        fp.style.display = 'block';
+                    } else {
+                        fp.style.display = 'none';
+                    }
+                });
+            });
+
+            // Initial check in case the radio button is already checked when the page loads
+            if (document.getElementById('formationProfessionnelle').checked) {
+                fp.style.display = 'block';
+            }
+        });
+
+       
+    </script>
+}
