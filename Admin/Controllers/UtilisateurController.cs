@@ -80,19 +80,25 @@ namespace Admin.Controllers
             return View(utilisateurVM);
         }
 
-        public IActionResult Delete(int Id)
+        [HttpPost]
+        public IActionResult Delete(int id)
         {
-
-            Utilisateur utilisateur = _utilisateurService.GetUtilisateurById(Id);
-            _utilisateurService.DeleteUtilisateur(utilisateur);
-            return RedirectToAction(nameof(Index));
-            if (utilisateur == null)
+            try
             {
-                return NotFound();
+                var utilisateur = _utilisateurService.GetUtilisateurById(id);
+                if (utilisateur == null)
+                {
+                    return Json(new { success = false, message = "Utilisateur non trouvé" });
+                }
+
+                _utilisateurService.DeleteUtilisateur(utilisateur);
+                return Json(new { success = true, message = "Utilisateur supprimé avec succès" });
             }
-
-            return RedirectToAction("Index");
-
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
         }
-    }      
+
+    }
 }
