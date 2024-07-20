@@ -5,6 +5,8 @@ using Admin.Mapper.Contract;
 using Admin.Mapper;
 using Microsoft.AspNetCore.Identity;
 using MS2Api.Model;
+using Admin.Builder.Contract;
+using Admin.Builder;
 
 namespace Admin.Extensions
 {
@@ -47,6 +49,8 @@ namespace Admin.Extensions
             services.AddScoped<IDossierService, DossierService>();
 
             services.AddScoped<IDossierMapper, DossierMapper>();
+
+            services.AddScoped<IDossierPersonnelBuilder, DossierPersonnelBuilder>();
 
         }
     }

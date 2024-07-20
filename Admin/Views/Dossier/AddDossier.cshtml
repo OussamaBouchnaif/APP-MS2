@@ -122,7 +122,12 @@
                                 </div>
                                 <div class="mb-3">
                                     <label asp-for="Familiale.SituationMatrimoniale" class="form-label"></label>
-                                    <input asp-for="Familiale.SituationMatrimoniale" class="form-control" />
+                                    <select asp-for="Familiale.SituationMatrimoniale" class="form-control">
+                                        <option value="célibataire">célibataire</option>
+                                        <option value="Encouple">En couple / maiée </option>
+                                        <option value="Divorce">Divorcé </option>
+                                        <option value="veuf">veuf</option>
+                                    </select>
                                     <span asp-validation-for="Familiale.SituationMatrimoniale" class="text-danger"></span>
                                 </div>
                             </div><!-- end row -->
@@ -155,12 +160,19 @@
                             <p class="card-title-desc">Veuillez remplir les informations ci-dessous</p>
                         </div>
                         <div>
+
                             <div class="row">
+                                <h5 class="font-size-14 mb-4">Peice d'identite</h5>
                                 <div class="form-check form-switch mb-3">
                                     <label asp-for="Administrative.CarteMarocaine" class="form-label"></label>
                                     <input asp-for="Administrative.CarteMarocaine" class="form-check-input" type="checkbox" id="carteMarocaineSwitch" value="true" />
                                     <input name="CarteMarocaine" type="hidden" value="false" />
                                     <span asp-validation-for="Administrative.CarteMarocaine" class="text-danger"></span>
+                                </div>
+                                <div class=" mb-3">
+                                    <label asp-for="Administrative.Autre" class="form-label"></label>
+                                    <input asp-for="Administrative.Autre" class="form-control" type="text" />
+                                    <span asp-validation-for="Administrative.Autre" class="text-danger"></span>
                                 </div>
                                 <div class="form-check form-switch mb-3">
                                     <label asp-for="Administrative.ValidationPassport" class="form-label"></label>
@@ -180,6 +192,14 @@
                                     <input name="ActeDeNaissance" type="hidden" value="false" />
                                     <span asp-validation-for="Administrative.ActeDeNaissance" class="text-danger"></span>
                                 </div>
+
+                                <div class="form-check form-switch mb-3">
+                                    <label asp-for="Administrative.AucunPiece" class="form-label"></label>
+                                    <input asp-for="Administrative.AucunPiece" class="form-check-input" type="checkbox" id="aucunP" value="true" />
+                                    <input name="ActeDeNaissance" type="hidden" value="false" />
+                                    <span asp-validation-for="Administrative.AucunPiece" class="text-danger"></span>
+                                </div>
+                                <h5 class="font-size-14 mb-4">Titre de sejour</h5>
                                 <div class="form-check form-switch mb-3">
                                     <label asp-for="Administrative.CarteSejourValid" class="form-label"></label>
                                     <input asp-for="Administrative.CarteSejourValid" class="form-check-input" type="checkbox" id="carteSejourValidSwitch" value="true" />
@@ -203,6 +223,13 @@
                                     <input asp-for="Administrative.Visa" class="form-check-input" type="checkbox" id="visaSwitch" value="true" />
                                     <input name="Visa" type="hidden" value="false" />
                                     <span asp-validation-for="Administrative.Visa" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-check form-switch mb-3">
+                                    <label asp-for="Administrative.AucunTite" class="form-label"></label>
+                                    <input asp-for="Administrative.AucunTite" class="form-check-input" type="checkbox" id="aucunt" value="true" />
+                                    <input name="Visa" type="hidden" value="false" />
+                                    <span asp-validation-for="Administrative.AucunTite" class="text-danger"></span>
                                 </div>
                             </div><!-- end row -->
 
@@ -311,8 +338,15 @@
                                             <div>
                                                 <h5 class="font-size-14 mb-4">Niveau Education</h5>
                                                 <div class="form-check mb-2">
+                                                <input class="form-check-input" type="radio" asp-for="SocioEconomique.NiveauEducation" value="aucun" name="sn"
+                                                           id="formRadios0" >
+                                                    <label class="form-check-label" for="formRadios1">
+                                                        aucun
+                                                    </label>
+                                                </div>
+                                                <div class="form-check mb-2">
                                                     <input class="form-check-input" type="radio" asp-for="SocioEconomique.NiveauEducation" value="primaire" name="sn"
-                                                           id="formRadios1" checked>
+                                                           id="formRadios1" >
                                                     <label class="form-check-label" for="formRadios1">
                                                         primaire
                                                     </label>
@@ -352,8 +386,15 @@
                                             <div>
                                                 <h5 class="font-size-14 mb-4">Source de revenus</h5>
                                                 <div class="form-check mb-2">
+                                                <input class="form-check-input" type="radio" asp-for="SocioEconomique.Source" value="aucun" name="ss"
+                                                           id="formRadios0">
+                                                    <label class="form-check-label" for="formRadios1">
+                                                        aucun
+                                                    </label>
+                                                </div>
+                                                <div class="form-check mb-2">
                                                     <input class="form-check-input" type="radio" asp-for="SocioEconomique.Source" value="Mendicite" name="ss"
-                                                           id="formRadios1" checked>
+                                                           id="formRadios1" >
                                                     <label class="form-check-label" for="formRadios1">
                                                         Mendicite
                                                     </label>
@@ -429,6 +470,7 @@
                         </div>
                         <div>
                             <div class="row">
+                                <h5 class="font-size-14 mb-4">Etat de santé</h5>
                                 <div class="mb-3">
                                     <label asp-for="Psychologique.Enceinte" class="form-label">Date Enceinte</label>
                                     <input asp-for="Psychologique.Enceinte" class="form-control" type="date" />
@@ -439,6 +481,7 @@
                                     <input asp-for="Psychologique.MaladieChronique" class="form-control" type="text" />
                                     <span asp-validation-for="Psychologique.MaladieChronique" class="text-danger"></span>
                                 </div>
+                                <h5 class="font-size-14 mb-4">santé mentale</h5>
                                 <div class="form-check form-switch mb-3">
                                     <label asp-for="Psychologique.SituationDeDetresse" class="form-label">Situation de Détresse</label>
                                     <input asp-for="Psychologique.SituationDeDetresse" class="form-check-input" type="checkbox" value="true" />
@@ -455,9 +498,15 @@
                                     <input asp-for="Psychologique.Autre" class="form-control" type="text" />
                                     <span asp-validation-for="Psychologique.Autre" class="text-danger"></span>
                                 </div>
+                                <h5 class="font-size-14 mb-4">situation de handicap</h5>
                                 <div class="mb-3">
                                     <label asp-for="Psychologique.Handicap" class="form-label">Handicap</label>
                                     <input asp-for="Psychologique.Handicap" class="form-control" type="text" />
+                                    <select asp-for="Psychologique.Handicap" class="form-control">
+                                        <option value="">selectionner</option>
+                                        <option value="Physique">Physique</option>
+                                        <option value="Mental">Mental</option>
+                                    </select>
                                     <span asp-validation-for="Psychologique.Handicap" class="text-danger"></span>
                                 </div>
                                 @* <div class="mb-3">
@@ -477,26 +526,55 @@
                             <div>
                                 <div class="row">
                                     <div class="mb-3">
-                                        <label asp-for="Violence.Victim" class="form-label">Victime</label>
-                                    <input asp-for="Violence.Victim" class="form-control" type="text" />
-                                    <span asp-validation-for="Violence.Victim" class="text-danger"></span>
+                                        <label asp-for="Violence.Victim" class="form-label">Victime de violence</label>
+                                        <select asp-for="Violence.Victim" class="form-control">
+                                            <option value="">selectionner</option>
+                                            <option value="Physique">Physique</option>
+                                            <option value="Mental">Mental</option>
+                                            <option value="Sexuelle">Sexuelle</option>
+                                        </select>
+                                        <span asp-validation-for="Violence.Victim" class="text-danger"></span>
                                     </div>
-                                    <div class="form-check form-switch mb-3">
-                                    <label asp-for="Violence.Indicateur" class="form-label">Indicateur</label>
-                                    <input asp-for="Violence.Indicateur" class="form-check-input" type="checkbox" />
-                                        <input name="Indicateur" type="hidden" value="false" />
-                                    <span asp-validation-for="Violence.Indicateur" class="text-danger"></span>
+                                    <div>
+                                        <h5 class="font-size-14 mb-4">Indicateur</h5>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" asp-for="Violence.Indicateur" value="oui" name="indicateur"
+                                                   id="formRadios0ii">
+                                            <label class="form-check-label" for="formRadios1">
+                                                oui
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" asp-for="Violence.Indicateur" value="oui" name="indicateur"
+                                                   id="formRadios0i">
+                                            <label class="form-check-label" for="formRadios1">
+                                                Non
+                                            </label>
+                                        </div>
                                     </div>
-                                    <div class="form-check form-switch mb-3">
-                                    <label asp-for="Violence.VictimArretation" class="form-label">Victime d'Arrestation</label>
-                                    <input asp-for="Violence.VictimArretation" class="form-check-input" type="checkbox" />
-                                        <input name="VictimArretation" type="hidden" value="false" />
-                                    <span asp-validation-for="Violence.VictimArretation" class="text-danger"></span>
+                                    <div class="">
+                                        <label asp-for="Violence.VictimArretation" class="form-label">Victime d'Arrestation</label>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" asp-for="Violence.VictimArretation" value="oui" name="victim"
+                                                   id="formRadios6v">
+                                            <label class="form-check-label" for="formRadios1">
+                                                oui
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" asp-for="Violence.VictimArretation" value="Non" name="victim"
+                                                   id="formRadios0">
+                                            <label class="form-check-label" for="formRadios1">
+                                                Non
+                                            </label>
+                                        </div>
+                                        <span asp-validation-for="Violence.VictimArretation" class="text-danger"></span>
                                     </div>
+                                   
                                     <div class="mb-3">
-                                    <label asp-for="Violence.Victimrefoulement" class="form-label">Victime de Refoulement</label>
-                                    <input asp-for="Violence.Victimrefoulement" class="form-control" type="text" />
-                                    <span asp-validation-for="Violence.Victimrefoulement" class="text-danger"></span>
+                                        <label asp-for="Violence.Victimrefoulement" class="form-label">Victime de Refoulement</label>
+                                        <input asp-for="Violence.Victimrefoulement" class="form-control" type="text" />
+                                        <span asp-validation-for="Violence.Victimrefoulement" class="text-danger"></span>
                                     </div>
                                     
                                 </div><!-- end row -->

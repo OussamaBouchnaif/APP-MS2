@@ -1,4 +1,5 @@
 ﻿using Admin.Builder;
+using Admin.Builder.Contract;
 using Admin.Mapper.Contract;
 using Admin.Repository;
 using Admin.Service.Contract;
@@ -12,12 +13,20 @@ namespace Admin.Service
         private readonly IRepository<DossierPersonnel> _repository;
         private readonly IRepository<Benificier> _benificierRepository;
         private readonly IDossierMapper _dossierMapper;
+        private readonly IDossierPersonnelBuilder _builder;
 
-        public DossierService(IRepository<DossierPersonnel> repository, IRepository<Benificier> benificierRepository,IDossierMapper dossierMapper)
+        public DossierService(
+            IRepository<DossierPersonnel> repository,
+            IRepository<Benificier> benificierRepository,
+            IDossierMapper dossierMapper,
+            IDossierPersonnelBuilder builder
+            )
         {
             _repository = repository;
             _benificierRepository = benificierRepository;
             _dossierMapper = dossierMapper;
+            _builder = builder;
+
         }
 
         public void CreateDossierPersonnel(DossierPersonnelViewModel model)
@@ -28,17 +37,16 @@ namespace Admin.Service
 
             if (benificier == null) throw new InvalidOperationException("Bénéficiaire introuvable");
 
-            var builder = new DossierPersonnelBuilder()
-                .SetLieuxDintervention(model.LieuxDintervention)
+            _builder.SetLieuxDintervention(model.LieuxDintervention)
                 .SetBenificier(benificier)
-                .SetFamiliale( _dossierMapper.MapToSituationFamiliale(model.Familiale))
+                .SetFamiliale(_dossierMapper.MapToSituationFamiliale(model.Familiale))
                 .SetAdministrative(_dossierMapper.MapToSituationAdministrative(model.Administrative))
                 .SetParcoursMigratoire(_dossierMapper.MapToParcoursMigratoire(model.ParcoursMigratoire))
-                .SetSocioEconomique(_dossierMapper.MapToSituationSocioEconomique(model.SocioEconomique));
-            //.SetPsychologique(model.Psychologique != null ? new SituationPsychologique { /* map properties */ } : null)
-            //.SetViolence(model.Violence != null ? new SituationViolence { /* map properties */ } : null)
+                .SetSocioEconomique(_dossierMapper.MapToSituationSocioEconomique(model.SocioEconomique))
+                .SetPsychologique(_dossierMapper.MapToSituationPsychologique(model.Psychologique))
+                .SetViolence(_dossierMapper.MapToSituationViolence(model.Violence));
 
-            var dossierPersonnel = builder.Build();
+            var dossierPersonnel = _builder.Build();
             if (dossierPersonnel == null) throw new InvalidOperationException("Dossier personnel non créé");
             _repository.Insert(dossierPersonnel);
             _repository.SaveChanges();

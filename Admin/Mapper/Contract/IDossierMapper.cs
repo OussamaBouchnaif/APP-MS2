@@ -9,5 +9,9 @@ namespace Admin.Mapper.Contract
         SituationAdministrative MapToSituationAdministrative(SituationAdministrativeViewModel viewModel);
         ParcoursMigratoire MapToParcoursMigratoire(ParcoursMigratoireViewModel viewModel);
         SituationSocioEconomique MapToSituationSocioEconomique(SituationSocioEconomiqueViewModel viewModel);
+
+        SituationPsychologique MapToSituationPsychologique(SituationPsychologiqueViewModel viewModel);
+
+        SituationViolence MapToSituationViolence(SituationViolenceViewModel viewModel);
     }
 }
