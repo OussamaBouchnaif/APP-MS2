@@ -7,13 +7,13 @@
                 <img src="~/assets/images/logo-dark-sm.png" alt="" height="50">
             </span>
             <span class="logo-lg">
-                <img src="~/assets/images/logo-dark.png" alt="" height="60">
+                <img src="~/assets/images/logo-dark-nbg.png" alt="" height="50">
             </span>
         </a>
 
         <a href="index-2.html" class="logo logo-light">
             <span class="logo-lg">
-                <img src="~/assets/images/logo-light.png" alt="" height="60">
+                <img src="~/assets/images/logo-light-nbg.png" alt="" height="60">
             </span>
             <span class="logo-sm">
                 <img src="~/assets/images/logo-light-sm.png" alt="" height="50">
@@ -31,54 +31,30 @@
         <div id="sidebar-menu">
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
-                <li class="menu-title" data-key="t-menu">Dashboard</li>
-
                 <li>
-                    <a href="javascript: void(0);">
-                        <i class="bx bx-home-alt icon nav-icon"></i>
-                        <span class="menu-item" data-key="t-dashboard">Dashboard</span>
-                        @* <span class="badge rounded-pill bg-primary">2</span> *@
+                    <a asp-controller="Dashboard" asp-action="Index">
+                        <i class="bx bx-calendar-event icon nav-icon"></i>
+                        <span class="menu-item" data-key="t-calendar">Dashboard</span>
                     </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="#" data-key="t-ecommerce">Admin</a></li>
-                        <li><a href="#" data-key="t-sales">Agent</a></li>
-                    </ul>
                 </li>
-
-                <li class="menu-title" data-key="t-applications">Veille stratégique</li>
+                <li>
+                    <a asp-action="Index" asp-controller="Benificier">
+                        <i class="bx bx-user icon nav-icon"></i>
+                        <span class="menu-item" data-key="t-calendar">Bénéficiaires</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Utilisateur">
+                        <i class="bx bxs-user icon nav-icon"></i>
+                        <span class="menu-item" data-key="t-calendar">Utilisateurs</span>
+                    </a>
+                </li>
 
                 <li>
                     <a asp-action="Index" asp-controller="VeilleContextuelle">
                         <i class="bx bx-search icon nav-icon"></i>
-                        <span class="menu-item" data-key="t-calendar">Veille contextuelle</span>
+                        <span class="menu-item" data-key="t-calendar">Veille stratégique</span>
                     </a>
-                </li>
-
-
-                <li class="menu-title" data-key="t-applications">Bénéficiaires</li>
-
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow">
-                        <i class="bx bx-user icon nav-icon"></i>
-                        <span class="menu-item" data-key="t-email">Bénéficiaire</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a asp-action="Index" asp-controller="Benificier" data-key="t-inbox">List des bénéficiaire</a></li>
-                        <li><a asp-action="Add" asp-controller="Benificier" data-key="t-read-email">Ajouter un bénéficiaire</a></li>
-                    </ul>
-                </li>
-
-                <li class="menu-title" data-key="t-applications">Utilisateurs</li>
-
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow">
-                        <i class="bx bx-user-check icon nav-icon"></i>
-                        <span class="menu-item" data-key="t-email">Utilisateur</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a asp-action="Index" asp-controller="Utilisateur" data-key="t-inbox">List des utilisateurs</a></li>
-                        <li><a asp-action="Add" asp-controller="Utilisateur" data-key="t-read-email">Ajouter un utilisateurs</a></li>
-                    </ul>
                 </li>
             </ul>
         </div>

@@ -1,9 +1,13 @@
 ﻿<!doctype html>
 <html lang="en">
 <head>
-    <title>@ViewData["Title"] | MS2-Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+    <meta content="Themesdesign" name="author" />
+    <title>@ViewData["Title"] | MS2 MAPPING</title>
     <!-- App favicon -->
-    <link rel="shortcut icon" href="~/assets/images/favicon.ico">
+    <link rel="shortcut icon" href="~/assets/images/favicon-dark.ico" media="(prefers-color-scheme: dark)">
+    <link rel="shortcut icon" href="~/assets/images/favicon-light.ico" media="(prefers-color-scheme: light)">
     <!-- Css -->
     @Html.Partial("_CssLinks")
     @await RenderSectionAsync("Styles", required: false)
