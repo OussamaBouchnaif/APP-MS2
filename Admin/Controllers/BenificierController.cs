@@ -7,7 +7,7 @@ using MS2Api.Model;
 
 namespace Admin.Controllers
 {
-    //[ServiceFilter(typeof(AuthenticationFilter))]
+    [ServiceFilter(typeof(AuthenticationFilter))]
     public class BenificierController : Controller
     {
         private readonly IBeneficiaryService _beneficiaryService;

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Admin.Controllers
 {
+    [ServiceFilter(typeof(AuthenticationFilter))]
     public class DossierController : Controller
     {
         private readonly IDossierService _dossierService;
@@ -11,7 +12,7 @@ namespace Admin.Controllers
         public DossierController(IDossierService dossierService)
         {
             _dossierService = dossierService;
-        }   
+        }
 
         [HttpGet]
         public IActionResult AddDossier(int Id)

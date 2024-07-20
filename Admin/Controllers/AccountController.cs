@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MS2Api.Model;
+using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Admin.Controllers
 {
@@ -37,6 +39,7 @@ namespace Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
+            var returnUrl = _httpContextAccessor.HttpContext.Session.GetString("ReturnUrl");
             if (ModelState.IsValid)
             {
                 var user = _userRepository.FindByExpression(u => u.Email == model.Email);
@@ -47,11 +50,17 @@ namespace Admin.Controllers
                     {
                         _httpContextAccessor.HttpContext.Session.SetObjectAsJson("User", user);
 
+                        if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                        {
+                            return Redirect(returnUrl ?? Url.Action("Index", "Dashboard"));
+                        }
+
                         return RedirectToAction("Index", "Dashboard");
                     }
                 }
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             }
+            ViewData["ReturnUrl"] = returnUrl;
             return View(model);
         }
 
@@ -97,11 +106,50 @@ namespace Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Logout()
+        public async Task<IActionResult> Logout(string returnUrl = null)
         {
-            // Supprimer les informations de la session
             _httpContextAccessor.HttpContext.Session.Clear();
+
+            if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+            {
+                return RedirectToAction("Login", new { returnUrl });
+            }
+
             return RedirectToAction("Login");
+        }
+
+        [HttpGet]
+        public IActionResult LockScreen()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Lock()
+        {
+            _httpContextAccessor.HttpContext.Session.SetString("IsLocked", "true");
+            return RedirectToAction("LockScreen");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> LockScreen(string password)
+        {
+            var userJson = _httpContextAccessor.HttpContext.Session.GetString("User");
+            var returnUrl = _httpContextAccessor.HttpContext.Session.GetString("ReturnUrl");
+            var user = JsonConvert.DeserializeObject<Utilisateur>(userJson);
+
+            if (user != null)
+            {
+                var verificationResult = _passwordHasher.VerifyHashedPassword(user, user.MotDePasse, password);
+                if (verificationResult == PasswordVerificationResult.Success)
+                {
+                    _httpContextAccessor.HttpContext.Session.Remove("IsLocked");
+                    _httpContextAccessor.HttpContext.Session.Remove("ReturnUrl");
+                    return Redirect(returnUrl ?? Url.Action("Index", "Dashboard"));
+                }
+                ModelState.AddModelError(string.Empty, "Mot de passe incorrect.");
+            }
+            return View();
         }
     }
 }
