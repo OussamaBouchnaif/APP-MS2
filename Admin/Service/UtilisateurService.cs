@@ -116,7 +116,13 @@ namespace Admin.Service
 
             public void DeleteUtilisateur(Utilisateur utilisateur)
             {
-                throw new NotImplementedException();
+            if(utilisateur == null)
+            {
+                throw new ArgumentException(nameof(utilisateur));
+            }
+            _utilisateurRepository.Delete(utilisateur);
+            _utilisateurRepository.SaveChanges();
+                
             }
         }
 }
