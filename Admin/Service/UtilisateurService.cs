@@ -79,6 +79,25 @@ namespace Admin.Service
             };
         }
 
+
+        public void UpdateUtilisateur(UtilisateurVM utilisateurVM)
+        {
+            if (utilisateurVM == null)
+            {
+                throw new ArgumentNullException(nameof(utilisateurVM));
+            }
+
+            var utilisateur = _utilisateurRepository.FindById(utilisateurVM.Id);
+            if (utilisateur == null)
+            {
+                throw new ArgumentException("Utilisateur non trouvé", nameof(utilisateurVM.Id));
+            }
+
+            _utilisateurMapper.UpdateUtilisateur(utilisateurVM, utilisateur);
+            _utilisateurRepository.Update(utilisateur);
+            _utilisateurRepository.SaveChanges();
+        }
+
         public void UpdateUtilisateur(UtilisateurVM utilisateurVM, Utilisateur existingutilisateur)
         {
             if (utilisateurVM == null || existingutilisateur == null)
@@ -87,6 +106,7 @@ namespace Admin.Service
             }
 
             _utilisateurMapper.UpdateUtilisateur(utilisateurVM, existingutilisateur);
+
 
             if (!string.IsNullOrEmpty(utilisateurVM.MotDePasse))
             {

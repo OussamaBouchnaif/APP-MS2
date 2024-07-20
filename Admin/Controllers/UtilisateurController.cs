@@ -69,7 +69,9 @@ namespace Admin.Controllers
             Utilisateur utilisateur=_utilisateurService.GetUtilisateurById(Id); 
             if (ModelState.IsValid)
             {
+
                 _utilisateurService.UpdateUtilisateur(utilisateurVM,utilisateur);
+
                 return RedirectToAction("Index");
             }
 
@@ -80,9 +82,17 @@ namespace Admin.Controllers
 
         public IActionResult Delete(int Id)
         {
+
             Utilisateur utilisateur = _utilisateurService.GetUtilisateurById(Id);
             _utilisateurService.DeleteUtilisateur(utilisateur);
             return RedirectToAction(nameof(Index));
+            if (utilisateur == null)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction("Index");
+
         }
     }      
 }

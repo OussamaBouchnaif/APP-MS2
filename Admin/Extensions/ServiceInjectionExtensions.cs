@@ -44,6 +44,10 @@ namespace Admin.Extensions
 
             services.AddScoped<INotificationService,NotificationService>();
 
+            services.AddScoped<IDossierService, DossierService>();
+
+            services.AddScoped<IDossierMapper, DossierMapper>();
+
         }
     }
 }
