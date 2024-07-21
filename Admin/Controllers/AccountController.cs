@@ -60,8 +60,10 @@ namespace Admin.Controllers
                         return RedirectToAction("Index", "Dashboard");
                     }
                 }
+
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             }
+
             return View(model);
         }
 

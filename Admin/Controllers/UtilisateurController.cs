@@ -3,6 +3,7 @@ using Admin.Service.Contract;
 using Admin.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using MS2Api.Model;
+using System.Security.Claims;
 
 namespace Admin.Controllers
 {
@@ -20,6 +21,8 @@ namespace Admin.Controllers
 
         public IActionResult Index()
         {
+            var userName = User.Identity.Name;
+            var userClaims = User.Claims;
             var utilisateurs = _utilisateurService.GetAllUtilisateurs();
             return View(utilisateurs);
         }
@@ -159,11 +162,11 @@ namespace Admin.Controllers
                 var utilisateur = _utilisateurService.GetUtilisateurById(utilisateurVM.Id);
                 if (utilisateur == null)
                 {
-                    return Json(new { success = false, message = "Utilisateur non trouvé" });
+                    return Json(new { success = false, message = "Utilisateur non trouvï¿½" });
                 }
 
                 _utilisateurService.UpdateUtilisateur(utilisateurVM, utilisateur);
-                return Json(new { success = true, message = "Modification réussie" });
+                return Json(new { success = true, message = "Modification rï¿½ussie" });
             }
 
             return Json(new { success = false, message = "Erreur de validation" });
