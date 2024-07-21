@@ -32,7 +32,7 @@ namespace Admin.Controllers
             var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
             ViewBag.Errors = errors;
 
-            return View(model);  // Ensure the model is passed back to the view
+            return View(model);  
         }
     }
 }

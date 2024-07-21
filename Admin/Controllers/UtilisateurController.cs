@@ -88,11 +88,11 @@ namespace Admin.Controllers
                 var utilisateur = _utilisateurService.GetUtilisateurById(id);
                 if (utilisateur == null)
                 {
-                    return Json(new { success = false, message = "Utilisateur non trouvé" });
+                    return Json(new { success = false, message = "Utilisateur non trouvï¿½" });
                 }
 
                 _utilisateurService.DeleteUtilisateur(utilisateur);
-                return Json(new { success = true, message = "Utilisateur supprimé avec succès" });
+                return Json(new { success = true, message = "Utilisateur supprimï¿½ avec succï¿½s" });
             }
             catch (Exception ex)
             {
