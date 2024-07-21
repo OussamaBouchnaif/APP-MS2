@@ -1,7 +1,6 @@
 ﻿using Admin.ViewModel;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MS2Api.Model;
-using System.Collections.Generic;
 
 namespace Admin.Service.Contract
 {
@@ -13,12 +12,14 @@ namespace Admin.Service.Contract
 
         void AddUtilisateur(UtilisateurVM utilisateurVM);
 
-        void UpdateUtilisateur(UtilisateurVM  utilisateurVM , Utilisateur utilisateur);
+        void UpdateUtilisateur(UtilisateurVM utilisateurVM, Utilisateur utilisateur);
 
         void DeleteUtilisateur(Utilisateur utilisateur);
 
         List<SelectListItem> GetSexesList();
 
         List<SelectListItem> GetRolesList();
+
+        public UtilisateurVM GetProfile(int utilisateurId);
     }
 }

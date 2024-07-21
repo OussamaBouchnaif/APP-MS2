@@ -68,7 +68,10 @@
                         <h6 class="mb-0"><strong class="text-primary">@nom</strong> @prenom</h6>
                         <p class="mb-0 font-size-11 text-muted">@user?.Email</p>
                     </div>
-                    <a class="dropdown-item" href="contacts-profile.html"><i class="text-primary mdi mdi-account-circle font-size-16 align-middle me-2" style="opacity: 0.8;"></i> <span class="align-middle">Profil</span></a>
+                    <a class="dropdown-item" asp-action="Profile" asp-controller="Utilisateur">
+                        <i class="text-primary mdi mdi-account-circle font-size-16 align-middle me-2" style="opacity: 0.8;"></i>
+                        <span class="align-middle">Profil</span>
+                    </a>
                     <a class="dropdown-item" href="pages-faqs.html"><i class="text-primary mdi mdi-lifebuoy font-size-16 align-middle me-2" style="opacity: 0.8;"></i> <span class="align-middle">Aide</span></a>
                     <a class="dropdown-item" asp-action="Lock" asp-controller="Account"><i class="text-primary mdi mdi-lock font-size-16 align-middle me-2" style="opacity: 0.8;"></i> <span class="align-middle">Écran de verrouillage</span></a>
                     <div class="dropdown-divider"></div>

@@ -43,9 +43,11 @@ namespace Admin.Controllers
             if (ModelState.IsValid)
             {
                 var user = _userRepository.FindByExpression(u => u.Email == model.Email);
+
                 if (user != null)
                 {
                     var verificationResult = _passwordHasher.VerifyHashedPassword(user, user.MotDePasse, model.Password);
+
                     if (verificationResult == PasswordVerificationResult.Success)
                     {
                         _httpContextAccessor.HttpContext.Session.SetObjectAsJson("User", user);
@@ -58,9 +60,10 @@ namespace Admin.Controllers
                         return RedirectToAction("Index", "Dashboard");
                     }
                 }
+
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             }
-            ViewData["ReturnUrl"] = returnUrl;
+
             return View(model);
         }
 
