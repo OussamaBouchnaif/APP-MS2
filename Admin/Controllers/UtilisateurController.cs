@@ -3,6 +3,7 @@ using Admin.Service.Contract;
 using Admin.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using MS2Api.Model;
+using System.Security.Claims;
 
 namespace Admin.Controllers
 {
@@ -20,6 +21,8 @@ namespace Admin.Controllers
 
         public IActionResult Index()
         {
+            var userName = User.Identity.Name;
+            var userClaims = User.Claims;
             var utilisateurs = _utilisateurService.GetAllUtilisateurs();
             return View(utilisateurs);
         }
@@ -46,8 +49,6 @@ namespace Admin.Controllers
             return View(utilisateurVM);
         }
 
-
-
         [HttpGet]
         public IActionResult Edit(int id)
         {
@@ -64,14 +65,12 @@ namespace Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(UtilisateurVM utilisateurVM,int Id )
+        public IActionResult Edit(UtilisateurVM utilisateurVM, int Id)
         {
-            Utilisateur utilisateur=_utilisateurService.GetUtilisateurById(Id); 
+            var utilisateur = _utilisateurService.GetUtilisateurById(Id);
             if (ModelState.IsValid)
             {
-
-                _utilisateurService.UpdateUtilisateur(utilisateurVM,utilisateur);
-
+                _utilisateurService.UpdateUtilisateur(utilisateurVM, utilisateur);
                 return RedirectToAction("Index");
             }
 
@@ -99,6 +98,21 @@ namespace Admin.Controllers
                 return Json(new { success = false, message = ex.Message });
             }
         }
+
+        [HttpGet]
+        public IActionResult Profile()
+        {
+            var user = HttpContext.Session.GetObjectFromJson<Utilisateur>("User");
+
+            if (user == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            return View(user);
+        }
+
+
 
     }
 }
