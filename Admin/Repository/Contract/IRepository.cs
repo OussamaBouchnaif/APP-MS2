@@ -2,11 +2,9 @@
 
 namespace Admin.Repository
 {
-    public interface  IRepository<TEntity> where TEntity : class
+    public interface IRepository<TEntity> where TEntity : class
     {
-       
         IQueryable<TEntity> GetAll();
-
 
         TEntity FindByExpression(Expression<Func<TEntity, bool>> predicate);
 
@@ -21,6 +19,5 @@ namespace Admin.Repository
         void Delete(TEntity entity);
 
         void SaveChanges();
-
     }
 }

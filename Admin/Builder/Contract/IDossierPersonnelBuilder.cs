@@ -9,6 +9,7 @@ namespace Admin.Builder.Contract
         DossierPersonnelBuilder SetFamiliale(SituationFamiliale familiale);
 
         DossierPersonnelBuilder SetAdministrative(SituationAdministrative administrative);
+
         DossierPersonnelBuilder SetParcoursMigratoire(ParcoursMigratoire parcoursMigratoire);
 
         DossierPersonnelBuilder SetSocioEconomique(SituationSocioEconomique socioEconomique);
