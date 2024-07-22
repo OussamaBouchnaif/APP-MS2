@@ -22,18 +22,15 @@ namespace Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddDossier(DossierPersonnelViewModel model)
+        public JsonResult AddDossier(DossierPersonnelViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 _dossierService.CreateDossierPersonnel(model);
-                return RedirectToAction("Index", "Benificier");
-
+                return Json(new { success = true, message = "Dossier créé avec succès!" });
             }
             var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-            ViewBag.Errors = errors;
-
-            return View(model);  
+            return Json(new { success = false, errors = errors });
         }
     }
 }
