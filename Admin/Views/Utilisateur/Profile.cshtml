@@ -195,9 +195,7 @@
                                                     </div>
 
                                                     <div class="mb-3 row">
-                                                        <div class="col-md-10 offset-md-2">
-                                                      @*       <button type="button" class="btn btn-primary" id="viewButton">Afficher</button>
-                                                            <button type="button" class="btn btn-primary" id="editButton">Modifier</button> *@
+                                                        <div class="col-md-10 offset-md-2">                                                   
                                                             <button type="submit" class="btn btn-primary" id="submitButton">Soumettre</button>
                                                         </div>
                                                     </div>
@@ -235,7 +233,6 @@
                 }
             });
 
-            // Handle form submission via AJAX
             $('form').on('submit', function (e) {
                 e.preventDefault();
 
@@ -247,7 +244,7 @@
                     success: function (response) {
                         if (response.success) {
                             Swal.fire({
-                                title: 'Succès!',
+                                title: 'Succes!',
                                 text: response.message,
                                 icon: 'success',
                                 confirmButtonText: 'OK'
@@ -274,25 +271,21 @@
                 });
             });
 
-            // Initialize
             const viewButton = document.getElementById('viewButton');
             const editButton = document.getElementById('editButton');
             const profileForm = document.getElementById('profileForm');
             const inputs = profileForm.querySelectorAll('input, select');
             const submitButton = document.getElementById('submitButton');
 
-            // Initially hide the inputs and clear values
             inputs.forEach(input => {
                 input.setAttribute('readonly', true);
                 input.setAttribute('disabled', true);
-                // Clear values initially for display
                 if (input.hasAttribute('data-value')) {
                     input.value = ''; 
                 }
             });
             submitButton.style.display = 'none';
 
-            // Display data in inputs when 'Afficher' is clicked
             viewButton.addEventListener('click', function (event) {
                 event.preventDefault();
                 inputs.forEach(input => {
@@ -307,7 +300,6 @@
                 submitButton.style.display = 'none';
             });
 
-            // Enable editing when 'Modifier' is clicked
             editButton.addEventListener('click', function (event) {
                 event.preventDefault();
                 inputs.forEach(input => {
@@ -317,7 +309,6 @@
                 submitButton.style.display = 'block';
             });
 
-            // Toggle password visibility
             const togglePassword = document.getElementById('togglePassword');
             const togglePasswordIcon = document.getElementById('togglePasswordIcon');
 
