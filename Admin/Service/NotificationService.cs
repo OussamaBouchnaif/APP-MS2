@@ -23,7 +23,7 @@ namespace Admin.Service
       
         public async Task<NotificationViewModel> GetNotificationsAsync()
         {
-            // Récupérer les données de VeilleContextuelle avec l'inclusion de Utilisateur
+
             var veilleContextuelles = await _repository.FindManyByExpression(v => true)
                                              .Include(v => v.Utilisateur)
                                              .ToListAsync();
@@ -32,9 +32,9 @@ namespace Admin.Service
             var notifications = veilleContextuelles.Select(v => new Notification
             {
                 Id = v.Id,
-                UserName = v.Utilisateur?.Nom ?? "Unknown User", // Utiliser "Unknown User" si Utilisateur est null
+                UserName = v.Utilisateur?.Nom ?? "Unknown User",
                 Message = v.DetailsEvenement,
-                TimeAgo = v.DateEvenement.ToString("f"), // Format de la date selon vos besoins
+                TimeAgo = v.DateEvenement.ToString("f"), 
             }).ToList();
 
             var viewModel = new NotificationViewModel

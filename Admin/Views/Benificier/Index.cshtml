@@ -3,85 +3,107 @@
 @{
     ViewData["Title"] = "Beneficiaries";
 }
-
-    <div class="container">
+<div class="container">
     <a asp-action="Add" asp-controller="Benificier" class="btn btn-primary" id="bn">Ajouter un Benificier</a>
-        @if (Model != null && Model.Any())
-        {
-
-            <table id="myTable" class="table table-hover">
-                <thead>
+    @if (Model != null && Model.Any())
+    {
+        <table id="myTable" class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>Age</th>
+                    <th>Sexe</th>
+                    <th>Tele</th>
+                    <th>TeleUrgent</th>
+                    <th>PaysOrigin</th>
+                    <th>Nationalite</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var beneficiary in Model)
+                {
                     <tr>
-                        <th>Nom</th>
-                        <th>Prenom</th>
-                        <th>Age</th>
-                        <th>Sexe</th>
-                        <th>Tele</th>
-                        <th>TeleUrgent</th>
-                        <th>PaysOrigin</th>
-                        <th>Nationalite</th>
-                       @*  <th>Adress</th>
-                        <th>Ville</th> *@
-                        @* <th>TypeDetection</th>
-                        <th>CodeUnique</th> *@
-                        <th>Action</th>
+                        <td>@beneficiary.Nom</td>
+                        <td>@beneficiary.Prenom</td>
+                        <td>@beneficiary.Age</td>
+                        <td>@beneficiary.Sexe</td>
+                        <td>@beneficiary.Tele</td>
+                        <td>@beneficiary.TeleUrgent</td>
+                        <td>@beneficiary.PaysOrigin</td>
+                        <td>@beneficiary.Nationalite</td>
+                        <td class="text-center">
+                            <a asp-action="Delete" asp-route-id="@beneficiary.Id" class="text-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet élément ?');">
+                                <i class="fa-solid fa-trash"></i>
+                            </a>
+                            <a asp-action="Update" asp-route-id="@beneficiary.Id">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </a>
+                            <a href="Add" class="text-info">
+                                <i class="fa-solid fa-circle-info"></i>
+                            </a>
+                            <a class="text-warning" data-id="@beneficiary.Id" data-toggle="modal" data-target="#exampleModalCenter">
+                                <i class="fa-solid fa-folder-plus"></i>
+                            </a>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach (var beneficiary in Model)
-                    {
-                        <tr>
-                            <td>@beneficiary.Nom</td>
-                            <td>@beneficiary.Prenom</td>
-                            <td>@beneficiary.Age</td>
-                            <td>@beneficiary.Sexe</td>
-                            <td>@beneficiary.Tele</td>
-                            <td>@beneficiary.TeleUrgent</td>
-                            <td>@beneficiary.PaysOrigin</td>
-                            <td>@beneficiary.Nationalite</td>
-                            @* <td>@beneficiary.Address</td>
-                            <td>@beneficiary.Ville</td> *@
-                            @* <td>@beneficiary.TypeDetection</td>
-                            <td>@beneficiary.codeUnique</td> *@
-                            <td class="text-center">
-                                <a asp-action="Delete" asp-route-id="@beneficiary.Id" class="text-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet élément ?');">
-                                    <i class="fa-solid fa-trash"></i>
-                                </a>
-                                <a asp-action="Update" asp-route-id="@beneficiary.Id">
-                                    <i class="fa-solid fa-pen-to-square"></i>
-                                </a>
-                                <a href="Add" class="text-info">
-                                    <i class="fa-solid fa-circle-info"></i>
-                                </a>
-                            <a asp-action="AddDossier" asp-route-id="@beneficiary.Id" asp-controller="Dossier" class="text-warning">
-                                    <i class="fa-solid fa-folder-plus"></i>
-                                </a>
-                            </td>
-
-                        </tr>
-                    }
-                </tbody>
-            </table>
-
-
-
-        }
-        else
-        {
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
         <div class="alert alert-info" role="alert">
             Aucun bénéficiaire trouvé.
         </div>
-        }
+    }
+</div>
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form asp-action="AddDossier" asp-controller="Dossier" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="text"  class="beneficiaryIdInput" readonly>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="btn btn-primary" value="Ajouter Fich Anamnese" >
+                    </div>
+                </div>
+            </form>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
     </div>
-
-
+</div>
 @section Scripts {
     <script src="~/assets/libs/jquery/jquery-3.6.0.min.js"></script>
     <script src="~/assets/libs/sweetalert2/sweetalert2.min.js"></script>
     <script src="~/assets/DataTables/datatables.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script>
         $(document).ready(function () {
             $('#myTable').DataTable();
+        });
+
+        $(document).ready(function () {
+            $('#exampleModalCenter').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget); 
+                var beneficiaryId = button.data('id'); 
+                var modal = $(this);
+                modal.find('.modal-body .beneficiaryIdInput').val(beneficiaryId);
+            });
         });
     </script>
 
