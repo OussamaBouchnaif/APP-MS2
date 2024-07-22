@@ -5,10 +5,13 @@ namespace Admin.ViewModel.DossierPersonnel
     public class DossierPersonnelViewModel
     {
         int Id { get; set; }
-        [Required]
+
+        [Required(ErrorMessage = "Le lieu d'intervention est obligatoire.")]
         public string LieuxDintervention { get; set; }
-        [Required]
+
+        [Required(ErrorMessage = "L'identifiant du bénéficiaire est obligatoire.")]
         public int BenificierId { get; set; }
+
         public SituationFamilialeViewModel? Familiale { get; set; }
         public SituationAdministrativeViewModel? Administrative { get; set; }
         public ParcoursMigratoireViewModel? ParcoursMigratoire { get; set; }

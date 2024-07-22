@@ -68,7 +68,7 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                     <div class="mb-3">
-                        <label class="required-label"><i class='bx bx-calendar'></i> Type d'événement</label>
+                        <label class="required-label"><i class='bx bx-calendar text-primary'></i> Type d'événement</label>
                         <select asp-for="TypeEvenement" class="form-control">
                             @foreach (var item in Enum.GetValues(typeof(Admin.Enums.TypeEvenement)))
                             {
@@ -78,25 +78,25 @@
                         <span asp-validation-for="TypeEvenement" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
-                        <label class="required-label"><i class='bx bx-detail'></i> Détails de l'événement</label>
+                        <label class="required-label"><i class='bx bx-detail text-primary'></i> Détails de l'événement</label>
                         <textarea asp-for="DetailsEvenement" class="form-control"></textarea>
                         <span asp-validation-for="DetailsEvenement" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
-                        <label class="required-label"><i class='bx bx-news'></i> Source d'information</label> <br />
+                        <label class="required-label"><i class='bx bx-news text-primary'></i> Source d'information</label> <br />
                         <div class="d-flex flex-wrap">
                             @foreach (Admin.Flags.SourceInformation source in Enum.GetValues(typeof(Admin.Flags.SourceInformation)))
                             {
                                 <div class="form-check form-check-inline">
                                     <input type="checkbox" class="btn-check source-checkbox" id="source_@((int)source)" name="SourceInformation" value="@((int)source)" autocomplete="off" data-is-other="@((int)source == autreSourceInformationValue)">
                                     <label class="btn btn-outline-primary" for="source_@((int)source)">
-                                        <i class='bx bx-info-circle'></i> @source
+                                        <i class='bx bx-info-circle text-primary'></i> @source
                                     </label>
                                 </div>
                             }
                         </div>
                         <div id="AutresSourceInformationWrapper" class="mt-2">
-                            <input asp-for="AutresSourceInformation" id="AutresSourceInformation" class="form-control" disabled placeholder="Precise quelle source d'information" />
+                            <input asp-for="AutresSourceInformation" id="AutresSourceInformation" class="form-control" disabled placeholder="Précisez quelle source d'information" />
                             <span asp-validation-for="AutresSourceInformation" class="text-danger"></span>
                         </div>
                     </div>
@@ -104,14 +104,14 @@
                         <input asp-for="NombreMigrants" type="hidden" class="form-control" id="NombreMigrants" />
                     </div>
                     <div class="mb-3">
-                        <label class="required-label"><i class='bx bx-group'></i> Type de migrants</label> <br />
+                        <label class="required-label"><i class='bx bx-group text-primary'></i> Type de migrants</label> <br />
                         <div class="d-flex flex-wrap">
                             @foreach (Admin.Flags.TypeMigrants type in Enum.GetValues(typeof(Admin.Flags.TypeMigrants)))
                             {
                                 <div class="form-check form-check-inline">
                                     <input type="checkbox" class="btn-check type-checkbox" id="type_@((int)type)" name="TypeMigrants" value="@((int)type)" autocomplete="off" data-target-id="typeInputs_@((int)type)">
                                     <label class="btn btn-outline-primary" for="type_@((int)type)">
-                                        <i class='bx bx-user'></i> @type
+                                        <i class='bx bx-user text-primary'></i> @type
                                     </label>
                                 </div>
                             }
@@ -132,14 +132,14 @@
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label class="required-label"><i class='bx bx-globe'></i> Nationalités</label> <br />
+                        <label class="required-label"><i class='bx bx-globe text-primary'></i> Nationalités</label> <br />
                         <div class="d-flex flex-wrap">
                             @foreach (Admin.Flags.Nationalites nationalite in Enum.GetValues(typeof(Admin.Flags.Nationalites)))
                             {
                                 <div class="form-check form-check-inline">
                                     <input type="checkbox" class="btn-check nationality-checkbox" id="nationalite_@((int)nationalite)" name="Nationalites" value="@((int)nationalite)" autocomplete="off" data-target-id="nationalityInputs_@((int)nationalite)" data-is-other="@((int)nationalite == autreNationalitesValue)">
                                     <label class="btn btn-outline-primary" for="nationalite_@((int)nationalite)">
-                                        <i class='bx bx-flag'></i> @nationalite
+                                        <i class='bx bx-flag text-primary'></i> @nationalite
                                     </label>
                                 </div>
                             }
@@ -152,7 +152,7 @@
                                 <input asp-for="NombreSudsoudan" type="number" class="form-control migrant-input" placeholder="Nombre de Sud Soudan" />
                             </div>
                             <div id="nationalityInputs_4" class="nationality-input mt-2">
-                                <input asp-for="NombreGuinee" type="number" class="form-control migrant-input" placeholder="Nombre de Guinee" />
+                                <input asp-for="NombreGuinee" type="number" class="form-control migrant-input" placeholder="Nombre de Guinée" />
                             </div>
                             <div id="nationalityInputs_8" class="nationality-input mt-2">
                                 <input asp-for="NombreCameroun" type="number" class="form-control migrant-input" placeholder="Nombre de Cameroun" />
@@ -167,7 +167,7 @@
                                 <input asp-for="NombreNigeria" type="number" class="form-control migrant-input" placeholder="Nombre de Nigeria" />
                             </div>
                             <div id="nationalityInputs_128" class="nationality-input mt-2">
-                                <input asp-for="NombreSenegal" type="number" class="form-control migrant-input" placeholder="Nombre de Senegal" />
+                                <input asp-for="NombreSenegal" type="number" class="form-control migrant-input" placeholder="Nombre de Sénégal" />
                             </div>
                             <div id="nationalityInputs_256" class="nationality-input mt-2">
                                 <input asp-for="NombreRDC" type="number" class="form-control migrant-input" placeholder="Nombre de RDC" />
@@ -177,7 +177,7 @@
                             </div>
                         </div>
                         <div id="AutresNationalitesWrapper" class="mt-2">
-                            <input asp-for="AutresNationalites" id="AutresNationalites" class="form-control" disabled placeholder="Precise quelle nationnalité" />
+                            <input asp-for="AutresNationalites" id="AutresNationalites" class="form-control" disabled placeholder="Précisez quelle nationalité" />
                             <span asp-validation-for="AutresNationalites" class="text-danger"></span>
                         </div>
                     </div>
@@ -194,20 +194,25 @@
             function toggleInput(checkbox, inputId) {
                 const inputDiv = document.getElementById(inputId);
                 if (inputDiv) {
+                    const inputFields = inputDiv.querySelectorAll('input');
                     if (checkbox.checked) {
                         inputDiv.style.display = 'block';
                         requestAnimationFrame(() => {
                             inputDiv.classList.add('show');
                             inputDiv.classList.remove('hide');
                         });
+                        inputFields.forEach(input => input.disabled = false);
                     } else {
+                        inputFields.forEach(input => {
+                            input.disabled = true;
+                            input.value = '';  // Reset the input value
+                        });
                         inputDiv.classList.add('hide');
                         inputDiv.classList.remove('show');
                         inputDiv.addEventListener('transitionend', () => {
                             inputDiv.style.display = 'none';
                         }, { once: true });
                     }
-                    inputDiv.querySelector('input').disabled = !checkbox.checked;
                 }
             }
 
@@ -218,7 +223,7 @@
                         targetInput.disabled = false;
                     } else {
                         targetInput.disabled = true;
-                        targetInput.value = '';
+                        targetInput.value = '';  // Reset the input value
                     }
                 }
             }
@@ -344,5 +349,6 @@
                 }
             });
         });
+
     </script>
 }

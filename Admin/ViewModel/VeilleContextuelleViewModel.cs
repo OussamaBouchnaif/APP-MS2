@@ -13,26 +13,26 @@ namespace Admin.ViewModel
         [DataType(DataType.Date)]
         public DateTime DateEvenement { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Le type d'événement est obligatoire.")]
         public TypeEvenement TypeEvenement { get; set; }
 
         [StringLength(255)]
-        [Required]
+        [Required(ErrorMessage = "Les détails de l'événement sont obligatoires.")]
         public string DetailsEvenement { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "La source d'information est obligatoire.")]
         public SourceInformation SourceInformation { get; set; }
 
         [StringLength(255)]
         public string? AutresSourceInformation { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Le nombre de migrants est obligatoire.")]
         public int NombreMigrants { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Le type de migrants est obligatoire.")]
         public TypeMigrants TypeMigrants { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "La nationalité est obligatoire.")]
         public Nationalites Nationalites { get; set; }
 
         [StringLength(255)]
