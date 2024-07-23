@@ -1,4 +1,9 @@
-﻿namespace MS2Api.Model
+
+﻿using Admin.Models;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace MS2Api.Model
 {
     public class Benificier : Personne
     {
@@ -13,5 +18,6 @@
         public string codeUnique { get; set; }
 
         public DossierPersonnel? Dossier { get; set; }
+        public IList<DossierMedical>? DossierMedicals { get; set; }
     }
 }

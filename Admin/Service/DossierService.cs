@@ -4,7 +4,9 @@ using Admin.Mapper.Contract;
 using Admin.Repository;
 using Admin.Service.Contract;
 using Admin.ViewModel.DossierPersonnel;
+using Microsoft.EntityFrameworkCore;
 using MS2Api.Model;
+using System.Linq.Expressions;
 
 namespace Admin.Service
 {
@@ -52,5 +54,22 @@ namespace Admin.Service
             _repository.SaveChanges();
 
         }
+
+        public DossierPersonnel GetDossierPersonnel(int beneficiaryId)
+        {
+
+            var dossierPersonnel = _repository.GetAll()
+                .Include(d => d.Benificier)
+                .Include(d => d.Familiale)
+                .Include(d => d.Administrative)
+                .Include(d => d.ParcoursMigratoire)
+                .Include(d => d.SocioEconomique)
+                .Include(d => d.Psychologique)
+                .Include(d => d.Violence)
+                .FirstOrDefault(d => d.Benificier.Id == beneficiaryId); 
+
+            return dossierPersonnel;
+        }
+    
     }
 }
