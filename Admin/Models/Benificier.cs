@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace MS2Api.Model
+﻿namespace MS2Api.Model
 {
     public class Benificier : Personne
     {

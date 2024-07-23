@@ -1,12 +1,27 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Admin.Service.Contract;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Admin.Controllers
 {
     public class DashboardController : Controller
     {
-        public IActionResult Index()
+        private readonly IBeneficiaryService _beneficiaryService;
+
+        public DashboardController(IBeneficiaryService beneficiaryService)
         {
-            return View();
+            _beneficiaryService = beneficiaryService;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var statistiques = await _beneficiaryService.GetStatistiquesAsync();
+
+            if (statistiques == null)
+            {
+                return View("Error");
+            }
+
+            return View(statistiques);
         }
     }
 }

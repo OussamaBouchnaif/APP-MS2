@@ -1,7 +1,5 @@
 using Admin.Enums;
 using Admin.Mapper.Contract;
-using Admin.Repository;
-using Admin.Service;
 using Admin.Service.Contract;
 using Admin.ViewModel;
 using Microsoft.AspNetCore.Mvc;

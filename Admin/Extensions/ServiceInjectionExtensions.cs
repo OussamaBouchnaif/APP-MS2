@@ -1,12 +1,12 @@
-﻿using Admin.Repository;
-using Admin.Service.Contract;
-using Admin.Service;
-using Admin.Mapper.Contract;
+﻿using Admin.Builder;
+using Admin.Builder.Contract;
 using Admin.Mapper;
+using Admin.Mapper.Contract;
+using Admin.Repository;
+using Admin.Service;
+using Admin.Service.Contract;
 using Microsoft.AspNetCore.Identity;
 using MS2Api.Model;
-using Admin.Builder.Contract;
-using Admin.Builder;
 
 namespace Admin.Extensions
 {
@@ -18,7 +18,7 @@ namespace Admin.Extensions
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
             // Ajouter le service des bénéficiaires
-            services.AddScoped<IBeneficiaryService, BenificierService>();
+            services.AddScoped<IBeneficiaryService, BeneficiaryService>();
 
             // Ajouter le mapper des bénéficiaires
             services.AddScoped<IBenificierMapper, BenificierMapper>();
@@ -43,15 +43,13 @@ namespace Admin.Extensions
             // Enregistrer IVeilleContextuelleMapper
             services.AddScoped<IVeilleContextuelleMapper, VeilleContextuelleMapper>();
 
-
-            services.AddScoped<INotificationService,NotificationService>();
+            services.AddScoped<INotificationService, NotificationService>();
 
             services.AddScoped<IDossierService, DossierService>();
 
             services.AddScoped<IDossierMapper, DossierMapper>();
 
             services.AddScoped<IDossierPersonnelBuilder, DossierPersonnelBuilder>();
-
         }
     }
 }

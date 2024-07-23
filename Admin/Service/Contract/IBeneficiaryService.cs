@@ -7,12 +7,21 @@ namespace Admin.Service.Contract
     public interface IBeneficiaryService
     {
         IEnumerable<Benificier> GetAllBeneficiaries();
+
         Benificier GetBenificierById(int id);
+
         Benificier FindBenificierByExpression(Expression<Func<Benificier, bool>> predicate);
+
         IEnumerable<Benificier> FindManyBeneficiariesByExpression(Expression<Func<Benificier, bool>> predicate);
+
         void AddBenificier(BenificierVM benificierVM);
-        void UpdateBenificier( BenificierVM benificierVM, Benificier benificier);
+
+        void UpdateBenificier(BenificierVM benificierVM, Benificier benificier);
+
         void DeleteBenificier(Benificier benificier);
+
+        public Task<StatistiquesData> GetStatistiquesAsync();
+
         void SaveChanges();
     }
 }
