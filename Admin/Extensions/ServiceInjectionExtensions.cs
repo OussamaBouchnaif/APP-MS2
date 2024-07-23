@@ -52,6 +52,9 @@ namespace Admin.Extensions
 
             services.AddScoped<IDossierPersonnelBuilder, DossierPersonnelBuilder>();
 
+            services.AddScoped<IMedicalService,MedicalService>();
+            services.AddScoped<IMedicalMapper,MedicalMapper>();
+
         }
     }
 }

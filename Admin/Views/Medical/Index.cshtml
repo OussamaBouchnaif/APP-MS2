@@ -1,0 +1,53 @@
+﻿@model Admin.ViewModel.DossierMedicalViewModel
+
+
+<div class="container">
+    <h2 class="text-primary"><i class='bx bx-folder'></i> Dossiers Médicaux pour le Bénéficiaire @Model.Benificier.Nom @Model.Benificier.Prenom </h2>
+
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-info">@TempData["Message"]</div>
+    }
+
+    <table class="table table-hover mt-5">
+        <thead>
+            <tr>
+                <th>Structure</th>
+                <th>Service</th>
+                <th>Public</th>
+                <th>Nom de la Structure</th>
+                <th>Motif</th>
+                <th>Présentation</th>
+                <th>Prix</th>
+                <th>Commentaires</th>
+                <th>Responsable</th>
+                <th>Signature</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var dossier in Model.DossiersMedicaux)
+            {
+                <tr>
+                    <td>@dossier.StructureName</td>
+                    <td>@dossier.PerformedService</td>
+                    <td>@dossier.IsPublic</td>
+                    <td>@dossier.StructureName</td>
+                    <td>@dossier.MotifAcoompagnement</td>
+                    <td>@dossier.PresentationEffectueé</td>
+                    <td>@dossier.Prix</td>
+                    <td>@dossier.Commentaires</td>
+                    <td>@dossier.Responsable</td>
+                    <td>@dossier.SignatureBenificier</td>
+                    @* <td>@dossier.Date.ToString("yyyy-MM-dd")</td> *@
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="form-group">
+        <a asp-action="Create" asp-route-beneficiaryId="@Model.Benificier.Id" class="btn btn-primary">
+            <i class='bx bx-plus-circle'></i> Ajouter un Dossier Médical
+        </a>
+    </div>
+</div>

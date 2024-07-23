@@ -50,7 +50,7 @@ app.UseSession();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Account}/{action=Login}");
+    pattern: "{controller=Benificier}/{action=Index}");
 
 // Créer les rôles
 //using (var scope = app.Services.CreateScope())

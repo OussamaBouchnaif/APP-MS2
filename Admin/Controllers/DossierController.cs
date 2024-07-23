@@ -1,4 +1,5 @@
 ﻿using Admin.Service.Contract;
+using Admin.ViewModel;
 using Admin.ViewModel.DossierPersonnel;
 using Microsoft.AspNetCore.Mvc;
 using MS2Api.Model;
@@ -9,10 +10,12 @@ namespace Admin.Controllers
     public class DossierController : Controller
     {
         private readonly IDossierService _dossierService;
+        private readonly IMedicalService _medicalService;
 
-        public DossierController(IDossierService dossierService)
+        public DossierController(IDossierService dossierService , IMedicalService medicalService)
         {
             _dossierService = dossierService;
+            _medicalService = medicalService;
         }
 
         public IActionResult Index(int BeneficiaryId)
@@ -51,11 +54,5 @@ namespace Admin.Controllers
             return Json(new { success = false, errors = errors });
         }
 
-        [HttpGet]
-        public IActionResult AddDossierMedical(int Id)
-        {
-            ViewData["Id"] = Id;
-            return View();
-        }
     }
 }
