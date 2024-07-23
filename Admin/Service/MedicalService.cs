@@ -3,7 +3,9 @@ using Admin.Models;
 using Admin.Repository;
 using Admin.Service.Contract;
 using Admin.ViewModel;
+using Microsoft.EntityFrameworkCore;
 using MS2Api.Model;
+using NuGet.Protocol.Core.Types;
 
 namespace Admin.Service
 {
@@ -27,14 +29,20 @@ namespace Admin.Service
             {
                 throw new ArgumentNullException(nameof(medicalVM));
             }
+
             DossierMedical medical = _medicalMapper.MapToDossierMedical(medicalVM);
             _medicalRepository.Insert(medical);
             SaveChanges();
         }
 
-        public DossierMedical GetBenificierById(int id)
+        public List<DossierMedical> GetDossierMedicalById(int id)
         {
-            throw new NotImplementedException();
+            var dossierMedicaux = _medicalRepository.GetAll()
+             .Include(d => d.benificier)
+             .Where(d => d.benificier.Id == id)
+             .ToList();
+
+            return dossierMedicaux;
         }
 
         public void SaveChanges()

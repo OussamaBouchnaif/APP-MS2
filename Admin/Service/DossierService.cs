@@ -57,7 +57,6 @@ namespace Admin.Service
 
         public DossierPersonnel GetDossierPersonnel(int beneficiaryId)
         {
-            if (beneficiaryId <= 0) throw new ArgumentException("Invalid beneficiary ID", nameof(beneficiaryId));
 
             var dossierPersonnel = _repository.GetAll()
                 .Include(d => d.Benificier)
@@ -67,9 +66,7 @@ namespace Admin.Service
                 .Include(d => d.SocioEconomique)
                 .Include(d => d.Psychologique)
                 .Include(d => d.Violence)
-                .FirstOrDefault(d => d.Benificier.Id == beneficiaryId);
-
-            
+                .FirstOrDefault(d => d.Benificier.Id == beneficiaryId); 
 
             return dossierPersonnel;
         }
