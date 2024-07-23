@@ -1,0 +1,118 @@
+﻿@model MS2Api.Model.DossierPersonnel
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="h2 text-primary"><i class='bx bx-folder'></i> Dossier Personnel de @Model.Benificier.Nom</h2>
+                <p class="card-title-desc"><i class='bx bx-info-circle'></i> Détails du dossier personnel</p>
+            </div>
+            <div class="card-body">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="familiale-tab" data-bs-toggle="tab" data-bs-target="#familiale" type="button" role="tab" aria-controls="familiale" aria-selected="true">Situation Familiale</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="administrative-tab" data-bs-toggle="tab" data-bs-target="#administrative" type="button" role="tab" aria-controls="administrative" aria-selected="false">Situation Administrative</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="migratoire-tab" data-bs-toggle="tab" data-bs-target="#migratoire" type="button" role="tab" aria-controls="migratoire" aria-selected="false">Parcours Migratoire</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="socio-economique-tab" data-bs-toggle="tab" data-bs-target="#socio-economique" type="button" role="tab" aria-controls="socio-economique" aria-selected="false">Situation Socio-Economique</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="psychologique-tab" data-bs-toggle="tab" data-bs-target="#psychologique" type="button" role="tab" aria-controls="psychologique" aria-selected="false">Situation Psychologique</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="violence-tab" data-bs-toggle="tab" data-bs-target="#violence" type="button" role="tab" aria-controls="violence" aria-selected="false">Situation de Violence</button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="familiale" role="tabpanel" aria-labelledby="familiale-tab">
+                        <h3 class="text-primary mt-4">Détails de la Situation Familiale</h3>
+                        <p><strong>Lieux d'intervention :</strong> @Model.LieuxDintervention</p>
+                        <p><strong>Mineur :</strong> @(Model.Familiale.Mineur.HasValue && Model.Familiale.Mineur.Value ? "Oui" : "Non")</p>
+                        <p><strong>Accompagné :</strong> @(Model.Familiale.Accompagne.HasValue && Model.Familiale.Accompagne.Value ? "Oui" : "Non")</p>
+                        @if (Model.Familiale.Accompagne.HasValue && Model.Familiale.Accompagne.Value)
+                        {
+                            <p><strong>Nom :</strong> @Model.Familiale.Name</p>
+                            <p><strong>Lien :</strong> @Model.Familiale.Link</p>
+                            <p><strong>Contact :</strong> @Model.Familiale.Contact</p>
+                        }
+                        <p><strong>Situation Matrimoniale :</strong> @Model.Familiale.SituationMatrimoniale</p>
+                        <p><strong>Enfant à charge :</strong> @(Model.Familiale.EnfantAcharge.HasValue && Model.Familiale.EnfantAcharge.Value ? "Oui" : "Non")</p>
+                        @if (Model.Familiale.EnfantAcharge.HasValue && Model.Familiale.EnfantAcharge.Value)
+                        {
+                            <p><strong>Nombre :</strong> @Model.Familiale.Nombre</p>
+                            <p><strong>Âge :</strong> @Model.Familiale.Age</p>
+                        }
+                    </div>
+                    <div class="tab-pane fade" id="administrative" role="tabpanel" aria-labelledby="administrative-tab">
+                        <h3 class="text-primary mt-4">Détails de la Situation Administrative</h3>
+                        <p><strong>Carte Marocaine :</strong> @(Model.Administrative.CarteMarocaine.HasValue && Model.Administrative.CarteMarocaine.Value ? "Oui" : "Non")</p>
+                        <p><strong>Autre :</strong> @Model.Administrative.Autre</p>
+                        <p><strong>Validation Passport :</strong> @(Model.Administrative.ValidationPassport.HasValue && Model.Administrative.ValidationPassport.Value ? "Oui" : "Non")</p>
+                        <p><strong>Carte Consulaire :</strong> @(Model.Administrative.CarteConsulaire.HasValue && Model.Administrative.CarteConsulaire.Value ? "Oui" : "Non")</p>
+                        <p><strong>Acte de Naissance :</strong> @(Model.Administrative.ActeDeNaissance.HasValue && Model.Administrative.ActeDeNaissance.Value ? "Oui" : "Non")</p>
+                        <p><strong>Aucun Pièce :</strong> @(Model.Administrative.AucunPiece.HasValue && Model.Administrative.AucunPiece.Value ? "Oui" : "Non")</p>
+                        <p><strong>Carte Séjour Valide :</strong> @(Model.Administrative.CarteSejourValid.HasValue && Model.Administrative.CarteSejourValid.Value ? "Oui" : "Non")</p>
+                        <p><strong>Status de Réfugié :</strong> @(Model.Administrative.StatusDeRefugie.HasValue && Model.Administrative.StatusDeRefugie.Value ? "Oui" : "Non")</p>
+                        <p><strong>Recepis de demande :</strong> @(Model.Administrative.RecepisseDedemande.HasValue && Model.Administrative.RecepisseDedemande.Value ? "Oui" : "Non")</p>
+                        <p><strong>Visa :</strong> @(Model.Administrative.Visa.HasValue && Model.Administrative.Visa.Value ? "Oui" : "Non")</p>
+                        <p><strong>Aucun Titre :</strong> @(Model.Administrative.AucunTite.HasValue && Model.Administrative.AucunTite.Value ? "Oui" : "Non")</p>
+                    </div>
+                    <div class="tab-pane fade" id="migratoire" role="tabpanel" aria-labelledby="migratoire-tab">
+                        <h3 class="text-primary mt-4">Détails de Parcours Migratoire</h3>
+                        <p><strong>Année d'Entrée :</strong> @Model.ParcoursMigratoire.AnneeEntree</p>
+                        <p><strong>Motif de départ :</strong> @Model.ParcoursMigratoire.MotifDepart</p>
+                        <p><strong>Voie :</strong> @Model.ParcoursMigratoire.Voie</p>
+                        <p><strong>Nouvelle Arrivante :</strong> @(Model.ParcoursMigratoire.NouvelleArrivante.HasValue && Model.ParcoursMigratoire.NouvelleArrivante.Value ? "Oui (-3mois)" : "Non (+3mois)")</p>
+                        <p><strong>Ville d'entrée :</strong> @Model.ParcoursMigratoire.VilleEntree</p>
+                        <p><strong>Durée :</strong> @Model.ParcoursMigratoire.Duree</p>
+                    </div>
+                    <div class="tab-pane fade" id="socio-economique" role="tabpanel" aria-labelledby="socio-economique-tab">
+                        <h3 class="text-primary mt-4">Détails de la Situation Socio-Economique</h3>
+                        <p><strong>Niveau Education :</strong> @Model.SocioEconomique.NiveauEducation</p>
+                        @if (Model.SocioEconomique.NiveauEducation == "formation professionnelle")
+                        {
+                            <p><strong>Formation Personnel :</strong> @Model.SocioEconomique.FormationPersonnel</p>
+                        }
+                        <p><strong>Source de revenus :</strong> @Model.SocioEconomique.Source</p>
+                        <p><strong>Habitation :</strong> @Model.SocioEconomique.Habit</p>
+                    </div>
+                    <div class="tab-pane fade" id="psychologique" role="tabpanel" aria-labelledby="psychologique-tab">
+                        <h3 class="text-primary mt-4">Détails de la Situation Psychologique</h3>
+                        @if (Model.Psychologique != null)
+                        {
+                            <p><strong>Date Enceinte :</strong> @(Model.Psychologique.Enceinte.HasValue ? Model.Psychologique.Enceinte.Value.ToString("dd/MM/yyyy") : "Non renseigné")</p>
+                            <p><strong>Maladie Chronique :</strong> @Model.Psychologique.MaladieChronique</p>
+                            <p><strong>Situation de Détresse :</strong> @(Model.Psychologique.SituationDeDetresse.HasValue && Model.Psychologique.SituationDeDetresse.Value ? "Oui" : "Non")</p>
+                            <p><strong>Maladie Mentale :</strong> @Model.Psychologique.MaladieMentale</p>
+                            <p><strong>Autre :</strong> @Model.Psychologique.Autre</p>
+                            <p><strong>Handicap :</strong> @Model.Psychologique.Handicap</p>
+                        }
+                        else
+                        {
+                            <p>Aucune information disponible pour la situation psychologique.</p>
+                        }
+                    </div>
+                    <div class="tab-pane fade" id="violence" role="tabpanel" aria-labelledby="violence-tab">
+                        <h3 class="text-primary mt-4">Détails de la Situation de Violence</h3>
+                        @if (Model.Violence != null)
+                        {
+                            <p><strong>Victime de violence :</strong> @Model.Violence.Victim</p>
+                            <p><strong>Indicateur :</strong> @(Model.Violence.Indicateur.HasValue && Model.Violence.Indicateur.Value ? "Oui" : "Non")</p>
+                            <p><strong>Victime d'Arrestation :</strong> @(Model.Violence.VictimArretation.HasValue && Model.Violence.VictimArretation.Value ? "Oui" : "Non")</p>
+                            <p><strong>Victime de Refoulement :</strong> @Model.Violence.Victimrefoulement</p>
+                        }
+                        else
+                        {
+                            <p>Aucune information disponible pour la situation de violence.</p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
