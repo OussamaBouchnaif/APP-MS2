@@ -32,5 +32,12 @@ namespace Admin.Controllers
             var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
             return Json(new { success = false, errors = errors });
         }
+
+        [HttpGet]
+        public IActionResult AddDossierMedical(int Id)
+        {
+            ViewData["Id"] = Id;
+            return View();
+        }
     }
 }
