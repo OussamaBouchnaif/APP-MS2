@@ -6,6 +6,7 @@ namespace MS2Api.Model
     {
         [Key]
         public int Id { get; set; }
+
         public string? MotifDepart { get; set; }
         public string? AutreMotif { get; set; }
         public DateTime? AnneeEntree { get; set; }
@@ -17,6 +18,5 @@ namespace MS2Api.Model
 
         public DossierPersonnel Dossier { get; set; }
         public int? DossierPersonnelId { get; set; }
-
     }
 }

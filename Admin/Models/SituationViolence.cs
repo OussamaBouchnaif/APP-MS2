@@ -6,8 +6,9 @@ namespace MS2Api.Model
     {
         [Key]
         public int Id { get; set; }
-        public string? Victim {  get; set; }
-        public bool ? Indicateur { get; set; }
+
+        public string? Victim { get; set; }
+        public bool? Indicateur { get; set; }
         public bool? VictimArretation { get; set; }
         public string? Victimrefoulement { get; set; }
 

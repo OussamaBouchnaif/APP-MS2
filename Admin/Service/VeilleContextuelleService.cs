@@ -1,6 +1,5 @@
 using Admin.Enums;
 using Admin.Flags;
-using Admin.Mapper;
 using Admin.Mapper.Contract;
 using Admin.Models;
 using Admin.Repository;
