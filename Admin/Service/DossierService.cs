@@ -69,7 +69,7 @@ namespace Admin.Service
                 .Include(d => d.Violence)
                 .FirstOrDefault(d => d.Benificier.Id == beneficiaryId);
 
-            if (dossierPersonnel == null) throw new InvalidOperationException("Dossier personnel introuvable");
+            
 
             return dossierPersonnel;
         }
