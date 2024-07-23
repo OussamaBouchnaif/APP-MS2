@@ -1,7 +1,6 @@
 ﻿using Admin.Mapper.Contract;
 using Admin.Service.Contract;
 using Admin.ViewModel;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MS2Api.Model;
 

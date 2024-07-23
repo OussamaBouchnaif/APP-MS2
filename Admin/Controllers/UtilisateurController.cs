@@ -96,7 +96,7 @@ namespace Admin.Controllers
                 }
 
                 _utilisateurService.DeleteUtilisateur(utilisateur);
-                return Json(new { success = true, message = "Utilisateur supprim� avec succ�s" });
+                return Json(new { success = true, message = "Utilisateur supprimé avec succés" });
             }
             catch (Exception ex)
             {

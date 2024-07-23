@@ -5,7 +5,8 @@ namespace MS2Api.Model
     public class DossierPersonnel
     {
         [Key]
-        public int Id {  get; set; }
+        public int Id { get; set; }
+
         public DateTime CreatedAt { get; set; }
         public string? LieuxDintervention { get; set; }
 
@@ -13,7 +14,7 @@ namespace MS2Api.Model
         public SituationAdministrative? Administrative { get; set; }
         public ParcoursMigratoire? ParcoursMigratoire { get; set; }
         public SituationSocioEconomique? SocioEconomique { get; set; }
-        public SituationPsychologique? Psychologique { get; set;}
+        public SituationPsychologique? Psychologique { get; set; }
         public SituationViolence? Violence { get; set; }
 
         public Benificier Benificier { get; set; }
