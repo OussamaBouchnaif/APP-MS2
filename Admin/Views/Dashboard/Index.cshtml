@@ -342,23 +342,30 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            var colors = ["#1E90FF", "#4682B4", "#4169E1", "#5F9ED5", "#87CEEB"]; // Nuances de bleu
+
             var options = {
                 series: [{
                     name: 'Nombre de Bénéficiaires',
                     data: @Html.Raw(Json.Serialize(Model.BeneficiariesPerNationality.Select(b => b.Value)))
                     }],
                 chart: {
-                    type: 'line',
+                    type: 'bar',
                     height: 350
                 },
                 plotOptions: {
                     bar: {
                         horizontal: false,
-                        endingShape: 'rounded'
+                        endingShape: 'rounded',
+                        borderRadius: 5, // Ajoute un rayon de bordure arrondie aux barres
+                        dataLabels: {
+                            position: 'top' // Positionne les étiquettes de données en haut des barres
+                        }
                     }
                 },
+                colors: colors, // Applique les couleurs définies
                 dataLabels: {
-                    enabled: false
+                    enabled: true
                 },
                 xaxis: {
                     categories: @Html.Raw(Json.Serialize(Model.BeneficiariesPerNationality.Select(b => b.Key)))
@@ -369,7 +376,7 @@
                     }
                 },
                 fill: {
-                    opacity: 0.6  // Ajustez l'opacité ici (0 pour complètement transparent, 1 pour complètement opaque)
+                    opacity: 0.8
                 },
                 tooltip: {
                     y: {
@@ -385,6 +392,48 @@
         });
     </script>
 
+         var options = {
+             series: [{
+                 name: 'Nombre de Bénéficiaires',
+                 data: @Html.Raw(Json.Serialize(Model.BeneficiariesPerNationality.Select(b => b.Value)))
+                 }],
+             chart: {
+                 type: 'bar',
+                 height: 350
+             },
+             plotOptions: {
+                 bar: {
+                     horizontal: false,
+                     endingShape: 'rounded',
+                     borderRadius: 5, // Ajoute un rayon de bordure arrondie aux barres
+                     dataLabels: {
+                         position: 'top' // Positionne les étiquettes de données en haut des barres
+                     }
+                 }
+             },
+             colors: colors, // Applique les couleurs définies
+             dataLabels: {
+                 enabled: true
+             },
+             xaxis: {
+                 categories: @Html.Raw(Json.Serialize(Model.BeneficiariesPerNationality.Select(b => b.Key)))
+                 },
+             yaxis: {
+                 title: {
+                     text: 'Nombre de Bénéficiaires'
+                 }
+             },
+             fill: {
+                 opacity: 0.8
+             },
+             tooltip: {
+                 y: {
+                     formatter: function (val) {
+                         return val + " bénéficiaires";
+                     }
+                 }
+             }
+         };
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
