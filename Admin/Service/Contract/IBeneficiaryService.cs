@@ -18,10 +18,11 @@ namespace Admin.Service.Contract
 
         void UpdateBenificier(BenificierVM benificierVM, Benificier benificier);
 
-        void DeleteBenificier(Benificier benificier);
+        bool DeleteBenificier(Benificier benificier);
 
         public Task<StatistiquesData> GetStatistiquesAsync();
 
         void SaveChanges();
+        string GenerateUniqueSuffix();
     }
 }

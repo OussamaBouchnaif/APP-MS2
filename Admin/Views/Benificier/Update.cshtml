@@ -1,118 +1,200 @@
-﻿@model Admin.ViewModel.BenificierVM;
+﻿@model Admin.ViewModel.BenificierVM
 
 @{
     ViewData["Title"] = "Modifier Benificier";
 }
 
-<div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">Formulaire de Benificier</h4>
-                <p class="card-title-desc">Veuillez remplir les informations ci-dessous.</p>
-            </div>
-            <div class="card-body">
-                <form asp-action="Update" method="post">
-                    <div class="form-group">
-                        <input asp-for="Id" class="form-control" type="hidden" />
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="Nom" class="col-md-2 col-form-label">Nom</label>
-                        <div class="col-md-10">
-                            <input asp-for="Nom" class="form-control" />
-                            <span asp-validation-for="Nom" class="text-danger"></span>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Formulaire de Bénéficiaire</h4>
+                    <p class="card-title-desc">Veuillez remplir les informations ci-dessous.</p>
+                </div>
+                <div class="card-body">
+                    <form id="updateForm" asp-action="Update" method="post">
+                        <div class="form-group">
+                            <input asp-for="Id" class="form-control" type="hidden" />
                         </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="Prenom" class="col-md-2 col-form-label">Prénom</label>
-                        <div class="col-md-10">
-                            <input asp-for="Prenom" class="form-control" />
-                            <span asp-validation-for="Prenom" class="text-danger"></span>
+                        <div class="row">
+                            <!-- Colonne de gauche -->
+                            <div class="col-md-6">
+                                <div class="mb-3 row">
+                                    <label for="Nom" class="col-md-4 col-form-label"><i class="bx bx-user text-primary"></i> Nom</label>
+                                    <div class="col-md-8">
+                                        <input asp-for="Nom" class="form-control" />
+                                        <span asp-validation-for="Nom" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="Prenom" class="col-md-4 col-form-label"><i class="bx bx-user text-primary"></i> Prénom</label>
+                                    <div class="col-md-8">
+                                        <input asp-for="Prenom" class="form-control" />
+                                        <span asp-validation-for="Prenom" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="Age" class="col-md-4 col-form-label"><i class="bx bx-calendar text-primary"></i> Age</label>
+                                    <div class="col-md-8">
+                                        <input asp-for="Age" class="form-control" type="number" />
+                                        <span asp-validation-for="Age" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="Sexe" class="col-md-4 col-form-label"><i class="bx bx-male-female text-primary"></i> Sexe</label>
+                                    <div class="col-md-8">
+                                        <select asp-for="Sexe" class="form-control">
+                                            <option value="">-- Sélectionnez --</option>
+                                            <option value="Homme">Homme</option>
+                                            <option value="Femme">Femme</option>
+                                        </select>
+                                        <span asp-validation-for="Sexe" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="Tele" class="col-md-4 col-form-label"><i class="bx bx-phone text-primary"></i> Téléphone</label>
+                                    <div class="col-md-8">
+                                        <input asp-for="Tele" class="form-control" type="tel" />
+                                        <span asp-validation-for="Tele" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="TeleUrgent" class="col-md-4 col-form-label"><i class="bx bx-phone text-primary"></i> Téléphone Urgent</label>
+                                    <div class="col-md-8">
+                                        <input asp-for="TeleUrgent" class="form-control" type="tel" />
+                                        <span asp-validation-for="TeleUrgent" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Colonne de droite -->
+                            <div class="col-md-6">
+                                <div class="mb-3 row">
+                                    <label for="PaysOrigin" class="col-md-4 col-form-label"><i class="bx bx-world text-primary"></i> Pays d'Origine</label>
+                                    <div class="col-md-8">
+                                        <input asp-for="PaysOrigin" class="form-control" />
+                                        <span asp-validation-for="PaysOrigin" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="Nationalite" class="col-md-4 col-form-label"><i class="bx bx-flag text-primary"></i> Nationalité</label>
+                                    <div class="col-md-8">
+                                        <input asp-for="Nationalite" class="form-control" />
+                                        <span asp-validation-for="Nationalite" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="Address" class="col-md-4 col-form-label"><i class="bx bx-map text-primary"></i> Adresse</label>
+                                    <div class="col-md-8">
+                                        <input asp-for="Address" class="form-control" />
+                                        <span asp-validation-for="Address" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="Ville" class="col-md-4 col-form-label"><i class="bx bx-buildings text-primary"></i> Ville</label>
+                                    <div class="col-md-8">
+                                        <input asp-for="Ville" class="form-control" />
+                                        <span asp-validation-for="Ville" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="TypeDetection" class="col-md-4 col-form-label"><i class="bx bx-search text-primary"></i> Type de Détection</label>
+                                    <div class="col-md-8">
+                                        <input asp-for="TypeDetection" class="form-control" />
+                                        <span asp-validation-for="TypeDetection" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="PrefixCode" class="col-md-4 col-form-label"><i class="bx bx-barcode text-primary"></i> Code Unique</label>
+                                    <div class="col-md-8">
+                                        <input asp-for="codeUnique" class="form-control" readonly />
+                                        <span asp-validation-for="codeUnique" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <p class="mt-2 text-danger"><i class="bx bx-info-circle"></i> Le code unique n'est pas modifiable.</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="Age" class="col-md-2 col-form-label">Age</label>
-                        <div class="col-md-10">
-                            <input asp-for="Age" class="form-control" type="number" />
-                            <span asp-validation-for="Age" class="text-danger"></span>
+                        <div class="row left">
+                            <div class="col-md-12 text-center">
+                                <button type="submit" class="btn btn-primary"><i class="bx bx-check-circle"></i> Mettre à jour</button>
+                                <a href="@Url.Action("Index", "Benificier")" class="btn btn-secondary"><i class="bx bx-list-ul"></i> Liste des Bénéficiaires</a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="Sexe" class="col-md-2 col-form-label">Sexe</label>
-                        <div class="col-md-10">
-                            <select asp-for="Sexe" class="form-control">
-                                <option value="">-- Sélectionnez --</option>
-                                <option value="Homme">Homme</option>
-                                <option value="Femme">Femme</option>
-                            </select>
-                            <span asp-validation-for="Sexe" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="Tele" class="col-md-2 col-form-label">Téléphone</label>
-                        <div class="col-md-10">
-                            <input asp-for="Tele" class="form-control" type="tel" />
-                            <span asp-validation-for="Tele" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="TeleUrgent" class="col-md-2 col-form-label">Téléphone Urgent</label>
-                        <div class="col-md-10">
-                            <input asp-for="TeleUrgent" class="form-control" type="tel" />
-                            <span asp-validation-for="TeleUrgent" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="PaysOrigin" class="col-md-2 col-form-label">Pays d'Origine</label>
-                        <div class="col-md-10">
-                            <input asp-for="PaysOrigin" class="form-control" />
-                            <span asp-validation-for="PaysOrigin" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="Nationalite" class="col-md-2 col-form-label">Nationalité</label>
-                        <div class="col-md-10">
-                            <input asp-for="Nationalite" class="form-control" />
-                            <span asp-validation-for="Nationalite" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="Address" class="col-md-2 col-form-label">Adresse</label>
-                        <div class="col-md-10">
-                            <input asp-for="Address" class="form-control" />
-                            <span asp-validation-for="Address" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="Ville" class="col-md-2 col-form-label">Ville</label>
-                        <div class="col-md-10">
-                            <input asp-for="Ville" class="form-control" />
-                            <span asp-validation-for="Ville" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="TypeDetection" class="col-md-2 col-form-label">Type de Détection</label>
-                        <div class="col-md-10">
-                            <input asp-for="TypeDetection" class="form-control" />
-                            <span asp-validation-for="TypeDetection" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="codeUnique" class="col-md-2 col-form-label">Code Unique</label>
-                        <div class="col-md-10">
-                            <input asp-for="codeUnique" class="form-control" />
-                            <span asp-validation-for="codeUnique" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="row left">
-                        <div class="col-md-10 offset-md-2">
-                            <button type="submit" class="btn btn-primary">Update</button>
-                        </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
+@section Scripts {
+    <script src="~/assets/libs/jquery/jquery-3.6.0.min.js"></script>
+    <script src="~/assets/libs/sweetalert2/sweetalert2(v2).js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#updateForm').on('submit', function (e) {
+                e.preventDefault();
 
+                Swal.fire({
+                    title: 'Êtes-vous sûr?',
+                    text: "Vous allez mettre à jour les informations du bénéficiaire!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Oui, mettez à jour!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire({
+                            title: 'Veuillez patienter',
+                            text: 'Mise à jour en cours...',
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            didOpen: () => {
+                                Swal.showLoading();
+                            }
+                        });
+
+                        var form = $(this);
+                        $.ajax({
+                            url: form.attr('action'),
+                            type: form.attr('method'),
+                            data: form.serialize(),
+                            success: function (response) {
+                                Swal.close();
+                                if (response.success) {
+                                    Swal.fire({
+                                        title: 'Succès!',
+                                        text: 'Les informations du bénéficiaire ont été mises à jour avec succès.',
+                                        icon: 'success',
+                                        confirmButtonText: 'OK'
+                                    }).then(() => {
+                                        window.location.href = '@Url.Action("Index", "Benificier")';
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        title: 'Erreur',
+                                        html: '<ul>' + response.errors.map(error => `<li>${error}</li>`).join('') + '</ul>',
+                                        icon: 'error',
+                                        confirmButtonText: 'OK'
+                                    });
+                                }
+                            },
+                            error: function (xhr, status, error) {
+                                Swal.close();
+                                Swal.fire({
+                                    title: 'Erreur',
+                                    text: 'Une erreur s\'est produite lors de la mise à jour des informations.',
+                                    icon: 'error',
+                                    confirmButtonText: 'OK'
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}

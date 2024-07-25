@@ -4,46 +4,70 @@
     ViewData["Title"] = "Utilisateurs";
 }
 
-<div class="content">
-    <div class="container">
-        <a href="Utilisateur/Add" class="btn btn-primary" id="bn">Ajouter un Utilisateur</a>
-        @if (Model != null && Model.Any())
-        {
+<div class="container">
 
-            <table id="myTable" class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>Nom</th>
-                        <th>Prenom</th>
-                        <th>Age</th>
-                        <th>Sexe</th>
-                        <th>Tele</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var utilisateur in Model)
-                    {
-                        <tr>
-                            <td>@utilisateur.Nom</td>
-                            <td>@utilisateur.Prenom</td>
-                            <td>@utilisateur.Age</td>
-                            <td>@utilisateur.Sexe</td>
-                            <td>@utilisateur.Tele</td>
-                            <td class="text-center">
-                                <a href="javascript:void(0);" data-id="@utilisateur.Id" class="text-danger delete-utilisateur"><i class="fas fa-trash-alt"></i></a>
-                                <a asp-action="Profile" asp-route-id="@utilisateur.Id" class="text-info"><i class="fas fa-info-circle"></i></a>
-                                <a asp-action="Add" class="text-warning"><i class="fas fa-folder-plus"></i></a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        }
-        else
-        {
-            <p>No beneficiaries found.</p>
-        }
+    <div class="card">
+        <div class="card-header d-flex align-items-center">
+            <i class='bx bxs-user icon nav-icon bx-lg ml-3 mr-3 text-primary'></i>
+            <div>
+                <h2 class="h2 text-primary m-0">Liste des Utilisateurs</h2>
+            </div>
+        </div>
+        <div class="card-body">
+            <!-- Documentation des boutons -->
+            <div class="alert alert-info" role="alert">
+                <ul>
+                    <li>
+                        <strong class="text-danger">Bouton Supprimer (<i class="fas fa-trash-alt"></i>)</strong> : Ce bouton permet de supprimer un utilisateur. Il ouvre une boîte de dialogue de confirmation avant de procéder à la suppression.
+                    </li>
+                    <li>
+                        <strong class="text-info">Bouton Modifier (<i class="fas fa-pencil-alt"></i>)</strong> : Ce bouton permet de voir les détails du profil d'un utilisateur. Il redirige vers une page de profil.
+                    </li>
+                    <li>
+                        <strong class="text-warning">Bouton Ajouter (<i class="fas fa-plus"></i>)</strong> : Ce bouton permet d'ajouter une nouveau utilisateur.
+                    </li>
+                </ul>
+            </div>
+            <a href="Add" class="btn btn-primary mb-3" id="bn">Ajouter un Utilisateur</a>
+            @if (Model != null && Model.Any())
+            {
+                <div class="table-responsive">
+                    <table id="myTable" class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Prenom</th>
+                                <th>Age</th>
+                                <th>Sexe</th>
+                                <th>Tele</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var utilisateur in Model)
+                            {
+                                <tr>
+                                    <td>@utilisateur.Nom</td>
+                                    <td>@utilisateur.Prenom</td>
+                                    <td>@utilisateur.Age</td>
+                                    <td>@utilisateur.Sexe</td>
+                                    <td>@utilisateur.Tele</td>
+                                    <td class="text-center">
+                                        <a href="javascript:void(0);" data-id="@utilisateur.Id" class="text-danger delete-utilisateur"><i class="fas fa-trash-alt"></i></a>
+                                        <a asp-action="Profile" asp-route-id="@utilisateur.Id" class="text-info"><i class="fas fa-pencil-alt"></i></a>
+                                        <a asp-action="Add" class="text-warning"><i class="fas fa-plus"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p>No beneficiaries found.</p>
+            }
+        </div>
     </div>
 </div>
 

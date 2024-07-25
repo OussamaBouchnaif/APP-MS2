@@ -13,7 +13,7 @@
                     <p class="card-title-desc">Veuillez remplir les informations ci-dessous.</p>
                 </div>
                 <div class="card-body">
-                    <form asp-action="Add" method="post">
+                    <form id="beneficiaryForm" asp-action="Add" method="post">
                         <div class="row">
                             <!-- Colonne de gauche -->
                             <div class="col-md-6">
@@ -102,10 +102,16 @@
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
-                                    <label for="codeUnique" class="col-md-4 col-form-label"><i class="bx bx-barcode text-primary"></i> Code Unique</label>
-                                    <div class="col-md-8">
-                                        <input asp-for="codeUnique" class="form-control" />
-                                        <span asp-validation-for="codeUnique" class="text-danger"></span>
+                                    <label for="PrefixCode" class="col-md-4 col-form-label"><i class="bx bx-barcode text-primary"></i> Code Unique</label>
+                                    <div class="col-md-4">
+                                        <input asp-for="PrefixCode" class="form-control" maxlength="5" placeholder="Préfixe (max 5 lettres)" />
+                                        <span asp-validation-for="PrefixCode" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input asp-for="GeneratedCode" class="form-control" readonly placeholder="Généré automatiquement" />
+                                    </div>
+                                    <div class="col-md-12">
+                                        <p class="mt-2 text-danger"><i class="bx bx-info-circle"></i> Le code unique n'est pas modifiable.</p>
                                     </div>
                                 </div>
                             </div>
@@ -123,6 +129,60 @@
     </div>
 </div>
 
+@section Scripts {
+    <script src="~/assets/libs/jquery/jquery-3.6.0.min.js"></script>
+    <script src="~/assets/libs/sweetalert2/sweetalert2(v2).js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#beneficiaryForm').on('submit', function (e) {
+                e.preventDefault();
 
+                Swal.fire({
+                    title: 'Veuillez patienter',
+                    text: 'Soumission en cours...',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
 
-
+                var form = $(this);
+                $.ajax({
+                    url: form.attr('action'),
+                    type: form.attr('method'),
+                    data: form.serialize(),
+                    success: function (response) {
+                        Swal.close();
+                        if (response.success) {
+                            Swal.fire({
+                                title: 'Succès!',
+                                text: 'Le bénéficiaire a été ajouté avec succès.',
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            }).then(() => {
+                                window.location.href = '@Url.Action("Index", "Benificier")';
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Erreur',
+                                html: '<ul>' + response.errors.map(error => `<li>${error}</li>`).join('') + '</ul>',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        Swal.close();
+                        Swal.fire({
+                            title: 'Erreur',
+                            text: 'Une erreur s\'est produite lors de la soumission du formulaire.',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}

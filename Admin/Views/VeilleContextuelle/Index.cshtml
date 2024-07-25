@@ -13,7 +13,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header d-flex align-items-center">
-                <i class='bx bx-list-ul bx-lg ml-3 mr-3 text-primary'></i>
+                <i class='bx bx-search bx-lg ml-3 mr-3 text-primary'></i>
                 <div>
                     <h2 class="h2 text-primary m-0">Liste des Veilles Contextuelles</h2>
                     @* <p class="card-title-desc">Vous trouvez ici toutes les veilles contextuelles saisies.</p> *@
@@ -21,8 +21,25 @@
             </div>
 
             <div class="card-body">
+                <!-- Documentation des boutons -->
+                <div class="alert alert-info" role="alert">
+                    <ul>
+                        <li>
+                            <strong class="text-primary">Bouton Détails (<i class="fas fa-chart-pie font-size-16 align-middle"></i>)</strong> : Ce bouton permet de voir les détails d'une veille contextuelle. Il redirige vers une page de détails.
+                        </li>
+                        <li>
+                            <strong class="text-danger">Bouton Rejeter (<i class="bx bx-block font-size-16 align-middle"></i>)</strong> : Ce bouton permet de rejeter une veille contextuelle. Il ouvre une boîte de dialogue de confirmation avant de procéder à la mise à jour du statut.
+                        </li>
+                        <li>
+                            <strong class="text-warning">Bouton Partiellement Satisfaisante (<i class="bx bx-error font-size-16 align-middle"></i>)</strong> : Ce bouton permet de marquer une veille contextuelle comme <span class="text-warning">"Partiellement Satisfaisante"</span>. Il ouvre une boîte de dialogue de confirmation avant de procéder à la mise à jour du statut.
+                        </li>
+                        <li>
+                            <strong class="text-success">Bouton Accepter (<i class="bx bx-check-double font-size-16 align-middle"></i>)</strong> : Ce bouton permet d'accepter une veille contextuelle. Il ouvre une boîte de dialogue de confirmation avant de procéder à la mise à jour du statut.
+                        </li>
+                    </ul>
+                </div>
                 <a asp-action="Create" type="button" class="btn btn-primary waves-effect waves-light w-sm">
-                    <i class='bx bx-plus d-block font-size-16'></i> Ajouter
+                     Ajouter
                 </a>
                 @if (Model != null && Model.Any())
                 {
