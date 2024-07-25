@@ -129,5 +129,10 @@ namespace Admin.Service
         {
             return Guid.NewGuid().ToString("N").Substring(0, 8).ToUpper();
         }
+
+        public Benificier FindByCodeUnique(string codeUnique)
+        {
+            return _benificierRepository.FindByExpression(b => b.codeUnique == codeUnique);
+        }
     }
 }

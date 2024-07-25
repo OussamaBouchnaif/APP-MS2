@@ -23,6 +23,9 @@ namespace Admin.Service.Contract
         public Task<StatistiquesData> GetStatistiquesAsync();
 
         void SaveChanges();
+
         string GenerateUniqueSuffix();
+
+        Benificier FindByCodeUnique(string codeUnique);
     }
 }

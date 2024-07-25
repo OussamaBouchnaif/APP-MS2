@@ -7,7 +7,6 @@
 <!doctype html>
 <html lang="en">
 
-
 <head>
 
     <meta charset="utf-8" />
@@ -25,9 +24,11 @@
     <link href="~/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
     <!-- App Css-->
     <link href="~/assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+    <!-- Custom Css -->
+    <link href="~/assets/css/custom.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/Login.css" rel="stylesheet" type="text/css" />
 
 </head>
-
 
 <body>
 
@@ -41,7 +42,7 @@
                     <div class="col-md-8 col-lg-6 col-xl-5">
 
                         <div class="mb-4 pb-2">
-                            <a href="index-2.html" class="d-block auth-logo">
+                            <a href="#" class="d-block auth-logo">
                                 <img src="~/assets/images/logo-dark-nbg.png" alt="" height="70" class="auth-logo-dark me-start">
                                 <img src="~/assets/images/logo-light-nbg.png" alt="" height="70" class="auth-logo-light me-start">
                             </a>
@@ -54,24 +55,6 @@
                                     <p class="text-muted">Connectez-vous pour continuer sur MS2 ADMIN.</p>
                                 </div>
                                 <div class="p-2 mt-4">
-                                    @* @if (ViewData.ModelState != null && ViewData.ModelState.ErrorCount > 0)
-                                    {
-                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                            <i class="mdi mdi-block-helper me-2"></i>
-                                            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
-                                            {
-                                                <div>@error.ErrorMessage</div>
-                                            }
-                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                        </div>
-                                    } *@
-
-                                    @* @if (TempData["SuccessMessage"] != null)
-                                    {
-                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                            @TempData["SuccessMessage"]
-                                        </div>
-                                    } *@
                                     <form method="post" asp-action="Login">
                                         <div class="mb-3">
                                             <label class="form-label" for="email" asp-for="Email">
@@ -96,8 +79,6 @@
                                             <span asp-validation-for="Password" class="form-error text-danger"></span>
                                         </div>
 
-
-
                                         <div class="form-check py-1">
                                             <input type="checkbox" class="form-check-input" id="auth-remember-check">
                                             <label class="form-check-label" for="auth-remember-check">Se souvenir de moi</label>
@@ -120,27 +101,83 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="text-center p-4">
-                            <p>©<script>document.write(new Date().getFullYear())</script> <b>MS2 ADMIN.</b> </p>
+                            <p>©<script>document.write(new Date().getFullYear())</script> <b>MS2 ADMIN.</b></p>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div><!-- end container -->
     </div>
     <!-- end authentication section -->
+    <!-- Floating feedback button -->
+    <div class="feedback-button">
+        <button class="btn btn-success rounded-circle waves-effect waves-light" id="feedback-button">
+            <i class="fa fa-comments"></i>
+            <span class="ripple"></span>
+        </button>
+    </div>
+
     <!-- JAVASCRIPT -->
     <script src="~/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/assets/libs/metismenujs/metismenujs.min.js"></script>
     <script src="~/assets/libs/simplebar/simplebar.min.js"></script>
     <script src="~/assets/libs/eva-icons/eva.min.js"></script>
-
     <script src="~/assets/js/pages/pass-addon.init.js"></script>
-
     <!-- Alert init js -->
     <script src="~/assets/js/pages/alert.init.js"></script>
-
     <partial name="_ValidationScriptsPartial" />
 
+    <script src="~/assets/libs/sweetalert2/sweetalert2(v2).js"></script>
+
+    <script>
+        document.getElementById('feedback-button').addEventListener('click', function () {
+            Swal.fire({
+                title: 'Saisissez votre code unique',
+                input: 'text',
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Soumettre',
+                showLoaderOnConfirm: true,
+                preConfirm: (codeUnique) => {
+                    return fetch('/Account/ValidateCodeUnique', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ codeUnique: codeUnique })
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(response.statusText);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (!data.success) {
+                            throw new Error(data.message);
+                        }
+                        return data;
+                    })
+                    .catch(error => {
+                        Swal.showValidationMessage(`Code unique invalide: ${error}`);
+                    });
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: `Code validé`,
+                        text: `Bienvenue!`,
+                        icon: 'success'
+                    }).then(() => {
+                        window.location.href = '@Url.Action("Index", "Avis")';
+                    });
+                }
+            });
+        });
+    </script>
 </body>
+
 </html>
