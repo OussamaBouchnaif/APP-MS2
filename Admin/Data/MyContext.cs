@@ -42,8 +42,14 @@ namespace MS2Api.Data
                 .HasDiscriminator<string>("PersonneType")
                 .HasValue<Benificier>("Benificier")
                 .HasValue<Utilisateur>("Utilisateur");
-        }
 
-        
+            modelBuilder.Entity<Benificier>()
+               .HasIndex(b => b.codeUnique)
+               .IsUnique();
+
+            modelBuilder.Entity<DossierMedical>()
+            .Property(d => d.Prix)
+            .HasPrecision(18, 2);
+        }
     }
 }

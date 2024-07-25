@@ -4,6 +4,7 @@ using MS2Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Admin.Migrations
 {
     [DbContext(typeof(MyContext))]
-    partial class MyContextModelSnapshot : ModelSnapshot
+    [Migration("20240725172526_AddDossierSocial")]
+    partial class AddDossierSocial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -191,31 +193,6 @@ namespace Admin.Migrations
                         .IsUnique();
 
                     b.ToTable("DossierSociale");
-                });
-
-            modelBuilder.Entity("Admin.Models.Participation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("DossierSocialeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Thematique")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DossierSocialeId");
-
-                    b.ToTable("Participation");
                 });
 
             modelBuilder.Entity("Admin.Models.SuiviSociale", b =>
@@ -814,17 +791,6 @@ namespace Admin.Migrations
                     b.Navigation("benificier");
                 });
 
-            modelBuilder.Entity("Admin.Models.Participation", b =>
-                {
-                    b.HasOne("Admin.Models.DossierSociale", "dossierSociale")
-                        .WithMany("participations")
-                        .HasForeignKey("DossierSocialeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("dossierSociale");
-                });
-
             modelBuilder.Entity("Admin.Models.SuiviSociale", b =>
                 {
                     b.HasOne("Admin.Models.DossierSociale", "dossierSociale")
@@ -914,8 +880,6 @@ namespace Admin.Migrations
 
             modelBuilder.Entity("Admin.Models.DossierSociale", b =>
                 {
-                    b.Navigation("participations");
-
                     b.Navigation("suiviSociales");
                 });
 

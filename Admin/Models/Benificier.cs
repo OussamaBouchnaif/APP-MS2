@@ -1,5 +1,4 @@
-
-﻿using Admin.Models;
+using Admin.Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -19,5 +18,7 @@ namespace MS2Api.Model
 
         public DossierPersonnel? Dossier { get; set; }
         public IList<DossierMedical>? DossierMedicals { get; set; }
+        public DossierSociale? dossierSociale { get; set; }
+        public IList<Avis>? Avis { get; set; }
     }
 }
