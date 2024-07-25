@@ -1,9 +1,10 @@
-﻿using MS2Api.Model;
+﻿using Admin.Models;
+using MS2Api.Model;
 using System.ComponentModel.DataAnnotations;
 
-namespace Admin.Models
+namespace Admin.ViewModel
 {
-    public class SuiviSociale
+    public class DossierSocialeVM
     {
         [Key]
         public int Id { get; set; }

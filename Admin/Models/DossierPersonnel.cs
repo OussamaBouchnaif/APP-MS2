@@ -17,6 +17,8 @@ namespace MS2Api.Model
         public SituationPsychologique? Psychologique { get; set; }
         public SituationViolence? Violence { get; set; }
 
+        public string? Conclusion { get; set; }
+
         public Benificier Benificier { get; set; }
         public int BenificierId { get; set; }
     }
