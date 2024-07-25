@@ -34,7 +34,13 @@
                 <li>
                     <a asp-controller="Dashboard" asp-action="Index">
                         <i class="bx bx-calendar-event icon nav-icon"></i>
-                        <span class="menu-item" data-key="t-calendar">Dashboard</span>
+                        <span class="menu-item" data-key="t-calendar">Tableau de Bord</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="VeilleContextuelle">
+                        <i class="bx bx-search icon nav-icon"></i>
+                        <span class="menu-item" data-key="t-calendar">Veille stratégique</span>
                     </a>
                 </li>
                 <li>
@@ -47,13 +53,6 @@
                     <a asp-action="Index" asp-controller="Utilisateur">
                         <i class="bx bxs-user icon nav-icon"></i>
                         <span class="menu-item" data-key="t-calendar">Utilisateurs</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a asp-action="Index" asp-controller="VeilleContextuelle">
-                        <i class="bx bx-search icon nav-icon"></i>
-                        <span class="menu-item" data-key="t-calendar">Veille stratégique</span>
                     </a>
                 </li>
             </ul>

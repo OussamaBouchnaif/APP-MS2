@@ -49,8 +49,12 @@ namespace Admin.ViewModel
         [StringLength(100, ErrorMessage = "Le type de détection ne peut pas dépasser 100 caractères.")]
         public string TypeDetection { get; set; }
 
-        [Required(ErrorMessage = "Le code unique est requis.")]
+        public string? PrefixCode { get; set; }
+
+        //[Required(ErrorMessage = "Le code unique est requis.")]
         [StringLength(50, ErrorMessage = "Le code unique ne peut pas dépasser 50 caractères.")]
-        public string codeUnique { get; set; }
+        public string? codeUnique { get; set; }
+
+        public string? GeneratedCode { get; set; }
     }
 }

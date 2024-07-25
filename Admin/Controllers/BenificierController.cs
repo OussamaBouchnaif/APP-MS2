@@ -6,7 +6,7 @@ using MS2Api.Model;
 
 namespace Admin.Controllers
 {
-    //[ServiceFilter(typeof(AuthenticationFilter))]
+    [ServiceFilter(typeof(AuthenticationFilter))]
     public class BenificierController : Controller
     {
         private readonly IBeneficiaryService _beneficiaryService;
@@ -28,7 +28,11 @@ namespace Admin.Controllers
         [HttpGet]
         public IActionResult Add()
         {
-            return View();
+            var model = new BenificierVM
+            {
+                GeneratedCode = _beneficiaryService.GenerateUniqueSuffix()
+            };
+            return View(model);
         }
 
         [HttpPost]
@@ -36,11 +40,13 @@ namespace Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                benificierVM.codeUnique = benificierVM.PrefixCode + benificierVM.GeneratedCode;
                 _beneficiaryService.AddBenificier(benificierVM);
-                return RedirectToAction(nameof(Index));
+                return Json(new { success = true });
             }
 
-            return View(benificierVM);
+            var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+            return Json(new { success = false, errors });
         }
 
         [HttpGet]
@@ -58,16 +64,21 @@ namespace Admin.Controllers
             if (ModelState.IsValid)
             {
                 _beneficiaryService.UpdateBenificier(benificierVM, benificier);
-                return RedirectToAction(nameof(Index));
+                return Json(new { success = true });
             }
-            return View(benificierVM);
+            var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+            return Json(new { success = false, errors });
         }
 
         public IActionResult Delete(int Id)
         {
             Benificier benificier = _beneficiaryService.GetBenificierById(Id);
-            _beneficiaryService.DeleteBenificier(benificier);
-            return RedirectToAction(nameof(Index));
+            var result = _beneficiaryService.DeleteBenificier(benificier);
+            if (result)
+            {
+                return Json(new { success = true });
+            }
+            return Json(new { success = false, error = "La suppression a échoué." });
         }
     }
 }
