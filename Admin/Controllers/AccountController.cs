@@ -1,4 +1,5 @@
-﻿using Admin.Models;
+﻿using Admin.Mapper.Contract;
+using Admin.Models;
 using Admin.Repository;
 using Admin.Service.Contract;
 using Admin.ViewModel;
@@ -17,17 +18,20 @@ namespace Admin.Controllers
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IPasswordHasher<Utilisateur> _passwordHasher;
         private readonly IUtilisateurService _utilisateurService;
+        private readonly IBeneficiaryService _beneficiaryService;
 
         public AccountController(
             IRepository<Utilisateur> userRepository,
             IHttpContextAccessor httpContextAccessor,
             IPasswordHasher<Utilisateur> passwordHasher,
-            IUtilisateurService utilisateurService)
+            IUtilisateurService utilisateurService,
+            IBeneficiaryService beneficiaryService)
         {
             _userRepository = userRepository;
             _httpContextAccessor = httpContextAccessor;
             _passwordHasher = passwordHasher;
             _utilisateurService = utilisateurService;
+            _beneficiaryService = beneficiaryService;
         }
 
         [HttpGet]
@@ -153,6 +157,18 @@ namespace Admin.Controllers
                 ModelState.AddModelError(string.Empty, "Mot de passe incorrect.");
             }
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult ValidateCodeUnique([FromBody] CodeUniqueVM codeUniqueModel)
+        {
+            var benificier = _beneficiaryService.FindByCodeUnique(codeUniqueModel.codeUnique);
+            if (benificier != null)
+            {
+                _httpContextAccessor.HttpContext.Session.SetObjectAsJson("Benificier", benificier);
+                return Json(new { success = true });
+            }
+            return Json(new { success = false, message = "Code unique incorrect." });
         }
     }
 }

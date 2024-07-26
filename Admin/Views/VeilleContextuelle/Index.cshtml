@@ -1,19 +1,29 @@
 @model IEnumerable<Admin.ViewModel.VeilleContextuelleViewModel>
+@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json
+@inject IHttpContextAccessor HttpContextAccessor
 
 @{
     ViewData["Title"] = "Liste des Veilles Contextuelles";
+    var userJson = HttpContextAccessor.HttpContext.Session.GetString("User");
+    dynamic user = userJson != null ? JsonConvert.DeserializeObject<dynamic>(userJson) : null;
 }
 
 @section Styles {
     <link rel="stylesheet" href="~/assets/libs/sweetalert2/sweetalert2.min.css">
     <link rel="stylesheet" href="~/assets/css/veilleContextuelle.css">
+    <style>
+        .small-font {
+            font-size: 13px;
+        }
+    </style>
 }
 
 <div class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-header d-flex align-items-center">
-                <i class='bx bx-list-ul bx-lg ml-3 mr-3 text-primary'></i>
+                <i class='bx bx-search bx-lg ml-3 mr-3 text-primary'></i>
                 <div>
                     <h2 class="h2 text-primary m-0">Liste des Veilles Contextuelles</h2>
                     @* <p class="card-title-desc">Vous trouvez ici toutes les veilles contextuelles saisies.</p> *@
@@ -21,8 +31,29 @@
             </div>
 
             <div class="card-body">
-                <a asp-action="Create" type="button" class="btn btn-primary waves-effect waves-light w-sm">
-                    <i class='bx bx-plus d-block font-size-16'></i> Ajouter
+                <!-- Documentation des boutons -->
+                <div class="alert alert-info small-font" role="alert">
+                    <ul>
+                        <li>
+                            <strong class="text-primary">Bouton Détails (<i class="fas fa-chart-pie font-size-16 align-middle"></i>)</strong> : Ce bouton permet de voir les détails d'une veille contextuelle. Il redirige vers une page de détails.
+                        </li>
+                        @if (user?.Role == "Admin")
+                        {
+                            <li>
+                                <strong class="text-danger">Bouton Rejeter (<i class="bx bx-block font-size-16 align-middle"></i>)</strong> : Ce bouton permet de rejeter une veille contextuelle. Il ouvre une boîte de dialogue de confirmation avant de procéder à la mise à jour du statut.
+                            </li>
+                            <li>
+                                <strong class="text-warning">Bouton Partiellement Satisfaisante (<i class="bx bx-error font-size-16 align-middle"></i>)</strong> : Ce bouton permet de marquer une veille contextuelle comme <span class="text-warning">"Partiellement Satisfaisante"</span>. Il ouvre une boîte de dialogue de confirmation avant de procéder à la mise à jour du statut.
+                            </li>
+                            <li>
+                                <strong class="text-success">Bouton Accepter (<i class="bx bx-check-double font-size-16 align-middle"></i>)</strong> : Ce bouton permet d'accepter une veille contextuelle. Il ouvre une boîte de dialogue de confirmation avant de procéder à la mise à jour du statut.
+                            </li>
+                        }
+                    </ul>
+                </div>
+
+                <a asp-action="Create" class="btn btn-primary mb-3" id="bn">
+                    <i class='bx bx-plus-medical' style="margin-right: 5px; font-size: 20px;"></i> Ajouter une veille contextuelle
                 </a>
                 @if (Model != null && Model.Any())
                 {
@@ -67,17 +98,20 @@
                                                 <a asp-action="Details" asp-route-id="@veille.Id" class="btn btn-subtle-primary btn-sm waves-effect waves-light">
                                                     <i class="fas fa-chart-pie font-size-16 align-middle"></i>
                                                 </a>
-                                                @if (veille.VerificationStatus != Admin.Enums.VerificationStatus.Rejete)
+                                                @if (user?.Role == "Admin")
                                                 {
-                                                    <button type="button" class="btn btn-subtle-danger btn-sm waves-effect waves-light" onclick="confirmUpdateStatus(@veille.Id, 0)"><i class="bx bx-block font-size-16 align-middle"></i></button>
-                                                }
-                                                @if (veille.VerificationStatus != Admin.Enums.VerificationStatus.CinquanteCinquante)
-                                                {
-                                                    <button type="button" class="btn btn-subtle-warning btn-sm waves-effect waves-light" onclick="confirmUpdateStatus(@veille.Id, 1)"><i class="bx bx-error font-size-16 align-middle"></i></button>
-                                                }
-                                                @if (veille.VerificationStatus != Admin.Enums.VerificationStatus.Accepte)
-                                                {
-                                                    <button type="button" class="btn btn-subtle-success btn-sm waves-effect waves-light" onclick="confirmUpdateStatus(@veille.Id, 2)"><i class="bx bx-check-double font-size-16 align-middle"></i></button>
+                                                    @if (veille.VerificationStatus != Admin.Enums.VerificationStatus.Rejete)
+                                                    {
+                                                        <button type="button" class="btn btn-subtle-danger btn-sm waves-effect waves-light" onclick="confirmUpdateStatus(@veille.Id, 0)"><i class="bx bx-block font-size-16 align-middle"></i></button>
+                                                    }
+                                                    @if (veille.VerificationStatus != Admin.Enums.VerificationStatus.CinquanteCinquante)
+                                                    {
+                                                        <button type="button" class="btn btn-subtle-warning btn-sm waves-effect waves-light" onclick="confirmUpdateStatus(@veille.Id, 1)"><i class="bx bx-error font-size-16 align-middle"></i></button>
+                                                    }
+                                                    @if (veille.VerificationStatus != Admin.Enums.VerificationStatus.Accepte)
+                                                    {
+                                                        <button type="button" class="btn btn-subtle-success btn-sm waves-effect waves-light" onclick="confirmUpdateStatus(@veille.Id, 2)"><i class="bx bx-check-double font-size-16 align-middle"></i></button>
+                                                    }
                                                 }
                                             </div>
                                         </td>

@@ -66,7 +66,7 @@ namespace Admin.Service
             SaveChanges();
         }
 
-        public void DeleteBenificier(Benificier benificier)
+        public bool DeleteBenificier(Benificier benificier)
         {
             if (benificier == null)
             {
@@ -75,6 +75,7 @@ namespace Admin.Service
 
             _benificierRepository.Delete(benificier);
             SaveChanges();
+            return true;
         }
 
         public void SaveChanges()
@@ -130,6 +131,16 @@ namespace Admin.Service
                 Beneficiaries = await _benificierRepository.GetAll().ToListAsync(),
                 Agents = agents
             };
+        }
+
+        string IBeneficiaryService.GenerateUniqueSuffix()
+        {
+            return Guid.NewGuid().ToString("N").Substring(0, 8).ToUpper();
+        }
+
+        public Benificier FindByCodeUnique(string codeUnique)
+        {
+            return _benificierRepository.FindByExpression(b => b.codeUnique == codeUnique);
         }
     }
 }

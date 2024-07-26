@@ -1,0 +1,55 @@
+﻿.required-label::after {
+    content: ' *';
+    color: red;
+}
+
+.required-label:hover::after {
+    content: ' * Ce champ est obligatoire';
+    color: red;
+}
+
+.hidden {
+    display: none;
+}
+
+.slide-in {
+    animation: slideIn 0.5s forwards;
+}
+
+.slide-out {
+    animation: slideOut 0.5s forwards;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+.form-check-input:checked {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.form-check-input {
+    background-color: #f8f9fa;
+    border-color: #ced4da;
+}

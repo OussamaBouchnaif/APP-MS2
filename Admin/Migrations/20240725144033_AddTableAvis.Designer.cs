@@ -4,6 +4,7 @@ using MS2Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Admin.Migrations
 {
     [DbContext(typeof(MyContext))]
-    partial class MyContextModelSnapshot : ModelSnapshot
+    [Migration("20240725144033_AddTableAvis")]
+    partial class AddTableAvis
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,6 +33,9 @@ namespace Admin.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("BenificierId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BenifierId")
                         .HasColumnType("int");
 
                     b.Property<string>("Contenue")
@@ -77,7 +82,6 @@ namespace Admin.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal?>("Prix")
-                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Responsable")
@@ -97,221 +101,6 @@ namespace Admin.Migrations
                     b.HasIndex("BenificierId");
 
                     b.ToTable("DossierMedical");
-                });
-
-            modelBuilder.Entity("Admin.Models.DossierSociale", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("AccompagnementPhysique")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("ActeDeNaissance")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("AnamneseEtDiscusionPlanDesuite")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("ApuiAdminstrative")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("ApuiSocialProfessionnel")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Autre3")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("BenificierId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("DateEntreeHebergementUrgence")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool?>("DelivranceInformation")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("DemandeAsile")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("DemandeInformation")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("DemandeRetourVolontaire")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("DetailsEtResultats")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("DistributiondeKit")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Extenrene")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("Hebergement")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Interne")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Orientation")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("PriseEnChargeMedical")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("ReferencementExterne")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("ReferencementIntern")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("autre1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("autre2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("emploi")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("formation")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("kitsAlimentaionEtHyfiene")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BenificierId")
-                        .IsUnique();
-
-                    b.ToTable("DossierSociale");
-                });
-
-            modelBuilder.Entity("Admin.Models.Participation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("DossierSocialeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Thematique")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DossierSocialeId");
-
-                    b.ToTable("Participation");
-                });
-
-            modelBuilder.Entity("Admin.Models.SuiviSociale", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("AccompagnementPhysique")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("ActeDeNaissance")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("AnamneseEtDiscusionPlanDesuite")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("ApuiAdminstrative")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("ApuiSocialProfessionnel")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Autre3")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("BenificierId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("DateEntreeHebergementUrgence")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("DelivranceInformation")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("DemandeAsile")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("DemandeInformation")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("DemandeRetourVolontaire")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("DetailsEtResultats")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("DistributiondeKit")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("DossierSocialeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Extenrene")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Hebergement")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Interne")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Orientation")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PriseEnChargeMedical")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("ReferencementExterne")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("ReferencementIntern")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("autre1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("autre2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("emploi")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("formation")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("kitsAlimentaionEtHyfiene")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DossierSocialeId");
-
-                    b.ToTable("SuiviSociale");
                 });
 
             modelBuilder.Entity("Admin.Models.VeilleContextuelle", b =>
@@ -418,9 +207,6 @@ namespace Admin.Migrations
 
                     b.Property<int>("BenificierId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Conclusion")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -806,35 +592,6 @@ namespace Admin.Migrations
                     b.Navigation("benificier");
                 });
 
-            modelBuilder.Entity("Admin.Models.DossierSociale", b =>
-                {
-                    b.HasOne("MS2Api.Model.Benificier", "benificier")
-                        .WithOne("dossierSociale")
-                        .HasForeignKey("Admin.Models.DossierSociale", "BenificierId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("benificier");
-                });
-
-            modelBuilder.Entity("Admin.Models.Participation", b =>
-                {
-                    b.HasOne("Admin.Models.DossierSociale", "dossierSociale")
-                        .WithMany("participations")
-                        .HasForeignKey("DossierSocialeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("dossierSociale");
-                });
-
-            modelBuilder.Entity("Admin.Models.SuiviSociale", b =>
-                {
-                    b.HasOne("Admin.Models.DossierSociale", null)
-                        .WithMany("suiviSociales")
-                        .HasForeignKey("DossierSocialeId");
-                });
-
             modelBuilder.Entity("Admin.Models.VeilleContextuelle", b =>
                 {
                     b.HasOne("MS2Api.Model.Utilisateur", "Utilisateur")
@@ -911,13 +668,6 @@ namespace Admin.Migrations
                     b.Navigation("Dossier");
                 });
 
-            modelBuilder.Entity("Admin.Models.DossierSociale", b =>
-                {
-                    b.Navigation("participations");
-
-                    b.Navigation("suiviSociales");
-                });
-
             modelBuilder.Entity("MS2Api.Model.DossierPersonnel", b =>
                 {
                     b.Navigation("Administrative");
@@ -940,8 +690,6 @@ namespace Admin.Migrations
                     b.Navigation("Dossier");
 
                     b.Navigation("DossierMedicals");
-
-                    b.Navigation("dossierSociale");
                 });
 
             modelBuilder.Entity("MS2Api.Model.Utilisateur", b =>

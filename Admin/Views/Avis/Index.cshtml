@@ -1,0 +1,204 @@
+﻿@model Admin.ViewModel.AvisListViewModel
+
+@{
+    Layout = null;
+}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Avis | MS2 MAPPING</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+    <meta content="Themesdesign" name="author" />
+    <link rel="shortcut icon" href="~/assets/images/favicon-dark.ico" media="(prefers-color-scheme: dark)">
+    <link rel="shortcut icon" href="~/assets/images/favicon-light.ico" media="(prefers-color-scheme: light)">
+    <link href="~/assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/custom.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/Avis.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div class="authentication-bg min-vh-100">
+        <div class="bg-overlay bg-light"></div>
+        <div class="container">
+            <div class="d-flex flex-column min-vh-100 px-3 pt-4">
+                <div class="row justify-content-center my-auto">
+                    <div class="col-md-10 col-lg-8 col-xl-5">
+                        <div class="pb-2">
+                            <a href="#" class="d-block auth-logo">
+                                <img src="~/assets/images/logo-dark-nbg.png" alt="" height="70" class="auth-logo-dark me-start">
+                                <img src="~/assets/images/logo-light-nbg.png" alt="" height="70" class="auth-logo-light me-start">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="col-12">
+                        <div class="border py-4 rounded">
+                            <div class="px-4" data-simplebar style="max-height: 360px;">
+                                @if (Model.Avis != null && Model.Avis.Any())
+                                {
+                                    var first = Model.Avis.First();
+                                    var others = Model.Avis.Skip(1);
+
+                                    @foreach (var avis in others)
+                                    {
+                                        <div class="border-bottom pb-3">
+                                            <p class="float-sm-end text-muted font-size-13">@avis.DateTime.ToString("dd MMM, yyyy HH:mm:ss")</p>
+                                            <p class="text-muted mb-4">@avis.Contenue</p>
+                                            <div class="d-flex align-items-start">
+                                                <div class="flex-grow-1">
+                                                    <div class="d-flex">
+                                                        @if (@avis.Benificier.Sexe == "Homme")
+                                                        {
+                                                            <img class="avatar-sm rounded-circle" src="~/assets/images/users/profile_homme.png" alt="Avatar d'en-tête">
+                                                        }
+                                                        else
+                                                        {
+                                                            <img class="avatar-sm rounded-circle" src="~/assets/images/users/profile_femme.png" alt="Avatar d'en-tête">
+                                                        }
+                                                        <div class="flex-1 ms-2 ps-1">
+                                                            <h5 class="font-size-16 mb-0">@avis.Benificier.Nom.ToString().ToUpper() @avis.Benificier.Prenom</h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+
+                                    <div class="pt-3 mb-3">
+                                        <p class="float-sm-end text-muted font-size-13">@first.DateTime.ToString("dd MMM, yyyy HH:mm:ss")</p>
+                                        <p class="text-muted mb-4">@first.Contenue</p>
+                                        <div class="d-flex align-items-start">
+                                            <div class="flex-grow-1">
+                                                <div class="d-flex">
+                                                    @if (@first.Benificier.Sexe == "Homme")
+                                                    {
+                                                        <img class="avatar-sm rounded-circle" src="~/assets/images/users/profile_homme.png" alt="Avatar d'en-tête">
+                                                    }
+                                                    else
+                                                    {
+                                                        <img class="avatar-sm rounded-circle" src="~/assets/images/users/profile_femme.png" alt="Avatar d'en-tête">
+                                                    }
+                                                    <div class="flex-1 ms-2 ps-1">
+                                                        <h5 class="font-size-16 mb-0">@first.Benificier.Nom.ToString().ToUpper() @first.Benificier.Prenom</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="alert alert-info" role="alert">
+                                        Aucun avis n'existe actuellement.
+                                    </div>
+                                }
+                            </div>
+
+                            <div class="px-4 mt-2">
+                                <div class="border rounded mt-4">
+                                    <form id="avisForm" asp-action="EnvoyerAvis" method="post">
+                                        <div class="px-2 py-1 bg-light">
+                                            <div class="btn-group p-2" role="group">
+                                            </div>
+                                        </div>
+                                        <textarea rows="3" class="form-control border-0 resize-none" placeholder="Votre Message..." name="Contenue" id="Contenue"></textarea>
+                                        <div class="text-end mt-3">
+                                            <button type="submit" class="btn btn-success w-sm text-truncate ms-2">Envoyer <i class="bx bx-send ms-2 align-middle"></i></button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Floating feedback button -->
+    <div class="feedback-button">
+        <a asp-controller="Account" asp-action="Login" class="btn btn-danger rounded-circle waves-effect waves-light">
+            <i class='bx bx-x'></i>
+            <span class="ripple"></span>
+        </a>
+    </div>
+    <!-- JAVASCRIPT -->
+    <script src="~/assets/libs/sweetalert2/sweetalert2(v2).js"></script>
+    <script src="~/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/libs/metismenujs/metismenujs.min.js"></script>
+    <script src="~/assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="~/assets/libs/eva-icons/eva.min.js"></script>
+    <script src="~/assets/js/pages/pass-addon.init.js"></script>
+    <script src="~/assets/js/pages/alert.init.js"></script>
+
+    <script>
+        document.getElementById('avisForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            var contenue = document.getElementById('Contenue').value.trim();
+
+            if (contenue === '') {
+                Swal.fire({
+                    title: 'Erreur',
+                    text: 'Le contenu ne peut pas être vide.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+                return;
+            }
+
+            Swal.fire({
+                title: 'Envoi en cours...',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
+            // Submit the form programmatically after showing the loading alert
+            fetch('@Url.Action("EnvoyerAvis", "Avis")', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'RequestVerificationToken': '@(ViewData["RequestVerificationToken"] ?? string.Empty)'
+                },
+                body: new URLSearchParams(new FormData(e.target))
+            }).then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire({
+                            title: 'Succès',
+                            text: data.message,
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Erreur',
+                            text: data.message,
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                }).catch(error => {
+                    Swal.fire({
+                        title: 'Erreur',
+                        text: 'Une erreur s\'est produite lors de l\'envoi de votre avis. Veuillez réessayer.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                });
+        });
+    </script>
+</body>
+
+</html>

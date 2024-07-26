@@ -53,6 +53,7 @@ namespace Admin.Extensions
 
             services.AddScoped<IMedicalService,MedicalService>();
             services.AddScoped<IMedicalMapper,MedicalMapper>();
+            services.AddScoped<IAvisService,AvisService>();
 
         }
     }

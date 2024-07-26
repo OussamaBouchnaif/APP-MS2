@@ -4,11 +4,14 @@
     ViewData["Title"] = "Utilisateurs";
 }
 
-<div class="content">
-    <div class="container">
-        <a href="Utilisateur/Add" class="btn btn-primary" id="bn">Ajouter un Utilisateur</a>
-        @if (Model != null && Model.Any())
-        {
+@section Styles{
+    <style>
+        .small-font {
+            font-size: 14px;
+        }
+    </style>
+}
+<div class="container">
 
             <table id="myTable" class="table table-hover">
                 <thead>

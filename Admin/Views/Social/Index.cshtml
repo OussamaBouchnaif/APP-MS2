@@ -1,0 +1,69 @@
+﻿@model Admin.ViewModel.DossierSocialViewModel
+
+<div class="container">
+    <h2 class="text-primary"><i class='bx bx-folder'></i> Fiche Sociale pour le Bénéficiaire @Model.Benificier.Nom @Model.Benificier.Prenom</h2>
+
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-info">@TempData["Message"]</div>
+    }
+
+    <div class="card mt-5">
+        <div class="card-header">
+            <h4>Détails de la Fiche Sociale</h4>
+        </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <h5>Informations Générales</h5>
+                    <p><strong>Demande d'informations :</strong> @(Model.DemandeInformation.HasValue && Model.DemandeInformation.Value ? "Oui" : "Non")</p>
+                    <p><strong>Prise en charge médicale :</strong> @(Model.PriseEnChargeMedical.HasValue && Model.PriseEnChargeMedical.Value ? "Oui" : "Non")</p>
+                    <p><strong>Hébergement/Aide au loyer :</strong> @(Model.Hebergement.HasValue && Model.Hebergement.Value ? "Oui" : "Non")</p>
+                    <p><strong>Appui administrative/juridique :</strong> @(Model.ApuiAdminstrative.HasValue && Model.ApuiAdminstrative.Value ? "Oui" : "Non")</p>
+                    <div class="ml-4">
+                        @if (Model.ApuiAdminstrative.HasValue && Model.ApuiAdminstrative.Value)
+                        {
+                            <p><strong>Acte de naissance/État civil :</strong> @(Model.ActeDeNaissance.HasValue && Model.ActeDeNaissance.Value ? "Oui" : "Non")</p>
+                            <p><strong>Demande d'asile :</strong> @(Model.DemandeAsile.HasValue && Model.DemandeAsile.Value ? "Oui" : "Non")</p>
+                            <p><strong>Demande de retour volontaire :</strong> @(Model.DemandeRetourVolontaire.HasValue && Model.DemandeRetourVolontaire.Value ? "Oui" : "Non")</p>
+                            <p><strong>Autre :</strong> @Model.autre1</p>
+                        }
+                    </div>
+                    <p><strong>Kits alimentation et hygiène :</strong> @Model.kitsAlimentaionEtHyfiene</p>
+                </div>
+
+                <div class="col-md-6">
+                    <h5>Services Fournis</h5>
+                    <p><strong>Délivrance d'informations :</strong> @(Model.DelivranceInformation.HasValue && Model.DelivranceInformation.Value ? "Oui" : "Non")</p>
+                    <p><strong>Anamnèse et discussion plan de suite :</strong> @(Model.AnamneseEtDiscusionPlanDesuite.HasValue && Model.AnamneseEtDiscusionPlanDesuite.Value ? "Oui" : "Non")</p>
+                    <p><strong>Date d'entrée Hébergement d'urgence :</strong> @Model.DateEntreeHebergementUrgence?.ToString("yyyy-MM-dd")</p>
+                    <p><strong>Distribution de kit :</strong> @(Model.DistributiondeKit.HasValue && Model.DistributiondeKit.Value ? "Oui" : "Non")</p>
+                    <p><strong>Accompagnement physique :</strong> @Model.AccompagnementPhysique</p>
+                    <p><strong>Orientation :</strong> @Model.Orientation</p>
+                    <p><strong>Référencement externe :</strong> @(Model.ReferencementExterne.HasValue && Model.ReferencementExterne.Value ? "Oui" : "Non")</p>
+                    <div class="ml-4">
+                        @if (Model.ReferencementExterne.HasValue && Model.ReferencementExterne.Value)
+                        {
+                            <p><strong>Externe :</strong> @Model.Extenrene</p>
+                        }
+                    </div>
+                    <p><strong>Référencement interne :</strong> @(Model.ReferencementIntern.HasValue && Model.ReferencementIntern.Value ? "Oui" : "Non")</p>
+                    <div class="ml-4">
+                        @if (Model.ReferencementIntern.HasValue && Model.ReferencementIntern.Value)
+                        {
+                            <p><strong>Interne :</strong> @Model.Interne</p>
+                        }
+                    </div>
+                    <p><strong>Autre :</strong> @Model.Autre3</p>
+                    <p><strong>Détails et résultats/décisions :</strong> @Model.DetailsEtResultats</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group mt-4">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">
+            <i class='bx bx-edit'></i> Modifier la Fiche Sociale
+        </a>
+    </div>
+</div>
