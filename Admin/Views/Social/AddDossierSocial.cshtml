@@ -1,0 +1,337 @@
+﻿@model Admin.ViewModel.DossierSocialeVM
+
+@{
+    ViewData["Title"] = "Ajouter un Dossier Social";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/assets/libs/sweetalert2/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/assets/css/dossierSocial.css">
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="h2 text-primary"><i class='bx bx-folder'></i> Formulaire de Dossier Social</h2>
+                <p class="card-title-desc"><i class='bx bx-info-circle'></i> Veuillez remplir les informations ci-dessous.</p>
+            </div>
+            <div class="card-body">
+                <form id="dossierSocialForm" asp-action="AddDossierSocial" method="post">
+                    <div class="form-group">
+                        <input asp-for="BenificierId" class="form-control" value="@ViewData["Id"]" type="hidden" />
+                    </div>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="row">
+                        <!-- Colonne de gauche -->
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <h5 class="text-primary">Motif de l'accompagnement</h5>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label required-label"><i class='bx bx-info-circle text-primary'></i> Demande d'informations</label>
+                                <div class="form-check form-switch">
+                                    <input asp-for="DemandeInformation" class="form-check-input" type="checkbox" />
+                                    <label class="form-check-label" for="DemandeInformation"></label>
+                                </div>
+                                <span asp-validation-for="DemandeInformation" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label required-label"><i class='bx bx-heart text-primary'></i> Prise en charge médicale</label>
+                                <div class="form-check form-switch">
+                                    <input asp-for="PriseEnChargeMedical" class="form-check-input" type="checkbox" />
+                                    <label class="form-check-label" for="PriseEnChargeMedical"></label>
+                                </div>
+                                <span asp-validation-for="PriseEnChargeMedical" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label required-label"><i class='bx bx-home text-primary'></i> Hébergement/Aide au loyer</label>
+                                <div class="form-check form-switch">
+                                    <input asp-for="Hebergement" class="form-check-input" type="checkbox" />
+                                    <label class="form-check-label" for="Hebergement"></label>
+                                </div>
+                                <span asp-validation-for="Hebergement" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label required-label"><i class='bx bx-support text-primary'></i> Appui administrative/juridique</label>
+                                <div class="form-check form-switch">
+                                    <input asp-for="ApuiAdminstrative" class="form-check-input" type="checkbox" id="ApuiAdminstrative" />
+                                    <label class="form-check-label" for="ApuiAdminstrative"></label>
+                                </div>
+                                <span asp-validation-for="ApuiAdminstrative" class="text-danger"></span>
+                            </div>
+                            <div id="additionalFields1" class="hidden">
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input asp-for="ActeDeNaissance" id="ActeDeNaissance" class="form-check-input" type="checkbox" />
+                                        <label for="ActeDeNaissance" class="form-label">Acte de naissance/État civil</label>
+                                    </div>
+                                    <span asp-validation-for="ActeDeNaissance" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input asp-for="DemandeAsile" id="DemandeAsile" class="form-check-input" type="checkbox" />
+                                        <label for="DemandeAsile" class="form-label">Demande d'asile</label>
+                                    </div>
+                                    <span asp-validation-for="DemandeAsile" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input asp-for="DemandeRetourVolontaire" id="DemandeRetourVolontaire" class="form-check-input" type="checkbox" />
+                                        <label for="DemandeRetourVolontaire" class="form-label">Demande de retour volontaire</label>
+                                    </div>
+                                    <span asp-validation-for="DemandeRetourVolontaire" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label"><i class='bx bx-comment text-primary'></i> Autre</label>
+                                    <input asp-for="autre1" class="form-control" />
+                                    <span asp-validation-for="autre1" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label"><i class='bx bx-package text-primary'></i> Kits alimentation et hygiène</label>
+                                <input asp-for="kitsAlimentaionEtHyfiene" class="form-control" />
+                                <span asp-validation-for="kitsAlimentaionEtHyfiene" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label required-label"><i class='bx bx-briefcase text-primary'></i> Appui socio-professionnel</label>
+                                <div class="form-check form-switch">
+                                    <input asp-for="ApuiSocialProfessionnel" class="form-check-input" type="checkbox" id="ApuiSocialProfessionnel" />
+                                    <label class="form-check-label" for="ApuiSocialProfessionnel"></label>
+                                </div>
+                                <span asp-validation-for="ApuiSocialProfessionnel" class="text-danger"></span>
+                            </div>
+                            <div id="additionalFields2" class="hidden">
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input asp-for="formation" id="formation" class="form-check-input" type="checkbox" />
+                                        <label for="formation" class="form-label">Formation</label>
+                                    </div>
+                                    <span asp-validation-for="formation" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input asp-for="emploi" id="emploi" class="form-check-input" type="checkbox" />
+                                        <label for="emploi" class="form-label">Emploi</label>
+                                    </div>
+                                    <span asp-validation-for="emploi" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label"><i class='bx bx-comment text-primary'></i> Autre</label>
+                                    <input asp-for="autre2" class="form-control" />
+                                    <span asp-validation-for="autre2" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Colonne de droite -->
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <h5 class="text-primary">Prestation fournies</h5>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label required-label"><i class='bx bx-info-circle text-primary'></i> Délivrance d'informations</label>
+                                <div class="form-check form-switch">
+                                    <input asp-for="DelivranceInformation" class="form-check-input" type="checkbox" />
+                                    <label class="form-check-label" for="DelivranceInformation"></label>
+                                </div>
+                                <span asp-validation-for="DelivranceInformation" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label required-label"><i class='bx bx-chat text-primary'></i> Anamnèse et discussion plan de suite</label>
+                                <div class="form-check form-switch">
+                                    <input asp-for="AnamneseEtDiscusionPlanDesuite" class="form-check-input" type="checkbox" />
+                                    <label class="form-check-label" for="AnamneseEtDiscusionPlanDesuite"></label>
+                                </div>
+                                <span asp-validation-for="AnamneseEtDiscusionPlanDesuite" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label required-label"><i class='bx bx-calendar-check text-primary'></i> Date d'entrée Hébergement d'urgence</label>
+                                <input asp-for="DateEntreeHebergementUrgence" class="form-control" type="date" />
+                                <span asp-validation-for="DateEntreeHebergementUrgence" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label required-label"><i class='bx bx-package text-primary'></i> Distribution de kit</label>
+                                <div class="form-check form-switch">
+                                    <input asp-for="DistributiondeKit" class="form-check-input" type="checkbox" />
+                                    <label class="form-check-label" for="DistributiondeKit"></label>
+                                </div>
+                                <span asp-validation-for="DistributiondeKit" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label"><i class='bx bx-user text-primary'></i> Accompagnement physique</label>
+                                <input asp-for="AccompagnementPhysique" class="form-control" />
+                                <span asp-validation-for="AccompagnementPhysique" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label"><i class='bx bx-direction text-primary'></i> Orientation</label>
+                                <input asp-for="Orientation" class="form-control" />
+                                <span asp-validation-for="Orientation" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label"><i class='bx bx-transfer text-primary'></i> Référencement externe</label>
+                                <div class="form-check form-switch">
+                                    <input asp-for="ReferencementExterne" class="form-check-input" type="checkbox" id="ReferencementExterne" />
+                                    <label class="form-check-label" for="ReferencementExterne"></label>
+                                </div>
+                                <span asp-validation-for="ReferencementExterne" class="text-danger"></span>
+                            </div>
+                            <div id="externalFields" class="hidden">
+                                <div class="mb-3">
+                                    <label class="form-label"><i class='bx bx-transfer text-primary'></i> Externe</label>
+                                    <input asp-for="Extenrene" class="form-control" />
+                                    <span asp-validation-for="Extenrene" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label"><i class='bx bx-transfer text-primary'></i> Référencement interne</label>
+                                <div class="form-check form-switch">
+                                    <input asp-for="ReferencementIntern" class="form-check-input" type="checkbox" id="ReferencementIntern" />
+                                    <label class="form-check-label" for="ReferencementIntern"></label>
+                                </div>
+                                <span asp-validation-for="ReferencementIntern" class="text-danger"></span>
+                            </div>
+                            <div id="internalFields" class="hidden">
+                                <div class="mb-3">
+                                    <label class="form-label"><i class='bx bx-transfer text-primary'></i> Interne</label>
+                                    <select asp-for="Interne" class="form-control">
+                                        <option value="">-- Sélectionnez --</option>
+                                        <option value="Médical">Médical</option>
+                                        <option value="Psycho">Psycho</option>
+                                    </select>
+                                    <span asp-validation-for="Interne" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label"><i class='bx bx-comment text-primary'></i> Autre</label>
+                                <input asp-for="Autre3" class="form-control" />
+                                <span asp-validation-for="Autre3" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label"><i class='bx bx-detail text-primary'></i> Détails et résultats/décisions</label>
+                            <textarea asp-for="DetailsEtResultats" class="form-control"></textarea>
+                            <span asp-validation-for="DetailsEtResultats" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary"><i class='bx bx-check-circle'></i> Soumettre</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/assets/libs/sweetalert2/sweetalert2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const adminSupportSwitch = document.getElementById('ApuiAdminstrative');
+            const additionalFields1 = document.getElementById('additionalFields1');
+
+            adminSupportSwitch.addEventListener('change', function () {
+                if (this.checked) {
+                    additionalFields1.classList.remove('hidden', 'slide-out');
+                    additionalFields1.classList.add('slide-in');
+                } else {
+                    additionalFields1.classList.remove('slide-in');
+                    additionalFields1.classList.add('slide-out');
+                    setTimeout(() => additionalFields1.classList.add('hidden'), 500);
+                }
+            });
+
+            const socioProSwitch = document.getElementById('ApuiSocialProfessionnel');
+            const additionalFields2 = document.getElementById('additionalFields2');
+
+            socioProSwitch.addEventListener('change', function () {
+                if (this.checked) {
+                    additionalFields2.classList.remove('hidden', 'slide-out');
+                    additionalFields2.classList.add('slide-in');
+                } else {
+                    additionalFields2.classList.remove('slide-in');
+                    additionalFields2.classList.add('slide-out');
+                    setTimeout(() => additionalFields2.classList.add('hidden'), 500);
+                }
+            });
+
+            const externalSwitch = document.getElementById('ReferencementExterne');
+            const externalFields = document.getElementById('externalFields');
+
+            externalSwitch.addEventListener('change', function () {
+                if (this.checked) {
+                    externalFields.classList.remove('hidden', 'slide-out');
+                    externalFields.classList.add('slide-in');
+                } else {
+                    externalFields.classList.remove('slide-in');
+                    externalFields.classList.add('slide-out');
+                    setTimeout(() => externalFields.classList.add('hidden'), 500);
+                }
+            });
+
+            const internalSwitch = document.getElementById('ReferencementIntern');
+            const internalFields = document.getElementById('internalFields');
+
+            internalSwitch.addEventListener('change', function () {
+                if (this.checked) {
+                    internalFields.classList.remove('hidden', 'slide-out');
+                    internalFields.classList.add('slide-in');
+                } else {
+                    internalFields.classList.remove('slide-in');
+                    internalFields.classList.add('slide-out');
+                    setTimeout(() => internalFields.classList.add('hidden'), 500);
+                }
+            });
+
+            document.getElementById('dossierSocialForm').addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                const form = this;
+                const formData = new FormData(form);
+
+                Swal.fire({
+                    title: 'En cours...',
+                    text: 'Veuillez patienter',
+                    icon: 'info',
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                    willOpen: () => {
+                        Swal.showLoading()
+                    }
+                });
+
+                fetch(form.action, {
+                    method: 'POST',
+                    body: formData
+                }).then(response => {
+                    if (response.ok) {
+                        Swal.fire({
+                            title: 'Succès!',
+                            text: 'Le dossier social a été ajouté avec succès.',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            window.location.href = '/Benificier/Index';
+                        });
+                    } else {
+                        response.json().then(data => {
+                            Swal.fire({
+                                title: 'Erreur',
+                                text: data.errors.join(', '),
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        });
+                    }
+                }).catch(error => {
+                    Swal.fire({
+                        title: 'Erreur',
+                        text: 'Une erreur est survenue. Veuillez réessayer plus tard.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                });
+            });
+        });
+    </script>
+}

@@ -136,10 +136,10 @@
                                         <i class="bx bx-heart text-primary"></i> Situation Matrimoniale
                                     </label>
                                     <select asp-for="Familiale.SituationMatrimoniale" class="form-control">
-                                        <option value="célibataire">célibataire</option>
+                                        <option value="célibataire">Célibataire</option>
                                         <option value="Encouple">En couple / mariée</option>
                                         <option value="Divorce">Divorcé</option>
-                                        <option value="veuf">veuf</option>
+                                        <option value="veuf">Veuf</option>
                                     </select>
                                     <span asp-validation-for="Familiale.SituationMatrimoniale" class="text-danger"></span>
                                 </div>
@@ -314,9 +314,9 @@
                                             </label>
                                             <select class="form-select" asp-for="ParcoursMigratoire.Voie">
                                                 <option selected>Selectionner le Voie</option>
-                                                <option value="terrestre">terrestre</option>
-                                                <option value="maritime">maritime</option>
-                                                <option value="aérienne">aérienne</option>
+                                                <option value="terrestre">Terrestre</option>
+                                                <option value="maritime">Maritime</option>
+                                                <option value="aérienne">Aérienne</option>
                                             </select>
                                         </div>
                                     </div><!-- end col -->
@@ -366,11 +366,11 @@
                                         <div>
                                             <h5 class="font-size-14 mb-4">Niveau Education</h5>
                                             <select class="form-select mb-3" asp-for="SocioEconomique.NiveauEducation" id="niveauEducation">
-                                                <option value="aucun">aucun</option>
-                                                <option value="primaire">primaire</option>
-                                                <option value="secondaire">secondaire</option>
-                                                <option value="superieur">superieur</option>
-                                                <option value="formation professionnelle">formation professionnelle</option>
+                                                <option value="aucun">Aucun</option>
+                                                <option value="primaire">Primaire</option>
+                                                <option value="secondaire">Secondaire</option>
+                                                <option value="superieur">Superieur</option>
+                                                <option value="formation professionnelle">Formation professionnelle</option>
                                             </select>
                                             <div class="mb-3" id="fpFieldContainer" style="display:none;">
                                                 <label asp-for="SocioEconomique.FormationPersonnel" class="form-label">
@@ -386,12 +386,12 @@
                                         <div>
                                             <h5 class="font-size-14 mb-4">Source de revenus</h5>
                                             <select class="form-select mb-3" asp-for="SocioEconomique.Source" id="sourceRevenus">
-                                                <option value="aucun">aucun</option>
+                                                <option value="aucun">Aucun</option>
                                                 <option value="Mendicite">Mendicite</option>
                                                 <option value="Epargne">Epargne</option>
-                                                <option value="travail informel">travail informel</option>
-                                                <option value="travail formel">travail formel</option>
-                                                <option value="transfert de fonds">transfert de fonds</option>
+                                                <option value="travail informel">Travail informel</option>
+                                                <option value="travail formel">Travail formel</option>
+                                                <option value="transfert de fonds">Transfert de fonds</option>
                                             </select>
                                         </div>
                                     </div>
@@ -405,8 +405,8 @@
                                             <select class="form-select" asp-for="SocioEconomique.Habit">
                                                 <option selected>Selectionner</option>
                                                 <option value="Logement individuel ou familial">Logement individuel ou familial</option>
-                                                <option value="logement partagé">logement partagé</option>
-                                                <option value="chambre partagée">chambre partagée</option>
+                                                <option value="logement partagé">Logement partagé</option>
+                                                <option value="chambre partagée">Chambre partagée</option>
                                                 <option value="Maison d'urgence">Maison d'urgence</option>
                                                 <option value="Squats">Squats</option>
                                                 <option value="compement">Situation de rue/compement</option>
@@ -470,7 +470,7 @@
                                         <i class="bx bx-wheelchair text-primary"></i> Handicap
                                     </label>
                                     <select asp-for="Psychologique.Handicap" class="form-control">
-                                        <option value="selectionner">selectionner</option>
+                                        <option value="selectionner">Selectionner</option>
                                         <option value="Physique">Physique</option>
                                         <option value="Mental">Mental</option>
                                     </select>
@@ -493,7 +493,7 @@
                                         <i class="bx bx-user-x text-primary"></i> Victime de violence
                                     </label>
                                     <select asp-for="Violence.Victim" class="form-control">
-                                        <option value="">selectionner</option>
+                                        <option value="">Selectionner</option>
                                         <option value="Physique">Physique</option>
                                         <option value="Mental">Mental</option>
                                         <option value="Sexuelle">Sexuelle</option>
@@ -512,8 +512,8 @@
                                         <i class="bx bx-shield-x text-primary"></i> Victime d'Arrestation
                                     </label>
                                     <select class="form-select mb-3" asp-for="Violence.VictimArretation" id="victimArretation">
-                                        <option value="true">oui</option>
-                                        <option value="false">non</option>
+                                        <option value="true">Oui</option>
+                                        <option value="false">Non</option>
                                     </select>
                                     <span asp-validation-for="Violence.VictimArretation" class="text-danger"></span>
                                 </div>

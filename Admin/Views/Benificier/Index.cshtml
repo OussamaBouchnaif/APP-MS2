@@ -3,6 +3,14 @@
 @{
     ViewData["Title"] = "Beneficiaries";
 }
+
+@section Styles {
+    <style>
+        .small-font {
+            font-size: 14px;
+        }
+    </style>
+}
 <div class="container">
 
     <div class="card">
@@ -15,7 +23,7 @@
 
         <div class="card-body">
             <!-- Documentation des boutons -->
-            <div class="alert alert-info" role="alert">
+            <div class="alert alert-info small-font" role="alert">
                 <ul>
                     <li>
                         <strong class="text-danger">Bouton Supprimer (<i class="fa-solid fa-trash"></i>)</strong> : Ce bouton permet de supprimer un bénéficiaire. Il ouvre une boîte de dialogue de confirmation avant de procéder à la suppression.
@@ -31,7 +39,11 @@
                     </li>
                 </ul>
             </div>
-            <a asp-action="Add" asp-controller="Benificier" class="btn btn-primary mb-3" id="bn">Ajouter un Bénéficiaire</a>
+
+@*             <a asp-action="Add" asp-controller="Benificier" class="btn btn-primary mb-3" id="bn">Ajouter un Bénéficiaire</a>
+ *@            <a href="Add" class="btn btn-primary mb-3" id="bn">
+                <i class='bx bx-user-plus' style="margin-right: 5px; font-size: 20px;"></i> Ajouter un Bénéficiaire
+            </a>
             @if (TempData["Message"] != null)
             {
                 <div class="alert alert-danger" role="alert">
@@ -132,7 +144,7 @@
                 </div>
             </form>
 
-            <form asp-action="AddDossierSocial" asp-controller="Dossier" method="get">
+            <form asp-action="AddDossierSocial" asp-controller="Social" method="get">
                 <div class="modal-body">
                     <div class="form-group">
                         <input type="text" class="beneficiaryIdInput" name="BeneficiaryId" hidden>

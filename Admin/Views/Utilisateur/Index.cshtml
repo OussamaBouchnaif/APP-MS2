@@ -4,6 +4,13 @@
     ViewData["Title"] = "Utilisateurs";
 }
 
+@section Styles{
+    <style>
+        .small-font {
+            font-size: 14px;
+        }
+    </style>
+}
 <div class="container">
 
     <div class="card">
@@ -15,7 +22,7 @@
         </div>
         <div class="card-body">
             <!-- Documentation des boutons -->
-            <div class="alert alert-info" role="alert">
+            <div class="alert alert-info small-font" role="alert">
                 <ul>
                     <li>
                         <strong class="text-danger">Bouton Supprimer (<i class="fas fa-trash-alt"></i>)</strong> : Ce bouton permet de supprimer un utilisateur. Il ouvre une boîte de dialogue de confirmation avant de procéder à la suppression.
@@ -28,7 +35,10 @@
                     </li>
                 </ul>
             </div>
-            <a href="Add" class="btn btn-primary mb-3" id="bn">Ajouter un Utilisateur</a>
+            <a href="Add" class="btn btn-primary mb-3" id="bn">
+                <i class='bx bx-user-plus' style="margin-right: 5px; font-size: 20px;"></i> Ajouter un Utilisateur
+            </a>
+
             @if (Model != null && Model.Any())
             {
                 <div class="table-responsive">
