@@ -19,10 +19,7 @@
     <link href="~/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
     <link href="~/assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
     <link href="~/assets/css/custom.css" rel="stylesheet" type="text/css" />
-    <link href="~/assets/css/Login.css" rel="stylesheet" type="text/css" />
-
-    <!-- SweetAlert2 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <link href="~/assets/css/Avis.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -33,7 +30,7 @@
                 <div class="row justify-content-center my-auto">
                     <div class="col-md-10 col-lg-8 col-xl-5">
                         <div class="pb-2">
-                            <a href="index-2.html" class="d-block auth-logo">
+                            <a href="#" class="d-block auth-logo">
                                 <img src="~/assets/images/logo-dark-nbg.png" alt="" height="70" class="auth-logo-dark me-start">
                                 <img src="~/assets/images/logo-light-nbg.png" alt="" height="70" class="auth-logo-light me-start">
                             </a>
@@ -66,7 +63,7 @@
                                                             <img class="avatar-sm rounded-circle" src="~/assets/images/users/profile_femme.png" alt="Avatar d'en-tête">
                                                         }
                                                         <div class="flex-1 ms-2 ps-1">
-                                                            <h5 class="font-size-16 mb-0">@avis.Benificier.Nom.ToString().ToUpper()  @avis.Benificier.Prenom</h5>
+                                                            <h5 class="font-size-16 mb-0">@avis.Benificier.Nom.ToString().ToUpper() @avis.Benificier.Prenom</h5>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -89,7 +86,7 @@
                                                         <img class="avatar-sm rounded-circle" src="~/assets/images/users/profile_femme.png" alt="Avatar d'en-tête">
                                                     }
                                                     <div class="flex-1 ms-2 ps-1">
-                                                        <h5 class="font-size-16 mb-0">@first.Benificier.Nom.ToString().ToUpper()  @first.Benificier.Prenom</h5>
+                                                        <h5 class="font-size-16 mb-0">@first.Benificier.Nom.ToString().ToUpper() @first.Benificier.Prenom</h5>
                                                     </div>
                                                 </div>
                                             </div>
@@ -111,8 +108,7 @@
                                             <div class="btn-group p-2" role="group">
                                             </div>
                                         </div>
-                                        <textarea rows="3" class="form-control border-0 resize-none" placeholder="Votre Message..." name="Contenue"></textarea>
-                                        @* <span asp-validation-for="AvisViewModel.Contenue" class="text-danger"></span> *@
+                                        <textarea rows="3" class="form-control border-0 resize-none" placeholder="Votre Message..." name="Contenue" id="Contenue"></textarea>
                                         <div class="text-end mt-3">
                                             <button type="submit" class="btn btn-success w-sm text-truncate ms-2">Envoyer <i class="bx bx-send ms-2 align-middle"></i></button>
                                         </div>
@@ -126,6 +122,13 @@
             </div>
         </div>
     </div>
+    <!-- Floating feedback button -->
+    <div class="feedback-button">
+        <a asp-controller="Account" asp-action="Login" class="btn btn-danger rounded-circle waves-effect waves-light">
+            <i class='bx bx-x'></i>
+            <span class="ripple"></span>
+        </a>
+    </div>
     <!-- JAVASCRIPT -->
     <script src="~/assets/libs/sweetalert2/sweetalert2(v2).js"></script>
     <script src="~/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -138,18 +141,62 @@
     <script>
         document.getElementById('avisForm').addEventListener('submit', function (e) {
             e.preventDefault();
+            var contenue = document.getElementById('Contenue').value.trim();
+
+            if (contenue === '') {
+                Swal.fire({
+                    title: 'Erreur',
+                    text: 'Le contenu ne peut pas être vide.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+                return;
+            }
+
             Swal.fire({
                 title: 'Envoi en cours...',
                 allowOutsideClick: false,
                 didOpen: () => {
-                    Swal.showLoading()
+                    Swal.showLoading();
                 }
             });
 
             // Submit the form programmatically after showing the loading alert
-            setTimeout(() => {
-                e.target.submit();
-            }, 1000); // Simulate delay for demonstration
+            fetch('@Url.Action("EnvoyerAvis", "Avis")', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'RequestVerificationToken': '@(ViewData["RequestVerificationToken"] ?? string.Empty)'
+                },
+                body: new URLSearchParams(new FormData(e.target))
+            }).then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire({
+                            title: 'Succès',
+                            text: data.message,
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Erreur',
+                            text: data.message,
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                }).catch(error => {
+                    Swal.fire({
+                        title: 'Erreur',
+                        text: 'Une erreur s\'est produite lors de l\'envoi de votre avis. Veuillez réessayer.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                });
         });
     </script>
 </body>

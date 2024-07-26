@@ -19,7 +19,14 @@ namespace Admin.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var avisList = _avisService.GetAllAvis().ToList();
+            var benificier = HttpContext.Session.GetObjectFromJson<Benificier>("Benificier");
+            if (benificier == null)
+            {
+                ViewBag.Message = "Veuillez saisir un code unique valide.";
+                return View(new AvisListViewModel());
+            }
+
+            var avisList = _avisService.GetAvisByBeneficiaryId(benificier.Id).ToList();
             var model = new AvisListViewModel
             {
                 Avis = avisList,
@@ -31,34 +38,50 @@ namespace Admin.Controllers
         [HttpPost]
         public IActionResult EnvoyerAvis(string Contenue)
         {
-            if (ModelState.IsValid)
+            if (string.IsNullOrWhiteSpace(Contenue))
             {
-                var benificier = HttpContext.Session.GetObjectFromJson<Benificier>("Benificier");
-                if (benificier == null)
-                {
-                    ViewBag.Message = "Veuillez saisir un code unique valide avant d'envoyer un avis.";
-                    return RedirectToAction("Index");
-                }
-
-                var avis = new Avis
-                {
-                    DateTime = DateTime.Now,
-                    Contenue = Contenue,
-                    BenificierId = benificier.Id
-                };
-
-                _avisService.AddAvis(avis);
-
-                return RedirectToAction("Index");
+                return Json(new { success = false, message = "Le contenu ne peut pas être vide." });
             }
 
+            var benificier = HttpContext.Session.GetObjectFromJson<Benificier>("Benificier");
+            if (benificier == null)
+            {
+                return Json(new { success = false, message = "Veuillez saisir un code unique valide avant d'envoyer un avis." });
+            }
+
+            var avis = new Avis
+            {
+                DateTime = DateTime.Now,
+                Contenue = Contenue,
+                BenificierId = benificier.Id
+            };
+
+            _avisService.AddAvis(avis);
+
+            return Json(new { success = true, message = "Avis envoyé avec succès." });
+        }
+
+        [HttpGet]
+        public IActionResult AfficherTousLesAvis()
+        {
             var avisList = _avisService.GetAllAvis().ToList();
-            var viewModel = new AvisListViewModel
+            var model = new AvisListViewModel
             {
                 Avis = avisList
             };
+            return View(model);
+        }
 
-            return View("Index", viewModel);
+        [HttpPost]
+        public IActionResult DeleteAvis(int id)
+        {
+            var avis = _avisService.GetAvisById(id);
+            if (avis != null)
+            {
+                _avisService.DeleteAvis(avis);
+                return Json(new { success = true });
+            }
+            return Json(new { success = false, message = "Avis non trouvé." });
         }
     }
 }
