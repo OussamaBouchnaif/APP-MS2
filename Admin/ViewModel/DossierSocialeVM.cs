@@ -6,7 +6,6 @@ namespace Admin.ViewModel
 {
     public class DossierSocialeVM
     {
-        [Key]
         public int Id { get; set; }
 
         public bool DemandeInformation { get; set; }
@@ -36,6 +35,6 @@ namespace Admin.ViewModel
         public string? DetailsEtResultats { get; set; }
 
         public int BenificierId { get; set; }
-
+        public Benificier? Benificier { get; set; }
     }
 }
