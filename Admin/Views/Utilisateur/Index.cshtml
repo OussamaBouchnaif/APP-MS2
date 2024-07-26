@@ -33,7 +33,14 @@
                             <td class="text-center">
                                 <a href="javascript:void(0);" data-id="@utilisateur.Id" class="text-danger delete-utilisateur"><i class="fas fa-trash-alt"></i></a>
                                 <a asp-action="Profile" asp-route-id="@utilisateur.Id" class="text-info"><i class="fas fa-info-circle"></i></a>
-                                <a asp-action="Add" class="text-warning"><i class="fas fa-folder-plus"></i></a>
+                                @if (utilisateur.Role != "Admin")
+                                {
+                                    <a asp-action="Edit" asp-route-id="@utilisateur.Id" class="text-warning">
+                                        <i class="fas fa-edit"></i> <!-- Icône de modification (crayon) -->
+                                    </a>
+                                }
+                                
+
                             </td>
                         </tr>
                     }

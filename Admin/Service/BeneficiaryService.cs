@@ -5,6 +5,7 @@ using Admin.ViewModel;
 using Microsoft.EntityFrameworkCore;
 using MS2Api.Model;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Admin.Service
 {
@@ -12,11 +13,13 @@ namespace Admin.Service
     {
         private readonly IRepository<Benificier> _benificierRepository;
         private readonly IBenificierMapper _benificierMapper;
+        private readonly IUtilisateurService _utilisateurService;
 
-        public BeneficiaryService(IRepository<Benificier> benificierRepository, IBenificierMapper benificierMapper)
+        public BeneficiaryService(IRepository<Benificier> benificierRepository, IBenificierMapper benificierMapper, IUtilisateurService utilisateurService)
         {
             _benificierRepository = benificierRepository;
             _benificierMapper = benificierMapper;
+            _utilisateurService = utilisateurService;
         }
 
         public IEnumerable<Benificier> GetAllBeneficiaries()
@@ -111,6 +114,10 @@ namespace Admin.Service
 
             var beneficiariesPerCity = beneficiariesByCity.ToDictionary(x => x.Ville, x => x.Count);
 
+            var agents = (_utilisateurService.GetAllUtilisateurs())
+                .Where(u => u.Role == "Agent")
+                .ToList();
+
             return new StatistiquesData
             {
                 TotalBeneficiaires = totalBeneficiaires,
@@ -120,7 +127,8 @@ namespace Admin.Service
                 NombreNonMineurs = nonMineurs,
                 BeneficiariesPerNationality = beneficiariesPerNationality,
                 BeneficiariesPerCity = beneficiariesPerCity,
-                Beneficiaries = await _benificierRepository.GetAll().ToListAsync() // Inclure les bénéficiaires dans les statistiques
+                Beneficiaries = await _benificierRepository.GetAll().ToListAsync(),
+                Agents = agents
             };
         }
     }

@@ -111,12 +111,7 @@
                                             <p class="card-title-desc">Veuillez remplir les informations ci-dessous.</p>
                                         </div>
                                         <div class="card-body">
-                                            @if (Model.Role == "Admin")
-                                            {
-                                                <p>Vous n'avez pas la permission de modifier ce profil.</p>
-                                            }
-                                            else
-                                            {
+                                           
                                                 <form id="profileForm" asp-action="Profile" method="post" novalidate>
                                                     <div class="form-group">
                                                         <input asp-for="Id" class="form-control" type="hidden" />

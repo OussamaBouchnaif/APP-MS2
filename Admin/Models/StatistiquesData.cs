@@ -9,6 +9,8 @@
         public int NombreNonMineurs { get; set; }
         public Dictionary<string, int> BeneficiariesPerNationality { get; set; }
         public IEnumerable<Benificier> Beneficiaries { get; set; }
-        public Dictionary<string, int> BeneficiariesPerCity { get; set; } // Ajouter cette ligne
+        public IEnumerable<Utilisateur> Utilisateurs { get; set; } // Assurez-vous que ce champ est nécessaire ou peut être retiré si non utilisé
+        public List<Utilisateur> Agents { get; set; }
+        public Dictionary<string, int> BeneficiariesPerCity { get; set; }
     }
 }
