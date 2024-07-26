@@ -1,3 +1,12 @@
+@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    var userJson = HttpContextAccessor.HttpContext.Session.GetString("User");
+    dynamic user = userJson != null ? JsonConvert.DeserializeObject<dynamic>(userJson) : null;
+}
+
 <div class="vertical-menu">
 
     <!-- LOGO -->
@@ -49,12 +58,21 @@
                         <span class="menu-item" data-key="t-calendar">Bénéficiaires</span>
                     </a>
                 </li>
-                <li>
-                    <a asp-action="Index" asp-controller="Utilisateur">
-                        <i class="bx bxs-user icon nav-icon"></i>
-                        <span class="menu-item" data-key="t-calendar">Utilisateurs</span>
-                    </a>
-                </li>
+                @if (user?.Role == "Admin")
+                {
+                    <li>
+                        <a asp-action="Index" asp-controller="Utilisateur">
+                            <i class="bx bxs-user icon nav-icon"></i>
+                            <span class="menu-item" data-key="t-calendar">Utilisateurs</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-action="AfficherTousLesAvis" asp-controller="Avis">
+                            <i class="bx bx-comment icon nav-icon"></i>
+                            <span class="menu-item" data-key="t-calendar">Avis</span>
+                        </a>
+                    </li>
+                }
             </ul>
         </div>
         <!-- Sidebar -->

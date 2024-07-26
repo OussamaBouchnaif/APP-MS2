@@ -1,8 +1,13 @@
 @model Admin.ViewModel.VeilleContextuelleViewModel
+@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json
+@inject IHttpContextAccessor HttpContextAccessor
 
 @{
     ViewData["Title"] = "Details des Veilles Contextuelles";
     var topNationalities = ViewBag.TopNationalities as (string, int)[];
+    var userJson = HttpContextAccessor.HttpContext.Session.GetString("User");
+    dynamic user = userJson != null ? JsonConvert.DeserializeObject<dynamic>(userJson) : null;
 }
 
 @section Styles {
@@ -25,11 +30,14 @@
                         <span>Statistique</span>
                     </a>
                 </li>
-                <li class="nav-item">
+                @if (user?.Role == "Admin")
+                {
+                    <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="tab" href="#validation" role="tab">
                         <span>Validation</span>
                     </a>
                 </li>
+                }
             </ul>
         </div>
     </div>
